@@ -21,6 +21,8 @@
 #########################
 
 import validation
+import passwordValid
+import dataFunctions
 import cgi
 import re
 import os
@@ -41,6 +43,7 @@ jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), a
 jinja_env.globals.update(format_the_date=validation.convert_to_letter_month)  # lets me use validation inside html.
 jinja_env.globals.update(numeric_to_alphabetic_month=validation.numeric_to_alpabetic)  # lets me use validation inside html.
 
+
 def add_response_headers(response):
     response.headers.add_header("Cache-Control", "no-cache, no-store, must-revalidate") # HTTP 1.1.
     response.headers.add_header("Pragma", "no-cache")  # HTTP 1.0.
@@ -58,8 +61,6 @@ class Handler(webapp2.RequestHandler):
         self.write(self.render_str(template, **kw))
         
 
-
-
 class BlogPost(db.Model): # abbreviated 'bp'
     headline = db.StringProperty(required = False)
     text = db.TextProperty(required = False)
@@ -75,7 +76,126 @@ class PostPart(db.Model):  # abbreviated 'pp'
     img = db.StringProperty(required = False)
     txt_below_img = db.StringProperty(required = False)
 
+
+class RegisteredUsers(db.Model):  #  --> ru
+    name = db.StringProperty(required = True)
+    password_hashed = db.StringProperty(required = True)  # (name + pw + salt) hexdigested and then pipe salt with format "hexdigestedValue|salt"
+    created = db.DateTimeProperty(auto_now_add = True)
+
+
+def check_user_id_cookie(a_request):
+    """"Returns a specific registered user, or if user_id_cookie_value or username is None
+        return None"""
     
+    user_id_cookie_value = a_request.cookies.get('user_id')# username_input|hash (cookie)
+    
+    if user_id_cookie_value:
+        username = passwordValid.check_secure_val(user_id_cookie_value)
+        
+        if username:  # valid cookie:
+            the_RU = dataFunctions.retrieveUser(username)
+            return the_RU
+    return None
+
+
+# '/', LoginHandler
+class LoginHandler(Handler):
+    def write_form(self, a_username="", an_invalid_error=""):
+        self.render("login_adm.html", the_login_username=a_username, error_login=an_invalid_error)
+
+        
+    def get(self):
+        self.write_form()
+
+
+    def post(self):
+        login_username_input = self.request.get('login_username')
+        login_password_input = self.request.get('login_password')
+        checkbox_stay_loggedIn = self.request.get('stay_logged_in')
+
+        #check if username exists
+        user_already_exists = False
+        all_reg_users = db.GqlQuery("SELECT * FROM RegisteredUsers ORDER BY created DESC")
+
+        if all_reg_users:
+            for users in all_reg_users:
+                if users.name == login_username_input:
+                    user_already_exists = True
+                    the_user_hash = users.password_hashed
+                    break
+            if user_already_exists:
+                #check if password is correct
+                if passwordValid.valid_pw(login_username_input, login_password_input, the_user_hash):
+                    secure_username = passwordValid.make_secure_val(login_username_input) # return login_username_input|hash
+                    
+
+                    if checkbox_stay_loggedIn:
+                        # make sure to set cookie expire to never
+                        #logging.debug("checkbox_stay_loggedIn")
+                        self.response.headers.add_header('Set-Cookie', 'user_id=%s; Path=/; expires=Fri, 31-Dec-9999 10:05:41 GMT;' %str(secure_username))
+                    else:
+                        # cookie expire when???
+                        #logging.debug("NOT checkbox_stay_loggedIn")
+                        self.response.headers.add_header('Set-Cookie', 'user_id=%s; Path=/' %str(secure_username))
+
+                    self.redirect("/add_blog_post")
+                else:
+                    self.loginError(login_username_input)
+            else:
+                if login_username_input:
+                    self.loginError(login_username_input)
+                else:
+                    self.loginError("")
+        else:
+            self.loginError("")
+
+    def loginError(self, name):
+        error_log_in = "Invalid login"
+        self.write_form(name, error_log_in)
+
+        
+# '/logout', LogoutHandler 
+class LogoutHandler(Handler):
+    def get(self):            
+        #set cookie value to 'empty'
+        self.response.headers.add_header('Set-Cookie', 'user_id=; Path=/')
+
+        #then redirect to '/login' LoginHandler
+        self.redirect("/login")
+
+
+
+########## DON'T DELETE THE BELOW ##########################################################################################################
+
+### '/add_user', SignupHandler
+##class AddUserHandler(Handler):
+##        
+##    
+##    def get(self):
+##        #secure_value # this is the (name + pw + salt) hexdigested and then pipe salt with format "hexdigestedValue|salt"
+##        
+##        username_input = ""
+##        password_input = ""
+##
+##        
+##                    
+##            
+##
+##        # username_and_password = username_input + password_input
+##        secure_password = passwordValid.make_pw_hash(username_input, password_input)  # the function returns hash|salt
+##        #secure_username = passwordValid.make_secure_val(username_input) # the function returns username_input|hash
+##
+##       
+##        ru = RegisteredUsers(name = username_input, password_hashed = secure_password) # save the hashed password in database
+##        ru.put()
+##        #time.sleep(0.1)  # to delay so db table gets displayed correct
+##        #self.response.headers.add_header('Set-Cookie', 'user_id=%s; Path=/' %str(secure_username))#sending secure_username back to browser
+##        self.redirect("/")
+
+########## DON'T DELETE THE ABOVE ##########################################################################################################
+
+
+        
     
 class AddNewBlogPost(Handler):
     def render_AddNewBlogPost(self, error_msg, bp_db, a_pp_list):
@@ -100,17 +220,30 @@ class AddNewBlogPost(Handler):
         # render "blog_post_entry.html" with correct params!
         self.render_AddNewBlogPost("", bp, post_parts_list)
 
-
-            
+ 
     def get(self):
+        the_RU = check_user_id_cookie(self.request)
+        
         # if user is correct
-        if True:
-            #display blank page
+        if the_RU:
             self.render_blank_blog_post()
-            
-        #else
+        else:
+            # false user, not loged in
+            self.redirect('/')
+
 
     def post(self):
+        the_RU = check_user_id_cookie(self.request)
+        
+        # if user is correct
+        if the_RU:
+            self.process_post()
+        else:
+            # false user, not loged in
+            self.redirect('/')
+
+
+    def process_post(self):            
         # data that user has entered
         headline_blog_messy = self.request.get("headline").strip()  # a string
         text_blog = self.request.get("text").strip()  # a text area...
@@ -121,10 +254,7 @@ class AddNewBlogPost(Handler):
         
         # create BlogPost item in db
         bp = BlogPost(headline = headline_blog, text = text_blog)
-                      
-                      
-       
-        #time.sleep(0.5)  # to delay so db table gets displayed correct
+        
 
         #logging.debug("bp.text = " + bp.text)
 
@@ -175,8 +305,6 @@ class AllBlogPosts(Handler):
         all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(1000)
 
         dict_blog = {}  # {'2014':{'12':['p1', 'p2', 'p3'], '11':['p4', 'p5'], '8':['p6', 'p7']}, '2013':{'12':['p8', 'p9'], '8':['p1', 'p2']}}
-
-                            
 
         for blog_posts in all_blog_posts:
             a_year = validation.get_just_yyyy(blog_posts.created)  # get string yyyy
@@ -256,9 +384,6 @@ class SingleBlogPost(Handler):
         self.render_front(a_headline, a_date, a_text, an_img_a, a_text_below)
 
 
-##    def post(self):
-##        self.render_front()
-
 
 class AboutUs(Handler):
     def get(self):
@@ -270,42 +395,12 @@ class AboutUs(Handler):
 app = webapp2.WSGIApplication([('/add_blog_post', AddNewBlogPost),
                                ('/', AllBlogPosts),
                                ('/single_blog_post', SingleBlogPost),
-                               ('/about', AboutUs)], debug=True)
+                               ('/about', AboutUs),
+                               ('/login', LoginHandler),
+                               ('/logout', LogoutHandler)], debug=True)
 
 
 
-    
-##app = webapp2.WSGIApplication([('/add_blog_post', AddNewBlogPost),
-##                               ('/', Home),
-##                               ('/all_blog_posts', AllBlogPosts),
-##                               ('/single_blog_post', SingleBlogPost),
-##                               ('/about', AboutUs),
-##                               ('/blog_overview', BlogOverview)], debug=True)
 
 
 
-            
-##        
-##class Home(Handler):
-##    def render_front(self):  # 'youngest' created date shown first by default
-##        # find the newest 5 posts
-##        all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC limit 5").fetch(5)
-##            
-##        self.render("home.html", blog_posts = all_blog_posts) # passing contents into the html file
-##
-##    def get(self):
-##        self.render_front()
-##
-##
-##    def post(self):
-##        self.render_front()
-
-
-    
-##class BlogOverview(Handler):
-##    def get(self):
-##        # find all posts
-##        all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(1000)
-##
-##        # passing contents into the html file
-##        self.render("blog_overview.html", blog_posts = all_blog_posts) 

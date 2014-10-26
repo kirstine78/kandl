@@ -117,6 +117,21 @@ a.link_top_bar:hover {
 	color:#0000E6;
 }
 
+.post_part_input0 {
+	color:black;
+}
+
+.post_part_input1 {
+	color:orange;
+}
+
+.post_part_input2{
+	color:blue;
+}
+
+.post_part_input3{
+	color:green;
+}
 
 .col-1 {
 	width: 8.33%;

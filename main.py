@@ -60,73 +60,54 @@ class Handler(webapp2.RequestHandler):
 
 
 
-class BlogPost(db.Model): # abbreviated 'BP'
-    headline = db.StringProperty(required = True)
-    text = db.TextProperty(required = True)
-
-    imgA_format = db.StringProperty(required = False)
-    imgA = db.StringProperty(required = False)
-    txt_below_imgA = db.StringProperty(required = False)
-
-
-    imgB_format = db.StringProperty(required = False)
-    imgB = db.StringProperty(required = False)
-    txt_below_imgB = db.StringProperty(required = False)
-
-    
-    imgC_format = db.StringProperty(required = False)
-    imgC = db.StringProperty(required = False)
-    txt_below_imgC = db.StringProperty(required = False)
-
-    
-    imgD_format = db.StringProperty(required = False)
-    imgD = db.StringProperty(required = False)
-    txt_below_imgD = db.StringProperty(required = False)
+class BlogPost(db.Model): # abbreviated 'bp'
+    headline = db.StringProperty(required = False)
+    text = db.TextProperty(required = False)
 
     created = db.DateTimeProperty(auto_now_add = True)  # more precise date, when sorting with format yyyy-mm-dd 06:46:22.467000
     _string_date_new = ""
 
 
+class PostPart(db.Model):  # abbreviated 'pp'
+    parent_blog_post = db.ReferenceProperty(BlogPost, collection_name='post_parts')   # ReferenceProperty reference to another db.Model
+    
+    img_format = db.StringProperty(required = False)
+    img = db.StringProperty(required = False)
+    txt_below_img = db.StringProperty(required = False)
+
+    
     
 class AddNewBlogPost(Handler):
-    def render_AddNewBlogPost(self, error_msg, headline_ct, text_ct, l_or_p_A_ct, imgA_ct, txt_below_imgA_ct, l_or_p_B_ct, imgB_ct, txt_below_imgB_ct, l_or_p_C_ct, imgC_ct, txt_below_imgC_ct, l_or_p_D_ct, imgD_ct, txt_below_imgD_ct):
+    def render_AddNewBlogPost(self, error_msg, bp_db, a_pp_list):
         
-        self.render("blog_post_entry.html", error_message=error_msg, headline_content=headline_ct, text_content=text_ct,
-                    L_or_P_imgA_content=l_or_p_A_ct, img_A_content=imgA_ct, text_below_img_A_content=txt_below_imgA_ct, 
-					L_or_P_imgB_content=l_or_p_B_ct, img_B_content=imgB_ct, text_below_img_B_content=txt_below_imgB_ct, 
-					L_or_P_imgC_content=l_or_p_C_ct, img_C_content=imgC_ct, text_below_img_C_content=txt_below_imgC_ct, 
-					L_or_P_imgD_content=l_or_p_D_ct, img_D_content=imgD_ct, text_below_img_D_content=txt_below_imgD_ct)
+        self.render("blog_post_entry.html", error_message=error_msg, bp=bp_db, pp_list=a_pp_list)
 
+    def render_blank_blog_post(self):
+        # create BlogPost item in db
+        bp = BlogPost(headline = "", text = "")
+
+        post_parts_list = []
+        
+        for i in range(1,5,1):
+        
+
+            pp = PostPart(img_format = "",
+                          img = "",
+                          txt_below_img = "")
+
+            post_parts_list.append(pp)
+        
+        # render "blog_post_entry.html" with correct params!
+        self.render_AddNewBlogPost("", bp, post_parts_list)
+
+
+            
     def get(self):
         # if user is correct
         if True:
             #display blank page
-            blank_error_msg=""
-            blank_headline_ct=""
-            blank_text_ct=""
+            self.render_blank_blog_post()
             
-            blank_l_or_p_A_ct=""
-            blank_imgA_ct=""
-            blank_txt_below_imgA_ct=""
-
-            blank_l_or_p_B_ct=""
-            blank_imgB_ct=""
-            blank_txt_below_imgB_ct=""
-
-            blank_l_or_p_C_ct=""
-            blank_imgC_ct=""
-            blank_txt_below_imgC_ct=""
-
-            blank_l_or_p_D_ct=""
-            blank_imgD_ct=""
-            blank_txt_below_imgD_ct=""
-
-            # render "blog_post_entry.html" with correct params!
-            self.render_AddNewBlogPost(blank_error_msg, blank_headline_ct, blank_text_ct,
-                                       blank_l_or_p_A_ct, blank_imgA_ct, blank_txt_below_imgA_ct,
-									   blank_l_or_p_B_ct, blank_imgB_ct, blank_txt_below_imgB_ct,
-									   blank_l_or_p_C_ct, blank_imgC_ct, blank_txt_below_imgC_ct,
-									   blank_l_or_p_D_ct, blank_imgD_ct, blank_txt_below_imgD_ct)
         #else
 
     def post(self):
@@ -134,86 +115,58 @@ class AddNewBlogPost(Handler):
         headline_blog_messy = self.request.get("headline").strip()  # a string
         text_blog = self.request.get("text").strip()  # a text area...
 		
-        L_P_A_blog = self.request.get("L_or_P_imgA").strip()  # a string
-        imgA_blog = self.request.get("img_A").strip()  # a string
-        text_below_imgA_blog = self.request.get("text_below_img_A").strip()  # a string
-		
-        L_P_B_blog = self.request.get("L_or_P_imgB").strip()  # a string
-        imgB_blog = self.request.get("img_B").strip()  # a string
-        text_below_imgB_blog = self.request.get("text_below_img_B").strip()  # a string
-		
-        L_P_C_blog = self.request.get("L_or_P_imgC").strip()  # a string
-        imgC_blog = self.request.get("img_C").strip()  # a string
-        text_below_imgC_blog = self.request.get("text_below_img_C").strip()  # a string
-		
-        L_P_D_blog = self.request.get("L_or_P_imgD").strip()  # a string
-        imgD_blog = self.request.get("img_D").strip()  # a string
-        text_below_imgD_blog = self.request.get("text_below_img_D").strip()  # a string
-
         #make sure first letter in string is upper case
         headline_blog = validation.upper_case_first_letter(headline_blog_messy)
         
+        
+        # create BlogPost item in db
+        bp = BlogPost(headline = headline_blog, text = text_blog)
+                      
+                      
+       
+        #time.sleep(0.5)  # to delay so db table gets displayed correct
+
+        #logging.debug("bp.text = " + bp.text)
+
+        # list for all post parts
+        blog_post_parts_list = []
+        
+        # if different amount of img's is needed then change the second paramter
+        for i in range(0,4,1):
+            
+            L_P_blog = self.request.get("L_or_P_img"+str(i)).strip()  # a string
+            img_blog = self.request.get("img"+str(i)).strip()  # a string
+            text_below_img_blog = self.request.get("text_below_img"+str(i)).strip()  # a string
+
+            
+            # create PostPart item in db
+            pp = PostPart(img_format = L_P_blog,
+                          img = img_blog,
+                          txt_below_img = text_below_img_blog)
+
+            blog_post_parts_list.append(pp)
+        
+        
+
+        #logging.debug("bp.string_date = " + bp.string_date)
+        
+
         # check if all mandatory fields are filled out
         if validation.are_all_fields_filled(headline_blog, text_blog):
-            # create BlogPost item in db
-            BP = BlogPost(headline = headline_blog,
-                          text = text_blog,
-                          imgA_format = L_P_A_blog,
-                          imgA = imgA_blog,
-                          txt_below_imgA = text_below_imgA_blog,
-                          imgB_format = L_P_B_blog,
-                          imgB = imgB_blog,
-                          txt_below_imgB = text_below_imgB_blog,
-                          imgC_format = L_P_C_blog,
-                          imgC = imgC_blog,
-                          txt_below_imgC = text_below_imgC_blog,
-                          imgD_format = L_P_D_blog,
-                          imgD = imgD_blog,
-                          txt_below_imgD = text_below_imgD_blog)
-            BP.put()
-            #time.sleep(0.5)  # to delay so db table gets displayed correct
+            bp.put()
 
-            logging.debug("BP.text = " + BP.text)
+            # can't do the below before bp is put()
+            for post_part in blog_post_parts_list:
+                post_part.parent_blog_post = bp
+                post_part.put()
 
-            
             #display blank page
-            blank_error_msg=""
-            blank_headline_ct=""
-            blank_text_ct=""
-			
-            blank_l_or_p_A_ct=""
-            blank_imgA_ct=""
-            blank_txt_below_imgA_ct=""
-			
-            blank_l_or_p_B_ct=""
-            blank_imgB_ct=""
-            blank_txt_below_imgB_ct=""
-			
-            blank_l_or_p_C_ct=""
-            blank_imgC_ct=""
-            blank_txt_below_imgC_ct=""
-			
-            blank_l_or_p_D_ct=""
-            blank_imgD_ct=""
-            blank_txt_below_imgD_ct=""
-
-            #logging.debug("BP.string_date = " + BP.string_date)
+            # render "blog_post_entry.html"!
+            self.render_blank_blog_post()
             
-
-
-            # render "blog_post_entry.html" with correct params!
-            self.render_AddNewBlogPost(blank_error_msg, blank_headline_ct, blank_text_ct,
-                                       blank_l_or_p_A_ct, blank_imgA_ct, blank_txt_below_imgA_ct,
-                                       blank_l_or_p_B_ct, blank_imgB_ct, blank_txt_below_imgB_ct,
-                                       blank_l_or_p_C_ct, blank_imgC_ct, blank_txt_below_imgC_ct,
-                                       blank_l_or_p_D_ct, blank_imgD_ct, blank_txt_below_imgD_ct)
         else:  # not all mandatory fields filled out
             # render "blog_post_entry.html" and display error message and redisplay what was filled in
-            self.render_AddNewBlogPost('Headline and/or Text missing', headline_blog, text_blog,
-                                       L_P_A_blog, imgA_blog, text_below_imgA_blog,
-                                       L_P_B_blog, imgB_blog, text_below_imgB_blog,
-                                       L_P_C_blog, imgC_blog, text_below_imgC_blog,
-                                       L_P_D_blog, imgD_blog, text_below_imgD_blog)
+            self.render_AddNewBlogPost('Headline and/or Text missing', bp, blog_post_parts_list)
 
         
         
@@ -262,14 +215,9 @@ class AllBlogPosts(Handler):
 
         
         #logging.debug("DICT BLOG = " + dict_blog['2014']['6'][0])
-
-
         
-            
-            
-        
-               
-        self.render("blog_all.html", dict_bloggi = dict_blog, blog_posts = all_blog_posts) # passing contents into the html file
+        # passing contents into the html file, nb you don't need to pass in post_parts
+        self.render("blog_all.html", dict_bloggi = dict_blog, blog_posts = all_blog_posts) 
         
 
     def get(self):

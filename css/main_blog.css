@@ -1,0 +1,196 @@
+/*  * {
+	border: 1px solid red !important;
+}  */
+
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+* {
+	font-family: 'Open Sans', sans-serif;
+}
+
+
+
+
+.grid {
+	margin: 0 auto;
+	/* max-width: 1200px; */
+	width:1150px;
+}
+
+
+.row {
+	width: 100%;
+	margin-bottom:20px;
+	display: flex;
+}
+
+.about_headline{
+	width: 100%;
+	display: flex;
+	padding-left: 20px;
+	padding-right: 40px;
+	padding-top: 18px;
+	padding-bottom: 5px;
+	font-weight: bold;
+	font-size: 24px;
+}
+
+.aboute_date {
+	width: 100%;
+	display: flex;
+	padding-left: 20px;
+	padding-bottom: 7px;
+	font-size: 12px;
+}
+
+.about_text {
+	width: 100%;
+	display: flex;
+	padding-left: 20px;
+	padding-right: 40px;
+}
+
+.blog_headline{
+	width: 100%;
+	display: flex;
+	padding-right: 38px;
+	padding-top: 15px;
+	padding-bottom: 5px;
+	font-weight: bold;
+	font-size: 24px;
+}
+
+.blog_date {
+	width: 100%;
+	display: flex;
+	padding-bottom: 7px;
+	color:#848484;
+	font-size: 13px;
+	
+}
+
+.blog_text {
+	width: 100%;
+	display: flex;
+	padding-right: 38px;
+}
+
+.blog_img {
+	
+	padding-right: 38px;
+
+}
+
+.about_img {
+	width:100%;
+	height=320px;
+}
+
+#about_img_div {
+	padding-bottom:20px; 
+	padding-top: 18px;
+}
+
+
+.error_message_red {
+	color:red;
+}
+
+.link_top_bar {
+	color:#848484;
+	text-decoration: none;
+    font-weight:bold;
+}
+
+a.link_top_bar:hover {
+	/* color:#FF8000; */
+	color:#0000E6;
+	
+}
+
+.new_old_link {
+	color:#0000E6;
+}
+
+
+.col-1 {
+	width: 8.33%;
+}
+.col-2 {
+	width:16.66%
+}
+.col-3 {
+	width:25%
+}
+.col-4 {
+	width:33.33%;
+}
+.col-5 {
+	width:41.66%
+}
+.col-6 {
+	width:50%
+}
+.col-7 {
+	width:58.33%
+}
+.col-8 {
+	width:66.66%
+}
+.col-9 {
+	width:75%
+}
+.col-10 {
+	width:83.33%
+}
+.col-11 {
+	width:91.66%
+}
+.col-12 {
+	width:100%
+}
+
+.col-75 {
+	width:60%
+}
+
+.col-25 {
+	width:23.33%
+}
+
+
+
+	
+#example_tree {
+	list-style-type: none
+	
+}
+
+#margin_decrease {
+	margin-left:-20px;
+}
+
+
+#color_yy{
+	color:#0000E6;
+	
+}
+
+#color_mm{
+	color:#0066FF;
+}
+
+
+#color_dd{
+	color:#00CCFF;
+}
+
+
+#color_arrow{
+	color:black;
+}

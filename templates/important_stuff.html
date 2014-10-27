@@ -1,0 +1,42 @@
+<div>
+					
+					
+					<UL id="example_tree" style="padding-left:0px;">
+					
+						{% for year in range(2020, 2011, -1) %}
+							<LI>
+								{% if year|string in dict_bloggi %}
+									<span ><a id="color_arrow" href="#" style="text-decoration:none;">&#9658;</a></span>
+									<a id="color_yy" href="#" ><b>{{year}}</b></a>
+									
+									
+									<UL id="example_tree">
+										{% for month in range(12, 0, -1) %}
+											{% if month|string in dict_bloggi[year|string] %}
+												
+												<LI id="margin_decrease">
+													<span><a id="color_arrow" href="#" style="text-decoration:none;">&#9658;</a></span>
+													<a id="color_mm" href="#">{{numeric_to_alphabetic_month(month)}}</a> <!-- using from python file: jinja_env.globals.update(numeric_to_alphabetic_month=validation.numeric_to_alpabetic) -->
+													
+														{% for i in dict_bloggi[year|string][month|string] %}
+															<UL id="example_tree">
+																<LI id="margin_decrease" style="padding-bottom:8px; font-size:13px;">&#8226;<a id="color_dd" href="#">{{i}}</a></LI>
+															</UL>
+														{% endfor %}
+												</LI>
+											{% endif %}
+										{% endfor %}
+									</UL>
+									
+									
+								{% endif %}
+							</LI>
+						{% endfor %}
+						
+												
+					</UL>
+					
+					
+					
+					
+				</div>

@@ -97,7 +97,53 @@ def check_user_id_cookie(a_request):
             return the_RU
     return None
 
+def make_dict_blog(collection_of_blog_posts):
+    """Takes a collection of blogposts (from db) and return a dictionary
+        with format example:
+        {'2014':{'12':['p1', 'p2', 'p3'], '11':['p4', 'p5'], '8':['p6', 'p7']}, '2013':{'12':['p8', 'p9'], '8':['p1', 'p2']}}
+        """
+    
+    all_blog_posts = collection_of_blog_posts
+    
+    dictionary = {}  # {'2014':{'12':['p1', 'p2', 'p3'], '11':['p4', 'p5'], '8':['p6', 'p7']}, '2013':{'12':['p8', 'p9'], '8':['p1', 'p2']}}
 
+    for blog_posts in all_blog_posts:
+        a_year = validation.get_just_yyyy(blog_posts.created)  # get string yyyy
+        a_month = str(int(validation.get_just_mm(blog_posts.created)))  # get string mm and make the format 1,2,3,4,5,6,7,8,9,10,11,12
+
+        if a_year not in dictionary:
+            dictionary[a_year] = {} # add a_year as key to the dict with empty dict as value
+
+            
+            if a_month not in dictionary[a_year]:  # a_month not a key in inner dict for that year
+                
+                # make a_month a key with empty list as value
+                dictionary[a_year][a_month] = []
+
+                # append headline to the list
+                dictionary[a_year][a_month].append(blog_posts.headline)
+
+
+            else:
+                # append headline to the list
+                dictionary[a_year][a_month].append(blog_posts.headline)
+
+        else:
+            if a_month not in dictionary[a_year]:  # a_month not a key in inner dict for that year
+                
+                # make a_month a key with empty list as value
+                dictionary[a_year][a_month] = []
+
+                # append headline to the list
+                dictionary[a_year][a_month].append(blog_posts.headline)
+
+
+            else:
+                # append headline to the list
+                dictionary[a_year][a_month].append(blog_posts.headline)
+    return dictionary
+
+    
 # '/', LoginHandler
 class LoginHandler(Handler):
     def write_form(self, a_username="", an_invalid_error=""):
@@ -196,7 +242,7 @@ class LogoutHandler(Handler):
 
 
         
-    
+# '/add_blog_post'    
 class AddNewBlogPost(Handler):
     def render_AddNewBlogPost(self, error_msg, bp_db, a_pp_list):
         
@@ -298,50 +344,16 @@ class AddNewBlogPost(Handler):
             # render "blog_post_entry.html" and display error message and redisplay what was filled in
             self.render_AddNewBlogPost('Headline and/or Text missing', bp, blog_post_parts_list)
 
+
         
-        
+# '/'   
 class AllBlogPosts(Handler):
     def render_front(self):  # 'youngest' created date shown first by default
         all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(1000)
 
-        dict_blog = {}  # {'2014':{'12':['p1', 'p2', 'p3'], '11':['p4', 'p5'], '8':['p6', 'p7']}, '2013':{'12':['p8', 'p9'], '8':['p1', 'p2']}}
+        #dict_blog = {}  # {'2014':{'12':['p1', 'p2', 'p3'], '11':['p4', 'p5'], '8':['p6', 'p7']}, '2013':{'12':['p8', 'p9'], '8':['p1', 'p2']}}
+        dict_blog = make_dict_blog(all_blog_posts)
 
-        for blog_posts in all_blog_posts:
-            a_year = validation.get_just_yyyy(blog_posts.created)  # get string yyyy
-            a_month = str(int(validation.get_just_mm(blog_posts.created)))  # get string mm and make the format 1,2,3,4,5,6,7,8,9,10,11,12
-
-            if a_year not in dict_blog:
-                dict_blog[a_year] = {} # add a_year as key to the dict with empty dict as value
-
-                
-                if a_month not in dict_blog[a_year]:  # a_month not a key in inner dict for that year
-                    
-                    # make a_month a key with empty list as value
-                    dict_blog[a_year][a_month] = []
-
-                    # append headline to the list
-                    dict_blog[a_year][a_month].append(blog_posts.headline)
-
-
-                else:
-                    # append headline to the list
-                    dict_blog[a_year][a_month].append(blog_posts.headline)
-
-            else:
-                if a_month not in dict_blog[a_year]:  # a_month not a key in inner dict for that year
-                    
-                    # make a_month a key with empty list as value
-                    dict_blog[a_year][a_month] = []
-
-                    # append headline to the list
-                    dict_blog[a_year][a_month].append(blog_posts.headline)
-
-
-                else:
-                    # append headline to the list
-                    dict_blog[a_year][a_month].append(blog_posts.headline)
-
-        
         #logging.debug("DICT BLOG = " + dict_blog['2014']['6'][0])
         
         # passing contents into the html file, nb you don't need to pass in post_parts
@@ -356,7 +368,70 @@ class AllBlogPosts(Handler):
         self.render_front()
 
 
-    
+
+# '/full_year'
+class FullYearBlogPosts (Handler):
+    def render_front(self, a_list_all_year_posts, a_dict_blog):
+            
+        self.render("blog_entire_year.html", list_all_year_posts=a_list_all_year_posts, dict_bloggi=a_dict_blog) # passing contents into the html file
+
+    def get(self):
+        year_id = self.request.get("id")  # if any year is clicked, there is: year_id
+        
+        all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(1000)
+        dict_blog = make_dict_blog(all_blog_posts)  # we need this to display the menu in the html
+        
+        logging.debug("year_id = " + year_id)
+        
+        only_specific_year = []  # list to contain blogposts
+
+        if year_id:   # means there is a year_id
+            
+            for posts in all_blog_posts:
+                if validation.get_just_yyyy(posts.created) == year_id:  # we only want blog posts that is from for example 2014
+                    only_specific_year.append(posts)
+        
+        self.render_front(only_specific_year, dict_blog)
+
+      
+
+# '/full_month'
+class FullMonthBlogPosts (Handler):
+    def render_front(self, a_list_all_month_posts, a_dict_blog):
+            
+        self.render("blog_entire_month.html", list_all_month_posts=a_list_all_month_posts, dict_bloggi=a_dict_blog) # passing contents into the html file
+
+    def get(self):
+        year_and_month_id = self.request.get("id")  # if any year is clicked, there is: year_and_month_id
+        just_year = year_and_month_id[0:4]
+        just_month = year_and_month_id[4:]  # 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, or 12
+
+        # make month to format 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, or 12
+        if len(just_month) < 2:
+            just_month = '0' + just_month
+        
+        all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(1000)
+        dict_blog = make_dict_blog(all_blog_posts)  # we need this to display the menu in the html
+        
+##        logging.debug("year_and_month_id = " + year_and_month_id)
+##        logging.debug("just_year = " + just_year)
+##        logging.debug("just_month = " + just_month)
+        
+        only_specific_month = []  # list to contain blogposts
+
+        if year_and_month_id:   # means there is a year_and_month_id
+            for posts in all_blog_posts:
+                if validation.get_just_yyyy(posts.created) == just_year:  # we only want blog posts that is from for example 2014
+                    # we only want blog posts that is from for example year 2014 AND from for example month 05
+                    if validation.get_just_mm(posts.created) == just_month:
+                        only_specific_month.append(posts)
+        
+        self.render_front(only_specific_month, dict_blog)
+
+      
+
+
+# '/single_blog_post'     
 class SingleBlogPost(Handler):
     def render_front(self, single_headline, single_date, single_text, single_img_a, single_text_below):
             
@@ -397,7 +472,9 @@ app = webapp2.WSGIApplication([('/add_blog_post', AddNewBlogPost),
                                ('/single_blog_post', SingleBlogPost),
                                ('/about', AboutUs),
                                ('/login', LoginHandler),
-                               ('/logout', LogoutHandler)], debug=True)
+                               ('/logout', LogoutHandler),
+                               ('/full_year', FullYearBlogPosts),
+                               ('/full_month', FullMonthBlogPosts)], debug=True)
 
 
 

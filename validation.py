@@ -5,21 +5,21 @@ from datetime import date
 import logging
 
 
-# for blog
-def is_date_valid(a_date):
-    """ Takes in a string a_date in "dd-mm-yyyy" format'.
-        Check if there is a date entered AND if it is valid date.
-        Returns boolean"""
-    
-    
-    try:
-        #logging.debug("string passed in: " + a_date)
-        date_object = datetime.strptime(a_date, '%d-%m-%Y').date()  ###################
-        #logging.debug("string passed in AFTER: " + a_date)
-        return True
-            
-    except ValueError:
-        return False
+### for blog
+##def is_date_valid(a_date):
+##    """ Takes in a string a_date in "dd-mm-yyyy" format'.
+##        Check if there is a date entered AND if it is valid date.
+##        Returns boolean"""
+##    
+##    
+##    try:
+##        #logging.debug("string passed in: " + a_date)
+##        date_object = datetime.strptime(a_date, '%d-%m-%Y').date()  ###################
+##        #logging.debug("string passed in AFTER: " + a_date)
+##        return True
+##            
+##    except ValueError:
+##        return False
     
 
 # for blog

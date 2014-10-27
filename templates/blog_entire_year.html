@@ -48,7 +48,7 @@
 		<div class="row" style="padding-top: 10px;">
 			<div class="col-1"></div>
 			<div class="col-75">
-			{% for post in blog_posts %}
+			{% for post in list_all_year_posts %}
 				<div class="blog_headline">{{post.headline}}</div>
 				<div class="blog_date">{{format_the_date(post.created)}}</div>
 				<div class="blog_text">{{post.text}}</div>
@@ -84,6 +84,7 @@
 			
 			<div class="col-25 end" style="font-size: 14px;" >
 				<div style="padding-top: 10px;"><h3>Blog Archive</h3></div>
+				
 				<div>
 					
 					
@@ -93,7 +94,7 @@
 							<LI>
 								{% if year|string in dict_bloggi %}
 									<span ><a id="color_arrow" href="#" style="text-decoration:none;">&#9658;</a></span>
-									<a id="color_yy" href="/full_year?id={{year|string}}" ><b>{{year}}</b></a>
+									<a id="color_yy" href="#" ><b>{{year}}</b></a>
 									
 									
 									<UL id="example_tree">
@@ -102,7 +103,7 @@
 												
 												<LI id="margin_decrease">
 													<span><a id="color_arrow" href="#" style="text-decoration:none;">&#9658;</a></span>
-													<a id="color_mm" href="/full_month?id={{year|string + month|string}}">{{numeric_to_alphabetic_month(month)}}</a> <!-- using from python file: jinja_env.globals.update(numeric_to_alphabetic_month=validation.numeric_to_alpabetic) -->
+													<a id="color_mm" href="#">{{numeric_to_alphabetic_month(month)}}</a> <!-- using from python file: jinja_env.globals.update(numeric_to_alphabetic_month=validation.numeric_to_alpabetic) -->
 													
 														{% for i in dict_bloggi[year|string][month|string] %}
 															<UL id="example_tree">
@@ -119,17 +120,14 @@
 							</LI>
 						{% endfor %}
 						
-						
-						
-						
-						
-						
+												
 					</UL>
 					
 					
 					
 					
 				</div>
+				
 			</div>
 			<div class="col-1 end"></div>
 		</div>

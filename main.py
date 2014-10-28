@@ -390,8 +390,13 @@ class FullYearBlogPosts (Handler):
             for posts in all_blog_posts:
                 if validation.get_just_yyyy(posts.created) == year_id:  # we only want blog posts that is from for example 2014
                     only_specific_year.append(posts)
-        
-        self.render_front(only_specific_year, dict_blog)
+            if len(only_specific_year) < 1:   # nothing to display
+                self.redirect('/')
+            else:
+                self.render_front(only_specific_year, dict_blog)
+
+        else:   # nothing to display
+            self.redirect('/')
 
       
 
@@ -413,9 +418,7 @@ class FullMonthBlogPosts (Handler):
         all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(1000)
         dict_blog = make_dict_blog(all_blog_posts)  # we need this to display the menu in the html
         
-##        logging.debug("year_and_month_id = " + year_and_month_id)
-##        logging.debug("just_year = " + just_year)
-##        logging.debug("just_month = " + just_month)
+
         
         only_specific_month = []  # list to contain blogposts
 
@@ -425,8 +428,13 @@ class FullMonthBlogPosts (Handler):
                     # we only want blog posts that is from for example year 2014 AND from for example month 05
                     if validation.get_just_mm(posts.created) == just_month:
                         only_specific_month.append(posts)
-        
-        self.render_front(only_specific_month, dict_blog)
+            if len(only_specific_month) < 1:  # nothing to display
+                self.redirect('/')
+            else:
+                self.render_front(only_specific_month, dict_blog)
+
+        else:   # nothing to display
+            self.redirect('/')
 
       
 
@@ -446,14 +454,24 @@ class SingleBlogPost(Handler):
         dict_blog = make_dict_blog(all_blog_posts)  # we need this to display the menu bar in the html
         
         blog_post_id = self.request.get("id")  # if any single blog post is clicked, there is: blog_post_id (format string)
+
+        #logging.debug("blog_post_id = " + blog_post_id)
         
         if blog_post_id:  # means there is a blog_post
+            #logging.debug("goes into if statement")
             specific_blog_post = BlogPost.get_by_id(int(blog_post_id))  # get the specific_blog_post with the specific id (blog_post_id)
+            if specific_blog_post:
+                self.render_front(specific_blog_post, dict_blog)
+            else:
+                #logging.debug("goes into first else statement")
+                self.redirect('/')
+                
         else:  # no blog post
+            #logging.debug("goes into else statement")
             self.redirect('/')
 
             
-        self.render_front(specific_blog_post, dict_blog)
+        
 
 
 

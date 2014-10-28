@@ -107,7 +107,7 @@
 													
 														{% for i in dict_bloggi[year|string][month|string] %}
 															<UL id="example_tree">
-																<LI id="margin_decrease" style="padding-bottom:8px; font-size:13px;">&#8226;<a id="color_dd" href="#">{{i}}</a></LI>
+																<LI id="margin_decrease" style="padding-bottom:8px; font-size:13px;">&#8226;<a id="color_dd" href="#">{{i.headline}}</a></LI>
 															</UL>
 														{% endfor %}
 												</LI>

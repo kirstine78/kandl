@@ -48,12 +48,12 @@
 		<div class="row" style="padding-top: 10px;">
 			<div class="col-1"></div>
 			<div class="col-75">
-			{% for post in blog_posts %}
-				<div class="blog_headline">{{post.headline}}</div>
-				<div class="blog_date">{{format_the_date(post.created)}}</div>
-				<div class="blog_text">{{post.text}}</div>
+			
+				<div class="blog_headline">{{single_blog_posts.headline}}</div>
+				<div class="blog_date">{{format_the_date(single_blog_posts.created)}}</div>
+				<div class="blog_text">{{single_blog_posts.text}}</div>
 				
-					{% for post_part in post.post_parts %}
+					{% for post_part in single_blog_posts.post_parts %}
 						{% if post_part.img_format == "l" %}
 							<br>
 							<div class="blog_img"><img src="../images/{{post_part.img}}" alt="photo" width="100%" height="480"></div>
@@ -74,7 +74,7 @@
 				
 				<br>
 				<br>
-			{% endfor %}
+			
 			</div>
 			
 			
@@ -84,6 +84,7 @@
 			
 			<div class="col-25 end" style="font-size: 14px;" >
 				<div style="padding-top: 10px;"><h3>Blog Archive</h3></div>
+				
 				<div>
 					
 					
@@ -93,7 +94,7 @@
 							<LI>
 								{% if year|string in dict_bloggi %}
 									<span ><a id="color_arrow" href="#" style="text-decoration:none;">&#9658;</a></span>
-									<a id="color_yy" href="/full_year?id={{year|string}}" ><b>{{year}}</b></a>
+									<a id="color_yy" href="#" ><b>{{year}}</b></a>
 									
 									
 									<UL id="example_tree">
@@ -102,11 +103,11 @@
 												
 												<LI id="margin_decrease">
 													<span><a id="color_arrow" href="#" style="text-decoration:none;">&#9658;</a></span>
-													<a id="color_mm" href="/full_month?id={{year|string + month|string}}">{{numeric_to_alphabetic_month(month)}}</a> <!-- using from python file: jinja_env.globals.update(numeric_to_alphabetic_month=validation.numeric_to_alpabetic) -->
+													<a id="color_mm" href="#">{{numeric_to_alphabetic_month(month)}}</a> <!-- using from python file: jinja_env.globals.update(numeric_to_alphabetic_month=validation.numeric_to_alpabetic) -->
 													
 														{% for i in dict_bloggi[year|string][month|string] %}
 															<UL id="example_tree">
-																<LI id="margin_decrease" style="padding-bottom:8px; font-size:13px;">&#8226;<a id="color_dd" href="/single_blog_post?id={{i.key().id()}}">{{i.headline}}</a></LI>
+																<LI id="margin_decrease" style="padding-bottom:8px; font-size:13px;">&#8226;<a id="color_dd" href="#">{{i.headline}}</a></LI>
 															</UL>
 														{% endfor %}
 												</LI>
@@ -119,17 +120,14 @@
 							</LI>
 						{% endfor %}
 						
-						
-						
-						
-						
-						
+												
 					</UL>
 					
 					
 					
 					
 				</div>
+				
 			</div>
 			<div class="col-1 end"></div>
 		</div>

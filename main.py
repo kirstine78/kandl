@@ -120,13 +120,13 @@ def make_dict_blog(collection_of_blog_posts):
                 # make a_month a key with empty list as value
                 dictionary[a_year][a_month] = []
 
-                # append headline to the list
-                dictionary[a_year][a_month].append(blog_posts.headline)
+                # append specific blogpost to the list
+                dictionary[a_year][a_month].append(blog_posts)
 
 
             else:
-                # append headline to the list
-                dictionary[a_year][a_month].append(blog_posts.headline)
+                # append specific blogpost to the list
+                dictionary[a_year][a_month].append(blog_posts)
 
         else:
             if a_month not in dictionary[a_year]:  # a_month not a key in inner dict for that year
@@ -134,13 +134,13 @@ def make_dict_blog(collection_of_blog_posts):
                 # make a_month a key with empty list as value
                 dictionary[a_year][a_month] = []
 
-                # append headline to the list
-                dictionary[a_year][a_month].append(blog_posts.headline)
+                # append specific blogpost to the list
+                dictionary[a_year][a_month].append(blog_posts)
 
 
             else:
-                # append headline to the list
-                dictionary[a_year][a_month].append(blog_posts.headline)
+                # append specific blogpost to the list
+                dictionary[a_year][a_month].append(blog_posts)
     return dictionary
 
     
@@ -431,32 +431,29 @@ class FullMonthBlogPosts (Handler):
       
 
 
+
+
+
 # '/single_blog_post'     
 class SingleBlogPost(Handler):
-    def render_front(self, single_headline, single_date, single_text, single_img_a, single_text_below):
+    def render_front(self, a_single_blog_posts, a_dict_blog):
             
-        self.render("blog_single.html",  specific_headline=single_headline,
-                    specific_date=single_date , specific_text=single_text,
-                    specific_img_a=single_img_a, specific_txt_below=single_text_below) # passing contents into the html file
+        self.render("blog_single_post.html",  single_blog_posts=a_single_blog_posts,
+                    dict_bloggi=a_dict_blog) # passing contents into the html file
 
     def get(self):
-        blog_post_id = self.request.get("id")  # if any blog post (either little img, headline or text) is clicked, there is: blog_post_id
+        all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(1000)
+        dict_blog = make_dict_blog(all_blog_posts)  # we need this to display the menu bar in the html
+        
+        blog_post_id = self.request.get("id")  # if any single blog post is clicked, there is: blog_post_id (format string)
+        
         if blog_post_id:  # means there is a blog_post
-            specific_blog_post = BlogPost.get_by_id(int(blog_post_id))  # get the blog_post with the specific id (blog_post_id)
-            a_headline = specific_blog_post.headline
-            a_date = validation.convert_to_letter_month(specific_blog_post.created)
-            a_text = specific_blog_post.text
-            an_img_a = specific_blog_post.img_a
-            a_text_below = specific_blog_post.txt_below
+            specific_blog_post = BlogPost.get_by_id(int(blog_post_id))  # get the specific_blog_post with the specific id (blog_post_id)
         else:  # no blog post
-            a_headline = ""
-            a_date = ""
-            a_text = ""
-            an_img_a = ""
-            a_text_below = ""
+            self.redirect('/')
 
             
-        self.render_front(a_headline, a_date, a_text, an_img_a, a_text_below)
+        self.render_front(specific_blog_post, dict_blog)
 
 
 
@@ -469,15 +466,16 @@ class AboutUs(Handler):
 
 app = webapp2.WSGIApplication([('/add_blog_post', AddNewBlogPost),
                                ('/', AllBlogPosts),
-                               ('/single_blog_post', SingleBlogPost),
                                ('/about', AboutUs),
                                ('/login', LoginHandler),
                                ('/logout', LogoutHandler),
                                ('/full_year', FullYearBlogPosts),
-                               ('/full_month', FullMonthBlogPosts)], debug=True)
+                               ('/full_month', FullMonthBlogPosts),
+                               ('/single_blog_post', SingleBlogPost)], debug=True)
 
 
 
 
+                               
 
 

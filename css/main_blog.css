@@ -1,6 +1,6 @@
-/*  * {
+ * {
 	border: 1px solid red !important;
-}  */
+} 
 
 * {
 	-webkit-box-sizing: border-box;
@@ -85,10 +85,9 @@
 }
 
 .blog_img {
-	
 	padding-right: 38px;
-
 }
+
 
 .about_img {
 	width:100%;

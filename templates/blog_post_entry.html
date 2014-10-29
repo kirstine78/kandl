@@ -41,11 +41,12 @@
 		
 			<div class="col-1"></div>
 			
-			<div class="col-10">
+			<div class="col-8">
 				<form method="post">
 					<p class="error_message_red"><b>{{error_message}}</b></p>
 
 					<p><b> * = mandatory fields </b></p>
+					<p>Helpful template: &lt;a href="http://www.xxx"&gt;txt&lt;/a&gt;</p>
 					<label>
 						<div>* Headline of your blog post (Don't exceed when front of text moves):</div> <input class="blog_headline" type="text" name="headline" value="{{bp.headline}}" style="width:670px;" onkeypress="return event.keyCode!=13">
 					</label>
@@ -80,7 +81,7 @@
 				</form>
 			</div>
 			
-			<div class="col-1">
+			<div class="col-2">
 				<input type="submit" value="Log out" id="margin_butt" onclick="window.location.href='/logout';">
 				<br>
 				<br>
@@ -88,6 +89,7 @@
 				<br>
 				<br>
 				<input  type="button" value="Go to Add video" onclick="window.location.href='/';"/>
+				
 				
 			</div>
 			

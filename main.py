@@ -485,27 +485,25 @@ class AddPhoto(Handler):
 
  
     def get(self):
-        self.render_AddPhoto("", "", "", "")
-##        the_RU = check_user_id_cookie(self.request)
-##        
-##        # if user is correct
-##        if the_RU:
-##            self.render_AddPhoto("", "", "", "")
-##        else:
-##            # false user, not loged in
-##            self.redirect('/')
+        the_RU = check_user_id_cookie(self.request)
+        
+        # if user is correct
+        if the_RU:
+            self.render_AddPhoto("", "", "", "")
+        else:
+            # false user, not loged in
+            self.redirect('/')
 
 
     def post(self):
-        self.process_add_photo()
-##        the_RU = check_user_id_cookie(self.request)
-##        
-##        # if user is correct
-##        if the_RU:
-##            self.process_add_photo()
-##        else:
-##            # false user, not loged in
-##            self.redirect('/')
+        the_RU = check_user_id_cookie(self.request)
+        
+        # if user is correct
+        if the_RU:
+            self.process_add_photo()
+        else:
+            # false user, not loged in
+            self.redirect('/')
 
 
     def process_add_photo(self):            

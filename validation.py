@@ -43,6 +43,28 @@ def are_all_fields_filled(headline, text):
         return False
 
 
+# for blog - photos
+def are_format_and_img_file_filled_correct(a_format_l_or_p, an_img_file):
+    """takes in strings.
+        Return boolean. False if any string are empty"""
+
+    if a_format_l_or_p and an_img_file:
+
+        
+        the_format = a_format_l_or_p
+        the_img_file = an_img_file
+
+
+        if len(the_format) < 1 or len(the_img_file) < 1:
+            return False
+        else:
+            if the_format == "l" or the_format == "p":
+                return True
+            else:
+                return False
+        
+    else:
+        return False
 
 
 # for blog

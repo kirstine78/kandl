@@ -23,6 +23,7 @@
 import validation
 import passwordValid
 import dataFunctions
+import math
 import cgi
 import re
 import os
@@ -81,6 +82,15 @@ class RegisteredUsers(db.Model):  #  --> ru
     name = db.StringProperty(required = True)
     password_hashed = db.StringProperty(required = True)  # (name + pw + salt) hexdigested and then pipe salt with format "hexdigestedValue|salt"
     created = db.DateTimeProperty(auto_now_add = True)
+
+
+class Photo(db.Model): # abbreviated 'photo'
+    img_format = db.StringProperty(required = False)
+    img = db.StringProperty(required = False)
+    txt_below_img = db.StringProperty(required = False)
+
+    created = db.DateTimeProperty(auto_now_add = True)  # more precise date, when sorting with format yyyy-mm-dd 06:46:22.467000
+    
 
 
 def check_user_id_cookie(a_request):
@@ -263,7 +273,7 @@ class AddNewBlogPost(Handler):
 
             post_parts_list.append(pp)
         
-        # render "blog_post_entry.html" with correct params!
+        # render "blog_post_entry.html" 
         self.render_AddNewBlogPost("", bp, post_parts_list)
 
  
@@ -307,7 +317,7 @@ class AddNewBlogPost(Handler):
         # list for all post parts
         blog_post_parts_list = []
         
-        # if different amount of img's is needed then change the second paramter
+        # if different amount of img's is needed then change the second paramter in range(a,b,c)
         for i in range(0,4,1):
             
             L_P_blog = self.request.get("L_or_P_img"+str(i)).strip()  # a string
@@ -436,11 +446,6 @@ class FullMonthBlogPosts (Handler):
         else:   # nothing to display
             self.redirect('/')
 
-      
-
-
-
-
 
 # '/single_blog_post'     
 class SingleBlogPost(Handler):
@@ -470,10 +475,135 @@ class SingleBlogPost(Handler):
             #logging.debug("goes into else statement")
             self.redirect('/')
 
+
+# '/add_photo'    
+class AddPhoto(Handler):
+    def render_AddPhoto(self, error_msg, an_img_format, an_img, a_txt_below):
+        
+        self.render("photos_add_photo.html", error_message=error_msg, img_format=an_img_format, img=an_img, txt_below_img=a_txt_below)
+
+
+ 
+    def get(self):
+        self.render_AddPhoto("", "", "", "")
+##        the_RU = check_user_id_cookie(self.request)
+##        
+##        # if user is correct
+##        if the_RU:
+##            self.render_AddPhoto("", "", "", "")
+##        else:
+##            # false user, not loged in
+##            self.redirect('/')
+
+
+    def post(self):
+        self.process_add_photo()
+##        the_RU = check_user_id_cookie(self.request)
+##        
+##        # if user is correct
+##        if the_RU:
+##            self.process_add_photo()
+##        else:
+##            # false user, not loged in
+##            self.redirect('/')
+
+
+    def process_add_photo(self):            
+        # data that user has entered
+        L_P_photo = self.request.get("L_or_P_img").strip()  # a string 
+        img_file = self.request.get("img_file").strip()  # a string
+        text_below_img = self.request.get("text_below_img").strip()  # a string
+
+        if validation.are_format_and_img_file_filled_correct(L_P_photo, img_file):
+            # process by creating Photo item in db
+            photo = Photo(img_format = L_P_photo, img = img_file, txt_below_img=text_below_img)
+            photo.put()
             
+            #display blank page
+            # render "photos_add_photo.html"!
+            self.render_AddPhoto("", "", "", "")
+
+        else:
+            # don't process - instead redisplay page
+            
+            # not all mandatory fields filled out
+            # render "photos_add_photo.html" and display error message and redisplay what was filled in
+            self.render_AddPhoto('Mandatory field(s) either missing or wrong', L_P_photo, img_file, text_below_img)
+
+
+
+# '/photos'   
+class AllPhotos(Handler):
+    def render_front(self):  # 'youngest' created date shown first by default
+        all_photos = db.GqlQuery("SELECT * FROM Photo ORDER BY created DESC").fetch(1000)
+
+        MAX_IMG_ON_ROW_INT = 7
+        MAX_IMG_ON_ROW_DECIMAL = 7.0
+        
+##        logging.debug("length of all_photos = " + str(len(all_photos)))
+##        logging.debug("position 1 = " + all_photos[1].img)
+
+        if len(all_photos) < 1:
+            # no images so pass in an empty list
+            photo_all_rows_list = []
+            self.render("photos_main.html", headline_photos="Sorry - gallery is empty", photo_list_of_lists=photo_all_rows_list)
+        else:
+            # how many rows do we need: len(all_photos) / MAX_IMG_ON_ROW_DECIMAL
+            rows_needed_decimal = len(all_photos) / MAX_IMG_ON_ROW_DECIMAL
+##            logging.debug("rows_needed_decimal = " + str(rows_needed_decimal))
+            
+            rows_needed_round = math.ceil(rows_needed_decimal)
+##            logging.debug("rows_needed_round = " + str(rows_needed_round))
+            
+            rows_needed_int = int(rows_needed_round)
+##            logging.debug("rows_needed_int = " + str(rows_needed_int))
+
+            if (len(all_photos) % MAX_IMG_ON_ROW_INT) != 0:
+##                logging.debug("goes into not equal zero")
+                
+                rows_fully_filled = rows_needed_int - 1
+            else:
+##                logging.debug("goes into equal zero")
+                rows_fully_filled = rows_needed_int
+            amount_img_in_row_not_filled = len(all_photos) % MAX_IMG_ON_ROW_INT
+##            logging.debug("rows_fully_filled = " + str(rows_fully_filled))
+##            logging.debug("amount_img_in_row_not_filled = " + str(amount_img_in_row_not_filled))
+
+            # create a list of lists where each inner list represent a row (max 7 img's in a row)
+            photo_all_rows_list = []  # will become a list of lists
+            
+            counter = 0
+            for photo in range(rows_fully_filled):
+                single_row = []
+                for i in range (7):
+                    single_row.append(all_photos[counter])
+                    counter = counter + 1
+                photo_all_rows_list.append(single_row)
+##            logging.debug("length outer list = " + str(len(photo_all_rows_list)))
+
+            single_row = []  
+            for img in range(amount_img_in_row_not_filled):
+                single_row.append(all_photos[counter])
+                counter = counter + 1
+            photo_all_rows_list.append(single_row)
+                
+            
+##            logging.debug("length outer list = " + str(len(photo_all_rows_list)))
+            
+            # passing contents into the html file, nb you don't need to pass in post_parts
+            self.render("photos_main.html", headline_photos="Click photo to enlarge", photo_list_of_lists=photo_all_rows_list)
         
 
+    def get(self):
 
+        
+        self.render_front()
+
+
+    def post(self):
+        self.render_front()
+
+     
 
 class AboutUs(Handler):
     def get(self):
@@ -482,15 +612,16 @@ class AboutUs(Handler):
 
 
 
-app = webapp2.WSGIApplication([('/add_blog_post', AddNewBlogPost),
-                               ('/', AllBlogPosts),
-                               ('/about', AboutUs),
-                               ('/login', LoginHandler),
+app = webapp2.WSGIApplication([('/login', LoginHandler),
                                ('/logout', LogoutHandler),
+                               ('/add_blog_post', AddNewBlogPost),
+                               ('/', AllBlogPosts),
                                ('/full_year', FullYearBlogPosts),
                                ('/full_month', FullMonthBlogPosts),
-                               ('/single_blog_post', SingleBlogPost)], debug=True)
-
+                               ('/single_blog_post', SingleBlogPost),
+                               ('/add_photo', AddPhoto),
+                               ('/photos', AllPhotos),
+                               ('/about', AboutUs)], debug=True)
 
 
 

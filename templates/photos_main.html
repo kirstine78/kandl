@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>K and L | About</title>
+	<title>K and L | Photos</title>
 	<link rel="stylesheet" href="../css/main_blog.css">
 	<link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css">
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
@@ -29,35 +29,40 @@
 		</div>
 		
 		
-		
+		<div class="row" style="padding-top: 10px;">
+			<div class="col-1"></div>
+			<div class="col-10" >
+			
+				<div class="photo_headline">{{headline_photos}}</div>
+				
+			</div>
+			<div class="col-1 end"></div>
+		</div>
 		
 
 		<div class="row" style="padding-top: 10px;">
 			<div class="col-1"></div>
 			<div class="col-10" >
-				<div style="display:flex;" width=100%>
-					
-					<div class="col-3" id="about_img_div"><img class="about_img" src="../images/kirstine.jpg" alt="main"></div>
-					<div class="col-9">
-						<div class="about_headline">Kirstine Brørup Nielsen</div><br>
-						<div class="about_text">Nationality: Danish.</div><br>
-						<div class="about_text">Education: Physiotherapist.</div><br>
-						<div class="about_text">Hobbies: Skiing and picking my nose and fart really loud.</div><br>
-					</div>
-
+				
+				
+				{% for image_list in photo_list_of_lists %}
+				<div class="row" style=" white-space: wrap;">	
+					{% for image in image_list %}
+						{% if image.img_format == "l" %}
+							<div class="col-77" >
+								<img id="specific_img_land" src="../images/{{image.img}}" alt="photo" href="klematis_big.htm">
+							</div>
+						{% endif %}
+						{% if image.img_format == "p" %}
+							<div class="col-77" >
+								<img id="specific_img_portrait" src="../images/{{image.img}}" alt="photo" href="klematis_big.htm">
+							</div>
+						{% endif %}
+					{% endfor %}
 				</div>
-				<br>
-				<div style="display:flex;" width=100%>
-					
-					<div class="col-3" id="about_img_div"><img class="about_img" src="../images/lachlan.jpg" alt="main"></div>
-					<div class="col-9">
-						<div class="about_headline">Lachlan Nelder</div><br>
-						<div class="about_text">Nationality: Australian.</div><br>
-						<div class="about_text">Education: Software Engineer.</div><br>
-						<div class="about_text">Hobbies: Snowboarding and Crosswords on toilet.</div><br>
-					</div>
-
-				</div>
+				{% endfor %}
+				
+				
 			</div>
 			<div class="col-1 end"></div>
 		</div>

@@ -539,7 +539,6 @@ class AllPhotos(Handler):
         MAX_IMG_ON_ROW_DECIMAL = 7.0
         
         logging.debug("length of all_photos = " + str(len(all_photos)))
-##        logging.debug("position 1 = " + all_photos[1].img)
 
         if len(all_photos) < 1:
             # no images so pass in an empty list
@@ -573,7 +572,7 @@ class AllPhotos(Handler):
             counter = 0
             for photo in range(rows_fully_filled):
                 single_row = []
-                for i in range (7):
+                for i in range (MAX_IMG_ON_ROW_INT):
                     single_row.append(all_photos[counter])
                     counter = counter + 1
                 photo_all_rows_list.append(single_row)

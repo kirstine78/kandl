@@ -391,7 +391,7 @@ class FullYearBlogPosts (Handler):
         all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(1000)
         dict_blog = make_dict_blog(all_blog_posts)  # we need this to display the menu in the html
         
-        logging.debug("year_id = " + year_id)
+##        logging.debug("year_id = " + year_id)
         
         only_specific_year = []  # list to contain blogposts
 
@@ -538,7 +538,7 @@ class AllPhotos(Handler):
         MAX_IMG_ON_ROW_INT = 7
         MAX_IMG_ON_ROW_DECIMAL = 7.0
         
-##        logging.debug("length of all_photos = " + str(len(all_photos)))
+        logging.debug("length of all_photos = " + str(len(all_photos)))
 ##        logging.debug("position 1 = " + all_photos[1].img)
 
         if len(all_photos) < 1:

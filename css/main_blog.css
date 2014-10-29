@@ -81,7 +81,7 @@
 	width: 100%;
 	display: flex;
 	padding-right: 38px;
-	white-space: pre-line;
+	white-space:pre-wrap;
 }
 
 .blog_img {

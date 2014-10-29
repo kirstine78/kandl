@@ -40,7 +40,7 @@ from google.appengine.ext import db
 
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
-jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape=True)
+jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape=False)
 jinja_env.globals.update(format_the_date=validation.convert_to_letter_month)  # lets me use validation inside html.
 jinja_env.globals.update(numeric_to_alphabetic_month=validation.numeric_to_alpabetic)  # lets me use validation inside html.
 

@@ -76,6 +76,7 @@ class PostPart(db.Model):  # abbreviated 'pp'
     img_format = db.StringProperty(required = False)
     img = db.StringProperty(required = False)
     txt_below_img = db.StringProperty(required = False)
+    rank = db.StringProperty(required = False)
 
 
 class RegisteredUsers(db.Model):  #  --> ru
@@ -117,9 +118,9 @@ def make_dict_blog(collection_of_blog_posts):
     
     dictionary = {}  # {'2014':{'12':['p1', 'p2', 'p3'], '11':['p4', 'p5'], '8':['p6', 'p7']}, '2013':{'12':['p8', 'p9'], '8':['p1', 'p2']}}
 
-    for blog_posts in all_blog_posts:
-        a_year = validation.get_just_yyyy(blog_posts.created)  # get string yyyy
-        a_month = str(int(validation.get_just_mm(blog_posts.created)))  # get string mm and make the format 1,2,3,4,5,6,7,8,9,10,11,12
+    for blog_post in all_blog_posts:
+        a_year = validation.get_just_yyyy(blog_post.created)  # get string yyyy
+        a_month = str(int(validation.get_just_mm(blog_post.created)))  # get string mm and make the format 1,2,3,4,5,6,7,8,9,10,11,12
 
         if a_year not in dictionary:
             dictionary[a_year] = {} # add a_year as key to the dict with empty dict as value
@@ -131,12 +132,12 @@ def make_dict_blog(collection_of_blog_posts):
                 dictionary[a_year][a_month] = []
 
                 # append specific blogpost to the list
-                dictionary[a_year][a_month].append(blog_posts)
+                dictionary[a_year][a_month].append(blog_post)
 
 
             else:
                 # append specific blogpost to the list
-                dictionary[a_year][a_month].append(blog_posts)
+                dictionary[a_year][a_month].append(blog_post)
 
         else:
             if a_month not in dictionary[a_year]:  # a_month not a key in inner dict for that year
@@ -145,12 +146,12 @@ def make_dict_blog(collection_of_blog_posts):
                 dictionary[a_year][a_month] = []
 
                 # append specific blogpost to the list
-                dictionary[a_year][a_month].append(blog_posts)
+                dictionary[a_year][a_month].append(blog_post)
 
 
             else:
                 # append specific blogpost to the list
-                dictionary[a_year][a_month].append(blog_posts)
+                dictionary[a_year][a_month].append(blog_post)
     return dictionary
 
     
@@ -269,7 +270,8 @@ class AddNewBlogPost(Handler):
 
             pp = PostPart(img_format = "",
                           img = "",
-                          txt_below_img = "")
+                          txt_below_img = "",
+                          rank = "")
 
             post_parts_list.append(pp)
         
@@ -323,12 +325,14 @@ class AddNewBlogPost(Handler):
             L_P_blog = self.request.get("L_or_P_img"+str(i)).strip()  # a string
             img_blog = self.request.get("img"+str(i)).strip()  # a string
             text_below_img_blog = self.request.get("text_below_img"+str(i)).strip()  # a string
+            rank_img = str(i)
 
             
             # create PostPart item in db
             pp = PostPart(img_format = L_P_blog,
                           img = img_blog,
-                          txt_below_img = text_below_img_blog)
+                          txt_below_img = text_below_img_blog,
+                          rank = rank_img)
 
             blog_post_parts_list.append(pp)
         
@@ -343,6 +347,7 @@ class AddNewBlogPost(Handler):
 
             # can't do the below before bp is put()
             for post_part in blog_post_parts_list:
+                #logging.debug("post_part.txt_below_img = " + post_part.txt_below_img)
                 post_part.parent_blog_post = bp
                 post_part.put()
 

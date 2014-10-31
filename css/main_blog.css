@@ -120,6 +120,10 @@ a.link_top_bar:hover {
 	color:#0000E6;
 }
 
+a.new_old_link:hover {
+	color:#F88017;
+}
+
 .post_part_input0 {
 	color:black;
 }
@@ -185,9 +189,55 @@ a.link_top_bar:hover {
 	width:14.2587%;
 }
 
+h3 {
+color:#0020C2;
+}
+
+.link_menu_yy {
+
+	color:#0000E6;
+}
+
+a.link_menu_yy:hover {
+
+	color:#F88017;;
+}
 
 
+
+.link_menu_mm  {
+	color:#0066FF;
+}
+
+a.link_menu_mm:hover {
+
+	color:#F88017;;
+}
+
+
+
+.link_menu_dd {
+	color:#00CCFF;
+}
 	
+a.link_menu_dd:hover {
+
+	color:#F88017;;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #example_tree {
 	list-style-type: none
 	
@@ -195,21 +245,6 @@ a.link_top_bar:hover {
 
 #margin_decrease {
 	margin-left:-20px;
-}
-
-
-#color_yy{
-	color:#0000E6;
-	
-}
-
-#color_mm{
-	color:#0066FF;
-}
-
-
-#color_dd{
-	color:#00CCFF;
 }
 
 

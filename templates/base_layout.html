@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>K and L</title>
+	<link rel="stylesheet" href="../css/main_blog.css">
+	<link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	
+	
+	
+	
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$("ul > li > ul").hide();
+	});
+	
+	$(function(){
+		$('#year_tree').find('SPAN').click(function(e){
+			var i=$(this);
+			$(this).siblings("ul").each(
+				function(){
+					$(this).toggle();
+					if($(this).is(":hidden"))i.html("&#9658;");
+					else i.html("&#9660;");
+					$(i).hover(function(){
+						$(this).css("cursor","pointer");
+						})
+				})
+		});
+	});
+
+	</script>
+	
+	
+	
+	
+	
+</head>
+<body>
+
+	<div class="grid">
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-10"><img src="../images/hf.jpg" alt="main" width="100%" height="320"></div>
+			<div class="col-1 end"></div>
+		</div>
+
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-10" style="display:flex;">
+				<div class="col-2"><a class="link_top_bar" href="/">Blog</a></div>
+				<div class="col-2"><a class="link_top_bar" href="/photos">Photos</a></div>
+				<div class="col-2"><a class="link_top_bar" href="/">Videos</a></div>
+				<div class="col-2"><a class="link_top_bar" href="/about">About</a></div>
+				<div class="col-2"><a class="link_top_bar" href="/">Contact</a></div>
+			</div>
+			<div class="col-1 end"></div>
+		</div>
+		
+		{% block body %}{% endblock %}
+	</div>	
+	
+</body>
+</html>

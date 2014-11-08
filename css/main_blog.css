@@ -112,7 +112,7 @@
 
 a.link_top_bar:hover {
 	/* color:#FF8000; */
-	color:#0000E6;
+	color:#F88017;
 	
 }
 
@@ -190,28 +190,29 @@ a.new_old_link:hover {
 }
 
 h3 {
-color:#0020C2;
+color:#848484;
 }
 
 .link_menu_yy {
 
-	color:#0000E6;
+	/* color:#0000E6; */
+	color:#848484;
 }
 
 a.link_menu_yy:hover {
 
-	color:#F88017;;
+	color:#F88017;
 }
 
 
 
 .link_menu_mm  {
-	color:#0066FF;
+	color:#848484;
 }
 
 a.link_menu_mm:hover {
 
-	color:#F88017;;
+	color:#F88017;
 }
 
 
@@ -222,7 +223,7 @@ a.link_menu_mm:hover {
 	
 a.link_menu_dd:hover {
 
-	color:#F88017;;
+	color:#F88017;
 }
 
 

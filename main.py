@@ -364,15 +364,28 @@ class AddNewBlogPost(Handler):
 # '/'   
 class AllBlogPosts(Handler):
     def render_front(self):  # 'youngest' created date shown first by default
-        all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(1000)
-
+        thousand_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(1000)
+        
         #dict_blog = {}  # {'2014':{'12':['p1', 'p2', 'p3'], '11':['p4', 'p5'], '8':['p6', 'p7']}, '2013':{'12':['p8', 'p9'], '8':['p1', 'p2']}}
-        dict_blog = make_dict_blog(all_blog_posts)
+        dict_blog = make_dict_blog(thousand_blog_posts)
 
         #logging.debug("DICT BLOG = " + dict_blog['2014']['6'][0])
         
+        POSTS_PER_PAGE = 3
+        
+        all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(POSTS_PER_PAGE)
+
+        
+
+        id_first_post = all_blog_posts[0].key().id()
+
+        id_last_post = all_blog_posts[POSTS_PER_PAGE - 1].key().id()
+
+        
+        
         # passing contents into the html file, nb you don't need to pass in post_parts
-        self.render("blog_all.html", dict_bloggi = dict_blog, blog_posts = all_blog_posts) 
+        self.render("blog_all.html", dict_bloggi = dict_blog, blog_posts = all_blog_posts,
+                    first_post_id = id_first_post, last_post_id = id_last_post) 
         
 
     def get(self):

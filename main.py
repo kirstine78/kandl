@@ -373,22 +373,60 @@ class AllBlogPosts(Handler):
         
         POSTS_PER_PAGE = 3
         
-        all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(POSTS_PER_PAGE)
+        
 
         
 
-        id_first_post = all_blog_posts[0].key().id()
+##        id_first_post = all_blog_posts[0].key().id()
+##
+##        id_last_post = all_blog_posts[POSTS_PER_PAGE - 1].key().id()
 
-        id_last_post = all_blog_posts[POSTS_PER_PAGE - 1].key().id()
+
+        a_first_post_id = self.request.get("after_id")  # if newer posts link is clicked, there is a_first_post_id
+        a_last_post_id = self.request.get("before_id")  # if older posts link is clicked, there is a_last_post_id
+        
+        # if there is a_first_post_id, then 'newer posts' has been clicked
+        if a_first_post_id:
+            logging.debug("Goes into if")
+            pass
+
+        # elif there is a_last_post_id, then 'older posts' has been clicked
+        elif a_last_post_id:
+            logging.debug("Goes into else if")
+            
+##            # find out the created date of the post with a_last_post_id
+##            last_post = BlogPost.get_by_id(int(a_last_post_id))  # get the blogpost with the specific id (a_last_post_id)
+##            created_last_post = last_post.created
+##            
+##            logging.debug("created_last_post = " + str(created_last_post))
+            
+            # find the next 3 posts to be shown
+            all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost WHERE created < '2013-09-15 23:32:17' ORDER BY created DESC").fetch(POSTS_PER_PAGE)
+            
+            logging.debug("length of all_blog_posts = " + str(len(all_blog_posts)))
+##            logging.debug("old = " + str(all_blog_posts[0].created))
+##            logging.debug("older = " + str(all_blog_posts[1].created))
+##            logging.debug("oldest = " + str(all_blog_posts[2].created))
+
+            #db.GqlQuery("SELECT * FROM FoodItem WHERE fk_registered_user_id=%s ORDER BY %s" %(current_user_id, parameter)).fetch(1000)
+
+        # else, no id, then just render the very first posts
+        else:
+            
+            logging.debug("Goes into else")
+            all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(POSTS_PER_PAGE)
 
         
         
         # passing contents into the html file, nb you don't need to pass in post_parts
-        self.render("blog_all.html", dict_bloggi = dict_blog, blog_posts = all_blog_posts,
-                    first_post_id = id_first_post, last_post_id = id_last_post) 
+        self.render("blog_all.html", dict_bloggi = dict_blog, blog_posts = all_blog_posts) 
+##        self.render("blog_all.html", dict_bloggi = dict_blog, blog_posts = all_blog_posts,
+##                    first_post_id = id_first_post, last_post_id = id_last_post) 
         
 
     def get(self):
+
+        
         self.render_front()
 
 

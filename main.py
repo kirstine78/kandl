@@ -373,26 +373,23 @@ class AllBlogPosts(Handler):
         
         POSTS_PER_PAGE = 3
         
-        
-
-        
 
 ##        id_first_post = all_blog_posts[0].key().id()
 ##
 ##        id_last_post = all_blog_posts[POSTS_PER_PAGE - 1].key().id()
 
-
+        # a link has been clicked!!!
         a_first_post_id = self.request.get("after_id")  # if newer posts link is clicked, there is a_first_post_id
         a_last_post_id = self.request.get("before_id")  # if older posts link is clicked, there is a_last_post_id
         
         # if there is a_first_post_id, then 'newer posts' has been clicked
         if a_first_post_id:
-            logging.debug("Goes into if")
+            logging.debug("Goes into if 'newer posts' has been clicked")
             pass
 
         # elif there is a_last_post_id, then 'older posts' has been clicked
         elif a_last_post_id:
-            logging.debug("Goes into else if")
+            logging.debug("Goes into else if 'older posts' has been clicked")
             
             # find out the created date of the post with a_last_post_id
             last_post = BlogPost.get_by_id(int(a_last_post_id))  # get the blogpost with the specific id (a_last_post_id)
@@ -407,18 +404,8 @@ class AllBlogPosts(Handler):
             # newer_link shall appear no matter what
             newer_link = "<< Newer posts"
             
-            # decide if older_link shall appear
-            if len(all_blog_posts_plus_one) > POSTS_PER_PAGE:
-                # appear
-                logging.debug("Goes into longer than 3")
-                
-                older_link = "Older posts >>"
-                
-
-            else:
-                #not appear
-                logging.debug("Goes into shorter than or equal to 3")
-                older_link = ""
+            # decide if older_link shall be "Older posts >>" or ""
+            older_link = validation.get_older_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
 
             # only get list of 3 or less
             all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost WHERE created < DATETIME('%s') ORDER BY created DESC" %(created_last_post)).fetch(POSTS_PER_PAGE)
@@ -426,13 +413,21 @@ class AllBlogPosts(Handler):
         # else, no id, then just render the very first posts
         else:
             
-            logging.debug("Goes into else")
+            logging.debug("Goes into else just display very first posts")
+            all_blog_posts_plus_one = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(POSTS_PER_PAGE+1)
+
+            # newer_link shall never appear no matter what
+            newer_link = ""
+            
+            # decide if older_link shall be "Older posts >>" or ""
+            older_link = validation.get_older_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
+
+            # only get list of 3 or less
             all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(POSTS_PER_PAGE)
-            older_link = "Older posts >>"
         
         
         # passing contents into the html file, NB you don't need to pass in post_parts
-        self.render("blog_all.html", dict_bloggi = dict_blog, blog_posts = all_blog_posts, old_link = older_link) 
+        self.render("blog_all.html", dict_bloggi = dict_blog, blog_posts = all_blog_posts, old_link = older_link, new_link = newer_link) 
 ##        self.render("blog_all.html", dict_bloggi = dict_blog, blog_posts = all_blog_posts,
 ##                    first_post_id = id_first_post, last_post_id = id_last_post) 
         

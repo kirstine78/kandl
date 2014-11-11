@@ -180,6 +180,14 @@ def numeric_to_alpabetic(a_month_number):
 
 
 
+# for blog
+def get_older_link(list_of_some_posts, a_number):
+    """ Takes in a list_of_some_posts. Based on length of list return a certain string"""
+
+    if len(list_of_some_posts) > a_number:
+        return "Older posts >>"
+    else:
+        return ""
         
     
 

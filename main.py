@@ -389,6 +389,9 @@ class AllBlogPosts(Handler):
             first_post = BlogPost.get_by_id(int(a_first_post_id))  # get the blogpost with the specific id (a_first_post_id)
             created_first_post = str(first_post.created)
             
+            # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)
+            #created_first_post = created_first_post[0:19]
+            
             logging.debug("created_first_post = " + str(created_first_post))
 
             # if 'newer posts' has been clicked we know that there are at least 3 (POSTS_PER_PAGE) posts to show
@@ -423,6 +426,9 @@ class AllBlogPosts(Handler):
             # find out the created date of the post with a_last_post_id
             last_post = BlogPost.get_by_id(int(a_last_post_id))  # get the blogpost with the specific id (a_last_post_id)
             created_last_post = str(last_post.created)
+
+            # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)
+            #created_last_post = created_last_post[0:19]
             
             logging.debug("created_last_post = " + str(created_last_post))
             

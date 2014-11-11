@@ -375,7 +375,6 @@ class AllBlogPosts(Handler):
         
 
 ##        id_first_post = all_blog_posts[0].key().id()
-##
 ##        id_last_post = all_blog_posts[POSTS_PER_PAGE - 1].key().id()
 
         # a link has been clicked!!!
@@ -384,12 +383,42 @@ class AllBlogPosts(Handler):
         
         # if there is a_first_post_id, then 'newer posts' has been clicked
         if a_first_post_id:
-            logging.debug("Goes into if 'newer posts' has been clicked")
-            pass
+            logging.debug("Goes into if: 'newer posts' has been clicked")
+
+            # find out the created date of the post with a_first_post_id (the first post of the 3 (POSTS_PER_PAGE) shown on specific page)
+            first_post = BlogPost.get_by_id(int(a_first_post_id))  # get the blogpost with the specific id (a_first_post_id)
+            created_first_post = str(first_post.created)
+            
+            logging.debug("created_first_post = " + str(created_first_post))
+
+            # if 'newer posts' has been clicked we know that there are at least 3 (POSTS_PER_PAGE) posts to show
+            # find the previous posts to be shown
+            all_blog_posts_plus_one = db.GqlQuery("SELECT * FROM BlogPost WHERE created > DATETIME('%s') ORDER BY created DESC" %(created_first_post)).fetch(1000)
+            logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
+
+            # older_link shall appear no matter what
+            older_link = "Older posts >>"
+
+            # decide if newer_link shall be "<< Newer posts" or ""
+            newer_link = validation.get_newer_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
+
+
+            all_blog_posts = []
+            
+            # just pick the last 3 posts in list
+            for i in range(POSTS_PER_PAGE, 0, -1):
+                all_blog_posts.append(all_blog_posts_plus_one[-1*i])
+                
+            logging.debug("all_blog_posts = " + str(all_blog_posts[0].created))
+            logging.debug("all_blog_posts = " + str(all_blog_posts[1].created))
+            logging.debug("all_blog_posts = " + str(all_blog_posts[2].created))
+
+                
+            
 
         # elif there is a_last_post_id, then 'older posts' has been clicked
         elif a_last_post_id:
-            logging.debug("Goes into else if 'older posts' has been clicked")
+            logging.debug("Goes into else if: 'older posts' has been clicked")
             
             # find out the created date of the post with a_last_post_id
             last_post = BlogPost.get_by_id(int(a_last_post_id))  # get the blogpost with the specific id (a_last_post_id)
@@ -413,7 +442,7 @@ class AllBlogPosts(Handler):
         # else, no id, then just render the very first posts
         else:
             
-            logging.debug("Goes into else just display very first posts")
+            logging.debug("Goes into else: just display very first posts")
             all_blog_posts_plus_one = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(POSTS_PER_PAGE+1)
 
             # newer_link shall never appear no matter what

@@ -191,6 +191,14 @@ def get_older_link(list_of_some_posts, a_number):
         
     
 
+# for blog
+def get_newer_link(list_of_some_posts, a_number):
+    """ Takes in a list_of_some_posts. Based on length of list return a certain string"""
+
+    if len(list_of_some_posts) > a_number:
+        return "<< Newer posts"
+    else:
+        return ""
 
 ##################################################################################################################
 

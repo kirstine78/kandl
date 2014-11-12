@@ -387,16 +387,16 @@ class AllBlogPosts(Handler):
 
             # find out the created date of the post with a_first_post_id (the first post of the 3 (POSTS_PER_PAGE) shown on specific page)
             first_post = BlogPost.get_by_id(int(a_first_post_id))  # get the blogpost with the specific id (a_first_post_id)
-            created_first_post = str(first_post.created)
+            created_first_post = first_post.created
             
-            # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)
+            # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)            
             #created_first_post = created_first_post[0:19]
             
             logging.debug("created_first_post = " + str(created_first_post))
 
             # if 'newer posts' has been clicked we know that there are at least 3 (POSTS_PER_PAGE) posts to show
             # find the previous posts to be shown
-            all_blog_posts_plus_one = db.GqlQuery("SELECT * FROM BlogPost WHERE created > DATETIME('%s') ORDER BY created DESC" %(created_first_post)).fetch(1000)
+            all_blog_posts_plus_one = db.GqlQuery("SELECT * FROM BlogPost WHERE created > :1 ORDER BY created DESC", created_first_post).fetch(1000)
             logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
 
             # older_link shall appear no matter what
@@ -408,7 +408,7 @@ class AllBlogPosts(Handler):
 
             all_blog_posts = []
             
-            # just pick the last 3 posts in list
+            # just pick the last 3 posts in list all_blog_posts_plus_one
             for i in range(POSTS_PER_PAGE, 0, -1):
                 all_blog_posts.append(all_blog_posts_plus_one[-1*i])
                 
@@ -425,7 +425,7 @@ class AllBlogPosts(Handler):
             
             # find out the created date of the post with a_last_post_id
             last_post = BlogPost.get_by_id(int(a_last_post_id))  # get the blogpost with the specific id (a_last_post_id)
-            created_last_post = str(last_post.created)
+            created_last_post = last_post.created
 
             # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)
             #created_last_post = created_last_post[0:19]
@@ -433,7 +433,7 @@ class AllBlogPosts(Handler):
             logging.debug("created_last_post = " + str(created_last_post))
             
             # find the next posts to be shown
-            all_blog_posts_plus_one = db.GqlQuery("SELECT * FROM BlogPost WHERE created < DATETIME('%s') ORDER BY created DESC" %(created_last_post)).fetch(POSTS_PER_PAGE+1)
+            all_blog_posts_plus_one = db.GqlQuery("SELECT * FROM BlogPost WHERE created < :1 ORDER BY created DESC", created_last_post).fetch(POSTS_PER_PAGE+1)
             logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
 
             # newer_link shall appear no matter what
@@ -443,7 +443,7 @@ class AllBlogPosts(Handler):
             older_link = validation.get_older_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
 
             # only get list of 3 or less
-            all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost WHERE created < DATETIME('%s') ORDER BY created DESC" %(created_last_post)).fetch(POSTS_PER_PAGE)
+            all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost WHERE created < :1 ORDER BY created DESC", created_last_post).fetch(POSTS_PER_PAGE)
 
         # else, no id, then just render the very first posts
         else:

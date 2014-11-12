@@ -372,10 +372,6 @@ class AllBlogPosts(Handler):
         #logging.debug("DICT BLOG = " + dict_blog['2014']['6'][0])
         
         POSTS_PER_PAGE = 3
-        
-
-##        id_first_post = all_blog_posts[0].key().id()
-##        id_last_post = all_blog_posts[POSTS_PER_PAGE - 1].key().id()
 
         # a link has been clicked!!!
         a_first_post_id = self.request.get("after_id")  # if newer posts link is clicked, there is a_first_post_id
@@ -396,7 +392,7 @@ class AllBlogPosts(Handler):
 
             # if 'newer posts' has been clicked we know that there are at least 3 (POSTS_PER_PAGE) posts to show
             # find the previous posts to be shown
-            all_blog_posts_plus_one = db.GqlQuery("SELECT * FROM BlogPost WHERE created > :1 ORDER BY created DESC", created_first_post).fetch(1000)
+            all_blog_posts_plus_one = db.GqlQuery("SELECT * FROM BlogPost WHERE created > :1 ORDER BY created ASC", created_first_post).fetch(POSTS_PER_PAGE+1)
             logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
 
             # older_link shall appear no matter what
@@ -406,16 +402,10 @@ class AllBlogPosts(Handler):
             newer_link = validation.get_newer_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
 
 
-            all_blog_posts = []
-            
-            # just pick the last 3 posts in list all_blog_posts_plus_one
-            for i in range(POSTS_PER_PAGE, 0, -1):
-                all_blog_posts.append(all_blog_posts_plus_one[-1*i])
-                
-            logging.debug("all_blog_posts = " + str(all_blog_posts[0].created))
-            logging.debug("all_blog_posts = " + str(all_blog_posts[1].created))
-            logging.debug("all_blog_posts = " + str(all_blog_posts[2].created))
+            all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost WHERE created > :1 ORDER BY created ASC", created_first_post).fetch(POSTS_PER_PAGE)
 
+            # revers the list
+            all_blog_posts.reverse()
                 
             
 

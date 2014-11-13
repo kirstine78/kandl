@@ -1,0 +1,36 @@
+{% extends "base_layout.html" %}
+{% block body %}
+
+		<div class="row" style="padding-top: 10px;">
+			<div class="col-1"></div>
+			<div class="col-10" >
+				<div class="contact_headline">You are welcome to contact us</div>
+					<br>
+				<form action="contact.php" method="post">
+					*Your name
+					<br>
+					<input type="text" name="cf_name">
+					<br>
+					<br>
+					*Your e-mail
+					<br>
+					<input type="text" name="cf_email">
+					<br>
+					<br>
+					*Message
+					<br>
+					<textarea name="cf_message"></textarea>
+					<br>
+					<br>
+					<input type="submit" value="Send">
+					<input type="reset" value="Clear">
+				</form>
+				
+			</div>
+			<div class="col-1 end"></div>
+			
+			
+		</div>
+
+
+{% endblock %}

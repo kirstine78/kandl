@@ -185,7 +185,7 @@ def get_older_link(list_of_some_posts, a_number):
     """ Takes in a list_of_some_posts. Based on length of list return a certain string"""
 
     if len(list_of_some_posts) > a_number:
-        return "Older posts >>"
+        return "Older posts >"
     else:
         return ""
         
@@ -196,9 +196,22 @@ def get_newer_link(list_of_some_posts, a_number):
     """ Takes in a list_of_some_posts. Based on length of list return a certain string"""
 
     if len(list_of_some_posts) > a_number:
-        return "<< Newer posts"
+        return "< Newer posts"
     else:
         return ""
+
+# for blog
+def is_there_a_tag(some_string):
+    """ Takes in a string, return True if string not empty else False """
+
+    if some_string:
+        if len(some_string) > 0:
+            return True
+        else:
+            return False
+    return False
+
+
 
 ##################################################################################################################
 

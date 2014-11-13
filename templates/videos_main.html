@@ -1,0 +1,33 @@
+{% extends "base_layout.html" %}
+{% block body %}
+
+	<div class="row" style="padding-top: 10px;">
+		<div class="col-1"></div>
+		<div class="col-10" >
+		
+			<div class="video_headline">{{headline_videos}}</div>
+			
+		</div>
+		<div class="col-1 end"></div>
+	</div>
+		
+
+	<div class="row" style="padding-top: 10px;">
+		<div class="col-1"></div>
+		<div class="col-10" style="text-align: center;">
+					
+			{% for video in video_list %}
+				{{video.iframe_tag_and_content}}
+			<br>
+			<br>
+			<br>
+			<br>
+				
+			{% endfor %}
+
+		</div>
+		</div>
+		<div class="col-1 end"></div>
+	</div>
+	
+{% endblock %}

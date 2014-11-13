@@ -92,6 +92,12 @@ class Photo(db.Model): # abbreviated 'photo'
     txt_below_img = db.StringProperty(required = False)
 
     created = db.DateTimeProperty(auto_now_add = True)  # more precise date, when sorting with format yyyy-mm-dd 06:46:22.467000
+
+
+class Video(db.Model): # abbreviated 'video'
+    iframe_tag_and_content = db.StringProperty(required = True)
+
+    created = db.DateTimeProperty(auto_now_add = True)  # more precise date, when sorting with format yyyy-mm-dd 06:46:22.467000
     
 
 
@@ -401,7 +407,7 @@ class AllBlogPosts(Handler):
             logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
 
             # older_link shall appear no matter what
-            older_link = "Older posts >>"
+            older_link = "Older posts >"
 
             # decide if newer_link shall be "<< Newer posts" or ""
             newer_link = validation.get_newer_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
@@ -432,7 +438,7 @@ class AllBlogPosts(Handler):
             logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
 
             # newer_link shall appear no matter what
-            newer_link = "<< Newer posts"
+            newer_link = "< Newer posts"
             
             # decide if older_link shall be "Older posts >>" or ""
             older_link = validation.get_older_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
@@ -694,6 +700,80 @@ class AllPhotos(Handler):
     def post(self):
         self.render_front()
 
+
+# '/add_video'    
+class AddVideo(Handler):
+    def render_AddVideo(self, error_msg, an_iframe_tag_input):
+        
+        self.render("videos_add_video.html", error_message=error_msg, iframe_tag_input=an_iframe_tag_input)
+
+
+ 
+    def get(self):
+        the_RU = check_user_id_cookie(self.request)
+        
+        # if user is correct
+        if the_RU:
+            self.render_AddVideo("", "")
+        else:
+            # false user, not loged in
+            self.redirect('/')
+
+
+    def post(self):
+        the_RU = check_user_id_cookie(self.request)
+        
+        # if user is correct
+        if the_RU:
+            self.process_add_video()
+        else:
+            # false user, not loged in
+            self.redirect('/')
+
+
+    def process_add_video(self):            
+        # data that user has entered
+        the_iframe_tag = self.request.get("iframe_tag").strip()  # a string
+
+        if validation.is_there_a_tag(the_iframe_tag):
+            # process by creating Video item in db
+            video = Video(iframe_tag_and_content = the_iframe_tag)
+            video.put()
+            
+            #display blank page
+            # render "videos_add_video.html"!
+            self.render_AddVideo("", "")
+
+        else:
+            # don't process - instead redisplay page
+            
+            # not all mandatory fields filled out
+            # render "photos_add_photo.html" and display error message and redisplay what was filled in (which will be empty string in this case)
+            self.render_AddVideo('Mandatory field is missing', the_iframe_tag)
+
+
+
+            
+# '/videos'   
+class AllVideos(Handler):
+    def render_front(self):
+        all_videos = db.GqlQuery("SELECT * FROM Video ORDER BY created DESC").fetch(1000)
+        
+        # passing contents into the html file, nb you don't need to pass in post_parts
+        self.render("videos_main.html", headline_videos="Videos", video_list=all_videos)
+        
+
+    def get(self):
+
+        
+        self.render_front()
+
+
+    def post(self):
+        self.render_front()
+
+
+
      
 
 class AboutUs(Handler):
@@ -701,6 +781,10 @@ class AboutUs(Handler):
         self.render("about.html")
         
 
+class ContactUs(Handler):
+    def get(self):
+        self.render("contact.html")
+        
 
 
 app = webapp2.WSGIApplication([('/login', LoginHandler),
@@ -712,7 +796,10 @@ app = webapp2.WSGIApplication([('/login', LoginHandler),
                                ('/single_blog_post', SingleBlogPost),
                                ('/add_photo', AddPhoto),
                                ('/photos', AllPhotos),
-                               ('/about', AboutUs)], debug=True)
+                               ('/add_video', AddVideo),
+                               ('/videos', AllVideos),
+                               ('/about', AboutUs),
+                               ('/contact', ContactUs)], debug=True)
 
 
 

@@ -1,4 +1,4 @@
-/*  * {
+/** {
 	border: 1px solid red !important;
 }  */
 
@@ -119,6 +119,7 @@ a.link_top_bar:hover {
 
 .new_old_link {
 	color:#0000E6;
+	font-weight: bold;
 }
 
 a.new_old_link:hover {
@@ -269,7 +270,7 @@ a.link_menu_dd:hover {
 }	
  */
  
-.photo_headline {
+.photo_headline, .video_headline {
 	width: 100%;
 	padding-top: 15px;
 	padding-bottom: 5px;
@@ -324,3 +325,12 @@ a.link_menu_dd:hover {
   width: 120px;
   margin: 5px;
 } */
+
+
+.contact_headline{
+	width: 100%;
+	padding-top: 15px;
+	padding-bottom: 5px;
+	font-weight: bold;
+	font-size: 24px;
+}

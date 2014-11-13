@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Photos - add photo</title>
+	<title>Videos - add video</title>
 	<link rel="stylesheet" href="../css/main_blog.css">
 	<link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css">
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
@@ -45,23 +45,11 @@
 				<form method="post">
 					<p class="error_message_red"><b>{{error_message}}</b></p>
 
-					
-					
-					<p ><b>* = mandatory fields</b></p>
+					<p ><b>* = mandatory field</b></p>
 					
 					<div>
 						<label>
-							<div>*Landscape or Portrait img (l/p):</div> <input type="text" name="L_or_P_img" value="{{img_format}}" style="width:20px;" maxlength="1" onkeypress="return event.keyCode!=13">
-						</label>
-						<br>
-						<br>
-						<label>
-							<div>*Image (file name):</div> <input type="text" name="img_file" value="{{img}}" style="width:450px;" onkeypress="return event.keyCode!=13">
-						</label>
-						<br>
-						<br>
-						<label>
-							<div>Text below big image (some description):</div> <input type="text" name="text_below_img" value="{{txt_below_img}}" maxlength="60" style="width:450px;" onkeypress="return event.keyCode!=13">
+							<div>*Embed iframe tag:</div> <input type="text" name="iframe_tag" value="{{iframe_tag_input}}" style="width:850px;" onkeypress="return event.keyCode!=13">
 						</label>
 						<br>
 						<br>
@@ -80,7 +68,7 @@
 				<input  type="button" value="Go to Add Blog" onclick="window.location.href='/add_blog_post';"/>
 				<br>
 				<br>
-				<input  type="button" value="Go to Add video" onclick="window.location.href='/add_video';"/>
+				<input  type="button" value="Go to Add photo" onclick="window.location.href='/add_photo';"/>
 				
 			</div>
 			

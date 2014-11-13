@@ -6,7 +6,7 @@
 			<div class="col-75">
 			{% for post in blog_posts %}
 				<div class="blog_headline">{{post.headline}}</div>
-				<div class="blog_date">{{format_the_date(post.created)}}</div>
+				<div class="blog_date">{{format_the_date(post.created)}}     <i>{{post.author}}</i></div>
 				<div class="blog_text">{{post.text}}</div>
 				
 				{% for post_part in post.post_parts.order("rank") %}

@@ -65,6 +65,7 @@ class Handler(webapp2.RequestHandler):
 class BlogPost(db.Model): # abbreviated 'bp'
     headline = db.StringProperty(required = False)
     text = db.TextProperty(required = False)
+    author = db.StringProperty(required = False)
 
     created = db.DateTimeProperty(auto_now_add = True)  # more precise date, when sorting with format yyyy-mm-dd 06:46:22.467000
     _string_date_new = ""
@@ -305,13 +306,17 @@ class AddNewBlogPost(Handler):
         # data that user has entered
         headline_blog_messy = self.request.get("headline").strip()  # a string
         text_blog = self.request.get("text").strip()  # a text area...
-		
+        author_blog = self.request.get("author_blog_post") 
+	
+        logging.debug("author_blog = " + author_blog)
+
+        
         #make sure first letter in string is upper case
         headline_blog = validation.upper_case_first_letter(headline_blog_messy)
         
         
         # create BlogPost item in db
-        bp = BlogPost(headline = headline_blog, text = text_blog)
+        bp = BlogPost(headline = headline_blog, text = text_blog, author = author_blog)
         
 
         #logging.debug("bp.text = " + bp.text)

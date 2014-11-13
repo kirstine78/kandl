@@ -378,7 +378,7 @@ class AllBlogPosts(Handler):
         
         POSTS_PER_PAGE = 3
 
-        # a link has been clicked!!!
+        # maybe a link has been clicked!!!
         a_first_post_id = self.request.get("after_id")  # if newer posts link is clicked, there is a_first_post_id
         a_last_post_id = self.request.get("before_id")  # if older posts link is clicked, there is a_last_post_id
         

@@ -200,6 +200,29 @@ def get_newer_link(list_of_some_posts, a_number):
     else:
         return ""
 
+
+# for blog
+def get_next_link(list_of_some_videos, a_number):
+    """ Takes in a list_of_some_videos. Based on length of list return a certain string"""
+
+    if len(list_of_some_videos) > a_number:
+        return "Next >"
+    else:
+        return ""
+        
+    
+
+# for blog
+def get_previous_link(list_of_some_videos, a_number):
+    """ Takes in a list_of_some_videos. Based on length of list return a certain string"""
+
+    if len(list_of_some_videos) > a_number:
+        return "< Previous"
+    else:
+        return ""
+
+    
+
 # for blog
 def is_there_a_tag(some_string):
     """ Takes in a string, return True if string not empty else False """

@@ -43,6 +43,7 @@ template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape=False)
 jinja_env.globals.update(format_the_date=validation.convert_to_letter_month)  # lets me use validation inside html.
 jinja_env.globals.update(numeric_to_alphabetic_month=validation.numeric_to_alpabetic)  # lets me use validation inside html.
+jinja_env.globals.update(length=len)
 
 
 def add_response_headers(response):
@@ -757,15 +758,116 @@ class AddVideo(Handler):
 # '/videos'   
 class AllVideos(Handler):
     def render_front(self):
-        all_videos = db.GqlQuery("SELECT * FROM Video ORDER BY created DESC").fetch(1000)
+        #all_videos = db.GqlQuery("SELECT * FROM Video ORDER BY created DESC").fetch(1000)
         
         headline="Videos"
         
-        if len(all_videos) < 1:
-            headline="Sorry - no videos"
+##        if len(all_videos) < 1:
+##            headline="Sorry - no videos"
+
+
+        VIDEOS_PER_PAGE = 3
+
+        # maybe a link has been clicked!!!
+        a_first_video_id = self.request.get("after_id")  # if Previous link is clicked, there is a_first_video_id
+        a_last_video_id = self.request.get("before_id")  # if Next link is clicked, there is a_last_video_id
+        
+        # if there is a_first_video_id, then 'Previous' has been clicked
+        if a_first_video_id:
+            logging.debug("Goes into if: 'Previous' has been clicked")
+
+            # find out the created date of the video with a_first_video_id (the first video of the 3 (VIDEOS_PER_PAGE) shown on specific page)
+            first_video = Video.get_by_id(int(a_first_video_id))  # get the video with the specific id (a_first_video_id)
+            created_first_video = first_video.created
             
-        # passing contents into the html file, nb you don't need to pass in post_parts
-        self.render("videos_main.html", headline_videos=headline, video_list=all_videos)
+            # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)            
+            #created_last_video = created_last_video[0:19]
+            
+            logging.debug("created_first_video = " + str(created_first_video))
+
+            # if 'Previous' has been clicked we know that there are at least 3 (VIDEOS_PER_PAGE) videos to show
+            # find the previous videos to be shown
+            all_videos_plus_one = db.GqlQuery("SELECT * FROM Video WHERE created > :1 ORDER BY created ASC", created_first_video).fetch(VIDEOS_PER_PAGE+1)
+            logging.debug("length of all_videos_plus_one = " + str(len(all_videos_plus_one)))
+
+            # next_link shall appear no matter what
+            next_link = "Next >"
+
+            # decide if previous_link shall be "< Previous" or ""
+            previous_link = validation.get_previous_link(all_videos_plus_one, VIDEOS_PER_PAGE)
+
+
+            all_videos = db.GqlQuery("SELECT * FROM Video WHERE created > :1 ORDER BY created ASC", created_first_video).fetch(VIDEOS_PER_PAGE)
+
+            # revers the list
+            all_videos.reverse()
+                
+            
+
+        # elif there is a_last_video_id, then 'Next' has been clicked
+        elif a_last_video_id:
+            logging.debug("Goes into else if: 'Next' has been clicked")
+            
+            # find out the created date of the video with a_last_video_id
+            last_video = Video.get_by_id(int(a_last_video_id))  # get the video with the specific id (a_last_video_id)
+            created_last_video = last_video.created
+
+            # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)
+            #created_last_video = created_last_video[0:19]
+            
+            logging.debug("created_last_video = " + str(created_last_video))
+            
+            # find the next videos to be shown
+            all_videos_plus_one = db.GqlQuery("SELECT * FROM Video WHERE created < :1 ORDER BY created DESC", created_last_video).fetch(VIDEOS_PER_PAGE+1)
+            logging.debug("length of all_videos_plus_one = " + str(len(all_videos_plus_one)))
+
+            # previous_link shall appear no matter what
+            previous_link = "< Previous"
+            
+            # decide if next_link shall be "Next >" or ""
+            next_link = validation.get_next_link(all_videos_plus_one, VIDEOS_PER_PAGE)
+
+            # only get list of 3 or less
+            all_videos = db.GqlQuery("SELECT * FROM Video WHERE created < :1 ORDER BY created DESC", created_last_video).fetch(VIDEOS_PER_PAGE)
+
+        # else, no id, then just render the very first videos
+        else:
+            
+            logging.debug("Goes into else: just display very first videos")
+            all_videos_plus_one = db.GqlQuery("SELECT * FROM Video ORDER BY created DESC").fetch(VIDEOS_PER_PAGE+1)
+
+            # previous_link shall never appear no matter what
+            previous_link = ""
+            
+            # decide if next_link shall be "Next >" or ""
+            next_link = validation.get_next_link(all_videos_plus_one, VIDEOS_PER_PAGE)
+
+            # only get list of 3 or less
+            all_videos = db.GqlQuery("SELECT * FROM Video ORDER BY created DESC").fetch(VIDEOS_PER_PAGE)
+            logging.debug("lenght all_videos = " + str(len(all_videos)))
+
+            if len(all_videos) < 1:
+                headline="Sorry - no videos"
+
+            
+        # passing contents into the html file
+        self.render("videos_main.html", headline_videos=headline, video_list=all_videos, old_link = next_link, new_link = previous_link)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
 
     def get(self):

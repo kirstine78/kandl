@@ -759,8 +759,13 @@ class AllVideos(Handler):
     def render_front(self):
         all_videos = db.GqlQuery("SELECT * FROM Video ORDER BY created DESC").fetch(1000)
         
+        headline="Videos"
+        
+        if len(all_videos) < 1:
+            headline="Sorry - no videos"
+            
         # passing contents into the html file, nb you don't need to pass in post_parts
-        self.render("videos_main.html", headline_videos="Videos", video_list=all_videos)
+        self.render("videos_main.html", headline_videos=headline, video_list=all_videos)
         
 
     def get(self):

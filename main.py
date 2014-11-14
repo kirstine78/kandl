@@ -476,23 +476,36 @@ class FullYearBlogPosts (Handler):
 
 
         if year_id:   # means there is a year_id
-            end_of_previous_year = 
-            all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(1000)
-        
-##            logging.debug("year_id = " + year_id)
+            # turn year_id into an int
+            year_id_integer = int(year_id)
+            end_of_previous_year = datetime(year_id_integer - 1, 12, 31)
+            start_of_next_year = datetime(year_id_integer + 1, 01, 01)
             
-            posts_for_specific_year = []  # list to contain blogposts
-            
-            for posts in all_blog_posts:
-                if validation.get_just_yyyy(posts.created) == year_id:  # we only want blog posts that is from for example 2014
-                    posts_for_specific_year.append(posts)
-            if len(posts_for_specific_year) < 1:   # nothing to display
+            all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost where created > :1 AND created < :2 ORDER BY created DESC", end_of_previous_year, start_of_next_year).fetch(1000)
+
+            if len(all_blog_posts) < 1:   # nothing to display, checks if user just type in a random year
                 self.redirect('/')
-            else:
-                self.render_front(posts_for_specific_year, make_dict_blog())
+            else:   
+                self.render_front(all_blog_posts, make_dict_blog())
 
         else:   # nothing to display
             self.redirect('/')
+                
+##            all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(1000)
+##        
+##            
+##            posts_for_specific_year = []  # list to contain blogposts
+##            
+##            for posts in all_blog_posts:
+##                if validation.get_just_yyyy(posts.created) == year_id:  # we only want blog posts that is from for example 2014
+##                    posts_for_specific_year.append(posts)
+##            if len(posts_for_specific_year) < 1:   # nothing to display
+##                self.redirect('/')
+##            else:
+##                self.render_front(posts_for_specific_year, make_dict_blog())
+
+
+            
 
 
 

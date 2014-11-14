@@ -53,9 +53,20 @@ def find_older_blog_posts(max_results, date_time):
     """ Takes a number max_results and a date_time, then perform db.GqlQuery and
         returns blog posts from database where 'created' is smaller than date_time (older posts)"""
     
-    find_older_blog_posts = db.GqlQuery("SELECT * FROM BlogPost WHERE created < :1 ORDER BY created DESC", date_time).fetch(max_results)
+    older_blog_posts = db.GqlQuery("SELECT * FROM BlogPost WHERE created < :1 ORDER BY created DESC", date_time).fetch(max_results)
 
-    return find_older_blog_posts
+    return older_blog_posts
+
+
+def find_blog_posts_between(max_results, date_time_oldest, date_time_youngest):
+    """ Takes a number max_results and two dateTimes: date_time_youngest and date_time_oldest.
+        Then perform db.GqlQuery and returns blog posts from database where 'created' is in between the two dateTimes """
+    
+    in_between_blog_posts = db.GqlQuery("SELECT * FROM BlogPost where created > :1 AND created < :2 ORDER BY created DESC", date_time_oldest, date_time_youngest).fetch(max_results)
+
+    return in_between_blog_posts
+
+
 
 ###########################################################################################################
 def randomword():

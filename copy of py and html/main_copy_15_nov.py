@@ -120,9 +120,8 @@ def make_dict_blog():
     """ Return a dictionary with format example:
         {'2014':{'12':['p1', 'p2', 'p3'], '11':['p4', 'p5'], '8':['p6', 'p7']}, '2013':{'12':['p8', 'p9'], '8':['p1', 'p2']}}
         """
-
-    # get all blogposts
-    all_blog_posts = dataFunctions.find_all_blog_posts()
+    
+    all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(1000)
     
     dictionary = {}  # {'2014':{'12':['p1', 'p2', 'p3'], '11':['p4', 'p5'], '8':['p6', 'p7']}, '2013':{'12':['p8', 'p9'], '8':['p1', 'p2']}}
 
@@ -397,9 +396,8 @@ class AllBlogPosts(Handler):
             logging.debug("created_first_post = " + str(created_first_post))
 
             # if 'newer posts' has been clicked we know that there are at least 3 (POSTS_PER_PAGE) posts to show
-            # find the younger posts to be shown
-            all_blog_posts_plus_one = dataFunctions.find_newer_blog_posts(POSTS_PER_PAGE + 1, created_first_post)
-            
+            # find the previous posts to be shown
+            all_blog_posts_plus_one = db.GqlQuery("SELECT * FROM BlogPost WHERE created > :1 ORDER BY created ASC", created_first_post).fetch(POSTS_PER_PAGE+1)
             logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
 
             # older_link shall appear no matter what
@@ -409,7 +407,7 @@ class AllBlogPosts(Handler):
             newer_link = validation.get_newer_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
 
 
-            all_blog_posts = dataFunctions.find_newer_blog_posts(POSTS_PER_PAGE, created_first_post)
+            all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost WHERE created > :1 ORDER BY created ASC", created_first_post).fetch(POSTS_PER_PAGE)
 
             # revers the list
             all_blog_posts.reverse()
@@ -430,9 +428,8 @@ class AllBlogPosts(Handler):
             logging.debug("created_last_post = " + str(created_last_post))
             
             # find the next posts to be shown
-            all_blog_posts_plus_one = dataFunctions.find_older_blog_posts(POSTS_PER_PAGE + 1, created_last_post)
-            
-##            logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
+            all_blog_posts_plus_one = db.GqlQuery("SELECT * FROM BlogPost WHERE created < :1 ORDER BY created DESC", created_last_post).fetch(POSTS_PER_PAGE+1)
+            logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
 
             # newer_link shall appear no matter what
             newer_link = "< Newer posts"
@@ -441,13 +438,13 @@ class AllBlogPosts(Handler):
             older_link = validation.get_older_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
 
             # only get list of 3 or less
-            all_blog_posts = dataFunctions.find_older_blog_posts(POSTS_PER_PAGE, created_last_post)
+            all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost WHERE created < :1 ORDER BY created DESC", created_last_post).fetch(POSTS_PER_PAGE)
 
         # else, no id, then just render the very first posts
         else:
             
             logging.debug("Goes into else: just display very first posts")
-            all_blog_posts_plus_one = dataFunctions.find_limited_blog_posts(POSTS_PER_PAGE + 1)
+            all_blog_posts_plus_one = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(POSTS_PER_PAGE+1)
 
             # newer_link shall never appear no matter what
             newer_link = ""
@@ -456,7 +453,7 @@ class AllBlogPosts(Handler):
             older_link = validation.get_older_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
 
             # only get list of 3 or less
-            all_blog_posts = dataFunctions.find_limited_blog_posts(POSTS_PER_PAGE)
+            all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(POSTS_PER_PAGE)
         
         
         # passing contents into the html file, NB you don't need to pass in post_parts. make_dict_blog() returns a dict

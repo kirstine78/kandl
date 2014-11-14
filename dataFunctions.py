@@ -26,6 +26,38 @@ def retrieveUserId(userName):
     return None
 
 
+
+def find_all_blog_posts():
+    """ Perform db.GqlQuery and returns all blog posts from database """
+    return find_limited_blog_posts(1000)
+
+
+def find_limited_blog_posts(max_results):
+    """ Takes a number max_results and perform db.GqlQuery and returns blog posts from database within limit of max_results """
+
+    limited_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(max_results)
+    return limited_blog_posts
+
+
+
+def find_newer_blog_posts(max_results, date_time):
+    """ Takes a number max_results and a date_time, then perform db.GqlQuery and
+        returns blog posts from database where 'created' is bigger than date_time (newer posts)"""
+    
+    newer_blog_posts = db.GqlQuery("SELECT * FROM BlogPost WHERE created > :1 ORDER BY created ASC", date_time).fetch(max_results)
+
+    return newer_blog_posts
+
+
+def find_older_blog_posts(max_results, date_time):
+    """ Takes a number max_results and a date_time, then perform db.GqlQuery and
+        returns blog posts from database where 'created' is smaller than date_time (older posts)"""
+    
+    find_older_blog_posts = db.GqlQuery("SELECT * FROM BlogPost WHERE created < :1 ORDER BY created DESC", date_time).fetch(max_results)
+
+    return find_older_blog_posts
+
+###########################################################################################################
 def randomword():
     """return a random string"""
     length = randomLength()

@@ -513,8 +513,9 @@ class FullMonthBlogPosts (Handler):
         # make month to format 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, or 12
         if len(just_month) < 2:
             just_month = '0' + just_month
-        
-        all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(1000)       
+
+        # find all blogposts
+        all_blog_posts = dataFunctions.find_all_blog_posts()    
 
         
         only_specific_month = []  # list to contain blogposts

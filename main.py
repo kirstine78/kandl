@@ -116,13 +116,12 @@ def check_user_id_cookie(a_request):
             return the_RU
     return None
 
-def make_dict_blog(collection_of_blog_posts):
-    """Takes a collection of blogposts (from db) and return a dictionary
-        with format example:
+def make_dict_blog():
+    """ Return a dictionary with format example:
         {'2014':{'12':['p1', 'p2', 'p3'], '11':['p4', 'p5'], '8':['p6', 'p7']}, '2013':{'12':['p8', 'p9'], '8':['p1', 'p2']}}
         """
     
-    all_blog_posts = collection_of_blog_posts
+    all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(1000)
     
     dictionary = {}  # {'2014':{'12':['p1', 'p2', 'p3'], '11':['p4', 'p5'], '8':['p6', 'p7']}, '2013':{'12':['p8', 'p9'], '8':['p1', 'p2']}}
 
@@ -376,12 +375,6 @@ class AddNewBlogPost(Handler):
 # '/'   
 class AllBlogPosts(Handler):
     def render_front(self):  # 'youngest' created date shown first by default
-        thousand_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(1000)
-        
-        #dict_blog = {}  # {'2014':{'12':['p1', 'p2', 'p3'], '11':['p4', 'p5'], '8':['p6', 'p7']}, '2013':{'12':['p8', 'p9'], '8':['p1', 'p2']}}
-        dict_blog = make_dict_blog(thousand_blog_posts)
-
-        #logging.debug("DICT BLOG = " + dict_blog['2014']['6'][0])
         
         POSTS_PER_PAGE = 3
 
@@ -463,19 +456,11 @@ class AllBlogPosts(Handler):
             all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(POSTS_PER_PAGE)
         
         
-        # passing contents into the html file, NB you don't need to pass in post_parts
-        self.render("blog_all.html", dict_bloggi = dict_blog, blog_posts = all_blog_posts, old_link = older_link, new_link = newer_link) 
-##        self.render("blog_all.html", dict_bloggi = dict_blog, blog_posts = all_blog_posts,
-##                    first_post_id = id_first_post, last_post_id = id_last_post) 
+        # passing contents into the html file, NB you don't need to pass in post_parts. make_dict_blog() returns a dict
+        self.render("blog_all.html", dict_bloggi = make_dict_blog(), blog_posts = all_blog_posts, old_link = older_link, new_link = newer_link)
         
 
     def get(self):
-
-        
-        self.render_front()
-
-
-    def post(self):
         self.render_front()
 
 
@@ -488,26 +473,29 @@ class FullYearBlogPosts (Handler):
 
     def get(self):
         year_id = self.request.get("id")  # if any year is clicked, there is: year_id
-        
-        all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(1000)
-        dict_blog = make_dict_blog(all_blog_posts)  # we need this to display the menu in the html
-        
-##        logging.debug("year_id = " + year_id)
-        
-        only_specific_year = []  # list to contain blogposts
+
 
         if year_id:   # means there is a year_id
+            end_of_previous_year = 
+            all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(1000)
+        
+##            logging.debug("year_id = " + year_id)
+            
+            posts_for_specific_year = []  # list to contain blogposts
             
             for posts in all_blog_posts:
                 if validation.get_just_yyyy(posts.created) == year_id:  # we only want blog posts that is from for example 2014
-                    only_specific_year.append(posts)
-            if len(only_specific_year) < 1:   # nothing to display
+                    posts_for_specific_year.append(posts)
+            if len(posts_for_specific_year) < 1:   # nothing to display
                 self.redirect('/')
             else:
-                self.render_front(only_specific_year, dict_blog)
+                self.render_front(posts_for_specific_year, make_dict_blog())
 
         else:   # nothing to display
             self.redirect('/')
+
+
+
 
       
 
@@ -526,9 +514,7 @@ class FullMonthBlogPosts (Handler):
         if len(just_month) < 2:
             just_month = '0' + just_month
         
-        all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(1000)
-        dict_blog = make_dict_blog(all_blog_posts)  # we need this to display the menu in the html
-        
+        all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(1000)       
 
         
         only_specific_month = []  # list to contain blogposts
@@ -542,7 +528,7 @@ class FullMonthBlogPosts (Handler):
             if len(only_specific_month) < 1:  # nothing to display
                 self.redirect('/')
             else:
-                self.render_front(only_specific_month, dict_blog)
+                self.render_front(only_specific_month, make_dict_blog())
 
         else:   # nothing to display
             self.redirect('/')
@@ -555,10 +541,7 @@ class SingleBlogPost(Handler):
         self.render("blog_single_post.html",  single_blog_posts=a_single_blog_posts,
                     dict_bloggi=a_dict_blog) # passing contents into the html file
 
-    def get(self):
-        all_blog_posts = db.GqlQuery("SELECT * FROM BlogPost ORDER BY created DESC").fetch(1000)
-        dict_blog = make_dict_blog(all_blog_posts)  # we need this to display the menu bar in the html
-        
+    def get(self):        
         blog_post_id = self.request.get("id")  # if any single blog post is clicked, there is: blog_post_id (format string)
 
         #logging.debug("blog_post_id = " + blog_post_id)
@@ -567,7 +550,7 @@ class SingleBlogPost(Handler):
             #logging.debug("goes into if statement")
             specific_blog_post = BlogPost.get_by_id(int(blog_post_id))  # get the specific_blog_post with the specific id (blog_post_id)
             if specific_blog_post:
-                self.render_front(specific_blog_post, dict_blog)
+                self.render_front(specific_blog_post, make_dict_blog())
             else:
                 #logging.debug("goes into first else statement")
                 self.redirect('/')

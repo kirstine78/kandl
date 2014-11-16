@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: cp1252 -*-
 #
 # Copyright 2007 Google Inc.
 #
@@ -19,6 +20,8 @@
 #    The Blog           #
 #     kandl             #
 #########################
+
+# -*- coding: cp1252 -*-
 
 import validation
 import passwordValid
@@ -287,7 +290,7 @@ class AddNewBlogPost(Handler):
             post_parts_list.append(pp)
         
         # render "blog_post_entry.html" 
-        self.render_AddNewBlogPost("", bp, post_parts_list, "by Lachlan Nelder")
+        self.render_AddNewBlogPost("", bp, post_parts_list, "by Kirstine Brørup Nielsen")
 
  
     def get(self):
@@ -318,7 +321,7 @@ class AddNewBlogPost(Handler):
         text_blog = self.request.get("text").strip()  # a text area...
         author_blog = self.request.get("author_blog_post") 
 	
-        logging.debug("author_blog = " + author_blog)
+##        logging.debug("author_blog = " + author_blog)
 
         
         #make sure first letter in string is upper case

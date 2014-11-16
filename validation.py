@@ -239,6 +239,9 @@ def is_there_a_tag(some_string):
 def selected_value_dropdown(author_chosen, author_option_value):
     """ Takes in two strings: author_chosen, author_option_value
         return a certain string"""
+    
+    logging.debug("author_chosen = " + author_chosen)
+    logging.debug("author_option_value = " + author_option_value)
 
     if author_chosen == author_option_value:
         return "selected"

@@ -49,11 +49,13 @@
 					<p>Helpful template for links: &lt;a href="http://www.xxx" target="_blank"&gt;txt&lt;/a&gt;</p>
 					<label>
 						Choose author:
+						{% set author=author_chosen %}
 						<select name="author_blog_post">
-							<option value="by Kirstine Brørup Nielsen">Kirstine Brørup Nielsen</option>
-							<option {{ selected_value_dropdown({{author_chosen}}, "by Lachlan Nelder") }}value="by Lachlan Nelder">Lachlan Nelder</option>
-							<option value="by Kirstine Brørup Nielsen & Lachlan Nelder">Kirstine Brørup Nielsen & Lachlan Nelder</option>
-							<option value="">no name</option>
+							<!-- call method selected_value_dropdown from python file  -->
+							<option {{selected_value_dropdown(author, "by Kirstine Brørup Nielsen")}} value="by Kirstine Brørup Nielsen">Kirstine Brørup Nielsen</option>
+							<option {{selected_value_dropdown(author, "by Lachlan Nelder")}} value="by Lachlan Nelder">Lachlan Nelder</option>
+							<option {{selected_value_dropdown(author, "by Kirstine Brørup Nielsen & Lachlan Nelder")}} value="by Kirstine Brørup Nielsen & Lachlan Nelder">Kirstine Brørup Nielsen & Lachlan Nelder</option>
+							<option {{selected_value_dropdown(author, "")}} value="">no name</option>
 						</select>
 					</label>
 					<br>

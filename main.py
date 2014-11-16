@@ -396,7 +396,7 @@ class AllBlogPosts(Handler):
             
             logging.debug("created_first_post = " + str(created_first_post))
 
-            # if 'newer posts' has been clicked we know that there are at least 3 (POSTS_PER_PAGE) posts to show
+            # if 'newer posts' has been clicked we know that there are at least POSTS_PER_PAGE posts to show
             # find the younger posts to be shown
             all_blog_posts_plus_one = dataFunctions.find_newer_blog_posts(POSTS_PER_PAGE + 1, created_first_post)
             
@@ -405,10 +405,10 @@ class AllBlogPosts(Handler):
             # older_link shall appear no matter what
             older_link = "Older posts >"
 
-            # decide if newer_link shall be "<< Newer posts" or ""
+            # decide if newer_link shall be "< Newer posts" or ""
             newer_link = validation.get_newer_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
 
-
+            # get list of only POSTS_PER_PAGE or less
             all_blog_posts = dataFunctions.find_newer_blog_posts(POSTS_PER_PAGE, created_first_post)
 
             # revers the list
@@ -432,15 +432,15 @@ class AllBlogPosts(Handler):
             # find the next posts to be shown
             all_blog_posts_plus_one = dataFunctions.find_older_blog_posts(POSTS_PER_PAGE + 1, created_last_post)
             
-##            logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
+            logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
 
             # newer_link shall appear no matter what
             newer_link = "< Newer posts"
             
-            # decide if older_link shall be "Older posts >>" or ""
+            # decide if older_link shall be "Older posts >" or ""
             older_link = validation.get_older_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
 
-            # only get list of 3 or less
+            # get list of only POSTS_PER_PAGE or less
             all_blog_posts = dataFunctions.find_older_blog_posts(POSTS_PER_PAGE, created_last_post)
 
         # else, no id, then just render the very first posts
@@ -452,10 +452,10 @@ class AllBlogPosts(Handler):
             # newer_link shall never appear no matter what
             newer_link = ""
             
-            # decide if older_link shall be "Older posts >>" or ""
+            # decide if older_link shall be "Older posts >" or ""
             older_link = validation.get_older_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
 
-            # only get list of 3 or less
+            # get list of only POSTS_PER_PAGE or less
             all_blog_posts = dataFunctions.find_limited_blog_posts(POSTS_PER_PAGE)
         
         
@@ -470,10 +470,11 @@ class AllBlogPosts(Handler):
 
 # '/full_year'
 class FullYearBlogPosts (Handler):
-    def render_front(self, a_list_all_year_posts, a_dict_blog, a_specific_year):
+    def render_front(self, a_list_all_year_posts, a_dict_blog, a_specific_year, an_older_link, a_newer_link):
             
         self.render("blog_entire_year.html", list_all_year_posts=a_list_all_year_posts,
-                    dict_bloggi=a_dict_blog, year=a_specific_year) # passing contents into the html file
+                    dict_bloggi=a_dict_blog, year=a_specific_year,
+                    old_link = an_older_link, new_link = a_newer_link) # passing contents into the html file
 
     def get(self):
         a_year = self.request.get("year")  # if any year is clicked, there is: a_year
@@ -495,24 +496,53 @@ class FullYearBlogPosts (Handler):
 
 
             if a_first_post_id:   # newer posts link is clicked, we wanna find younger posts
-                
+
+                # older_link shall appear no matter what
+                older_link = "Older posts >"
+
+                # decide if newer_link shall be "< Newer posts" or ""
+                all_blog_posts_plus_one = dataFunctions.find_blog_posts_between_and_younger(POSTS_PER_PAGE + 1, end_of_previous_year, start_of_next_year, a_first_post_id)
+##                logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
+                newer_link = validation.get_newer_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
+
+                # get list of only POSTS_PER_PAGE or less
                 all_blog_posts = dataFunctions.find_blog_posts_between_and_younger(POSTS_PER_PAGE, end_of_previous_year, start_of_next_year, a_first_post_id)
 
                 # reverse, cause you get ASC and you want DESC
                 all_blog_posts.reverse()
+
+                
                 
             elif a_last_post_id:    # older posts link is clicked, we wanna find older posts
+                
+                # newer_link shall appear no matter what
+                newer_link = "< Newer posts"
+                
+                # decide if older_link shall be "Older posts >" or ""
+                all_blog_posts_plus_one = dataFunctions.find_blog_posts_between_and_older(POSTS_PER_PAGE + 1, end_of_previous_year, start_of_next_year, a_last_post_id)
+##                logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
+                older_link = validation.get_older_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
 
+                # get just the amount (POSTS_PER_PAGE)
                 all_blog_posts = dataFunctions.find_blog_posts_between_and_older(POSTS_PER_PAGE, end_of_previous_year, start_of_next_year, a_last_post_id)
 
             else:    # neither newer or older link has been clicked. This is the year link that has been clicked
-                # find blog posts for this specific year
+
+                # newer_link shall never appear no matter what
+                newer_link = ""
+                
+                # decide if older_link shall be "Older posts >" or ""
+                all_blog_posts_plus_one = dataFunctions.find_blog_posts_between(POSTS_PER_PAGE + 1, end_of_previous_year, start_of_next_year)
+                logging.debug("in year: length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
+                older_link = validation.get_older_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
+            
+                # find blog posts for this specific year, get list of only POSTS_PER_PAGE or less
                 all_blog_posts = dataFunctions.find_blog_posts_between(POSTS_PER_PAGE, end_of_previous_year, start_of_next_year)
 
             if len(all_blog_posts) < 1:   # nothing to display, checks if user just type in a random year that doesn't exist in menu yet
                 self.redirect('/')
             else:   
-                self.render_front(all_blog_posts, make_dict_blog(), a_year)
+                self.render_front(all_blog_posts, make_dict_blog(), a_year, older_link, newer_link)
 
         else:   # nothing to display
             self.redirect('/')           

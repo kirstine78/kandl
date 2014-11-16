@@ -118,7 +118,8 @@ a.link_top_bar:hover {
 }
 
 .new_old_link {
-	color:#0000E6;
+	/* color:#0000E6; */
+	color:#008080;
 	font-weight: bold;
 }
 
@@ -220,7 +221,8 @@ a.link_menu_mm:hover {
 
 
 .link_menu_dd {
-	color:#00CCFF;
+	/* color:#00CCFF; */
+	color:#008080;
 }
 	
 a.link_menu_dd:hover {

@@ -470,26 +470,29 @@ class AllBlogPosts(Handler):
 
 # '/full_year'
 class FullYearBlogPosts (Handler):
-    def render_front(self, a_list_all_year_posts, a_dict_blog):
+    def render_front(self, a_list_all_year_posts, a_dict_blog, a_specific_year):
             
-        self.render("blog_entire_year.html", list_all_year_posts=a_list_all_year_posts, dict_bloggi=a_dict_blog) # passing contents into the html file
+        self.render("blog_entire_year.html", list_all_year_posts=a_list_all_year_posts,
+                    dict_bloggi=a_dict_blog, year=a_specific_year) # passing contents into the html file
 
     def get(self):
-        year_id = self.request.get("id")  # if any year is clicked, there is: year_id
+        a_year = self.request.get("year")  # if any year is clicked, there is: a_year
 
 
-        if year_id:   # means there is a year_id
-            # turn year_id into an int
-            year_id_integer = int(year_id)
-            end_of_previous_year = datetime(year_id_integer - 1, 12, 31)
-            start_of_next_year = datetime(year_id_integer + 1, 01, 01)
+        if a_year:   # means there is a a_year
+            # turn a_year into an int
+            year_integer = int(a_year)
+
+            # from the Python package, datetime
+            end_of_previous_year = datetime(year_integer - 1, 12, 31)
+            start_of_next_year = datetime(year_integer + 1, 01, 01)
             
             all_blog_posts = dataFunctions.find_blog_posts_between(1000, end_of_previous_year, start_of_next_year)
 
-            if len(all_blog_posts) < 1:   # nothing to display, checks if user just type in a random year
+            if len(all_blog_posts) < 1:   # nothing to display, checks if user just type in a random year that doesn't exist in menu yet
                 self.redirect('/')
             else:   
-                self.render_front(all_blog_posts, make_dict_blog())
+                self.render_front(all_blog_posts, make_dict_blog(), a_year)
 
         else:   # nothing to display
             self.redirect('/')           
@@ -506,9 +509,9 @@ class FullMonthBlogPosts (Handler):
         self.render("blog_entire_month.html", list_all_month_posts=a_list_all_month_posts, dict_bloggi=a_dict_blog) # passing contents into the html file
 
     def get(self):
-        year_and_month_id = self.request.get("id")  # if any year is clicked, there is: year_and_month_id
-        just_year = year_and_month_id[0:4]
-        just_month = year_and_month_id[4:]  # 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, or 12
+        a_year_and_month = self.request.get("year_and_month")  # if any year is clicked, there is: a_year_and_month
+        just_year = a_year_and_month[0:4]
+        just_month = a_year_and_month[4:]  # 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, or 12
 
         # make month to format 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, or 12
         if len(just_month) < 2:
@@ -520,7 +523,7 @@ class FullMonthBlogPosts (Handler):
         
         only_specific_month = []  # list to contain blogposts
 
-        if year_and_month_id:   # means there is a year_and_month_id
+        if a_year_and_month:   # means there is a a_year_and_month
             for posts in all_blog_posts:
                 if validation.get_just_yyyy(posts.created) == just_year:  # we only want blog posts that is from for example 2014
                     # we only want blog posts that is from for example year 2014 AND from for example month 05
@@ -543,13 +546,13 @@ class SingleBlogPost(Handler):
                     dict_bloggi=a_dict_blog) # passing contents into the html file
 
     def get(self):        
-        blog_post_id = self.request.get("id")  # if any single blog post is clicked, there is: blog_post_id (format string)
+        blog_post_id = self.request.get("single_post_id")  # if any single blog post is clicked, there is: blog_post_id (format string)
 
-        #logging.debug("blog_post_id = " + blog_post_id)
+        #logging.debug("blog_post = " + blog_post)
         
-        if blog_post_id:  # means there is a blog_post
+        if blog_post_id:  # means there is a blog_post_id
             #logging.debug("goes into if statement")
-            specific_blog_post = BlogPost.get_by_id(int(blog_post_id))  # get the specific_blog_post with the specific id (blog_post_id)
+            specific_blog_post = BlogPost.get_by_id(int(blog_post))  # get the specific_blog_post with the specific id (blog_post_id)
             if specific_blog_post:
                 self.render_front(specific_blog_post, make_dict_blog())
             else:

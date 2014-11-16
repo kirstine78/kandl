@@ -794,14 +794,14 @@ class AddVideo(Handler):
             
 # '/videos'   
 class AllVideos(Handler):
-    def render_front(self):
-        #all_videos = db.GqlQuery("SELECT * FROM Video ORDER BY created DESC").fetch(1000)
+    def render_front(self, a_headline, an_all_videos, a_next_link, a_previous_link):
+        # passing contents into the html file
+        self.render("videos_main.html", headline_videos=a_headline, video_list=an_all_videos, old_link = a_next_link, new_link = a_previous_link)
+        
+
+    def get(self):
         
         headline="Videos"
-        
-##        if len(all_videos) < 1:
-##            headline="Sorry - no videos"
-
 
         VIDEOS_PER_PAGE = 3
 
@@ -885,32 +885,8 @@ class AllVideos(Handler):
 
             if len(all_videos) < 1:
                 headline="Sorry - no videos"
-
-            
-        # passing contents into the html file
-        self.render("videos_main.html", headline_videos=headline, video_list=all_videos, old_link = next_link, new_link = previous_link)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         
-
-    def get(self):
-
-        
-        self.render_front()
+        self.render_front(headline, all_videos, next_link, previous_link)
 
 
     def post(self):

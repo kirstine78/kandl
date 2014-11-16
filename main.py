@@ -43,6 +43,7 @@ template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape=False)
 jinja_env.globals.update(format_the_date=validation.convert_to_letter_month)  # lets me use validation inside html.
 jinja_env.globals.update(numeric_to_alphabetic_month=validation.numeric_to_alpabetic)  # lets me use validation inside html.
+jinja_env.globals.update(selected_value_dropdown=validation.selected_value_dropdown)  # lets me use validation inside html.
 jinja_env.globals.update(length=len)
 
 
@@ -116,6 +117,7 @@ def check_user_id_cookie(a_request):
             return the_RU
     return None
 
+
 def make_dict_blog():
     """ Return a dictionary with format example:
         {'2014':{'12':['p1', 'p2', 'p3'], '11':['p4', 'p5'], '8':['p6', 'p7']}, '2013':{'12':['p8', 'p9'], '8':['p1', 'p2']}}
@@ -161,6 +163,7 @@ def make_dict_blog():
                 # append specific blogpost to the list
                 dictionary[a_year][a_month].append(blog_post)
     return dictionary
+
 
     
 # '/', LoginHandler
@@ -263,9 +266,9 @@ class LogoutHandler(Handler):
         
 # '/add_blog_post'    
 class AddNewBlogPost(Handler):
-    def render_AddNewBlogPost(self, error_msg, bp_db, a_pp_list):
+    def render_AddNewBlogPost(self, error_msg, bp_db, a_pp_list, an_author):
         
-        self.render("blog_post_entry.html", error_message=error_msg, bp=bp_db, pp_list=a_pp_list)
+        self.render("blog_post_entry.html", error_message=error_msg, bp=bp_db, pp_list=a_pp_list, author_chosen=an_author)
 
     def render_blank_blog_post(self):
         # create BlogPost item in db
@@ -284,7 +287,7 @@ class AddNewBlogPost(Handler):
             post_parts_list.append(pp)
         
         # render "blog_post_entry.html" 
-        self.render_AddNewBlogPost("", bp, post_parts_list)
+        self.render_AddNewBlogPost("", bp, post_parts_list, "by Lachlan Nelder")
 
  
     def get(self):
@@ -369,14 +372,19 @@ class AddNewBlogPost(Handler):
             
         else:  # not all mandatory fields filled out
             # render "blog_post_entry.html" and display error message and redisplay what was filled in
-            self.render_AddNewBlogPost('Headline and/or Text missing', bp, blog_post_parts_list)
+            self.render_AddNewBlogPost('Headline and/or Text missing', bp, blog_post_parts_list, author_blog)
 
 
         
 # '/'   
 class AllBlogPosts(Handler):
-    def render_front(self):  # 'youngest' created date shown first by default
+    def render_front(self, a_dict_blogs, an_all_blog_posts, an_older_link, a_newer_link):  # 'youngest' created date shown first by default
         
+        # passing contents into the html file, NB you don't need to pass in post_parts. make_dict_blog() returns a dict
+        self.render("blog_all.html", dict_bloggi = a_dict_blogs, blog_posts = an_all_blog_posts, old_link = an_older_link, new_link = a_newer_link)
+        
+        
+    def get(self):
         POSTS_PER_PAGE = 3
 
         # maybe a link has been clicked!!!
@@ -456,15 +464,9 @@ class AllBlogPosts(Handler):
             older_link = validation.get_older_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
 
             # get list of only POSTS_PER_PAGE or less
-            all_blog_posts = dataFunctions.find_limited_blog_posts(POSTS_PER_PAGE)
-        
-        
-        # passing contents into the html file, NB you don't need to pass in post_parts. make_dict_blog() returns a dict
-        self.render("blog_all.html", dict_bloggi = make_dict_blog(), blog_posts = all_blog_posts, old_link = older_link, new_link = newer_link)
-        
+            all_blog_posts = dataFunctions.find_limited_blog_posts(POSTS_PER_PAGE)    
 
-    def get(self):
-        self.render_front()
+        self.render_front(make_dict_blog(), all_blog_posts, older_link, newer_link)
 
 
 
@@ -670,7 +672,12 @@ class AddPhoto(Handler):
 
 # '/photos'   
 class AllPhotos(Handler):
-    def render_front(self):  # 'youngest' created date shown first by default
+    def render_front(self, a_headline, a_list):  # 'youngest' created date shown first by default
+        # passing contents into the html file, nb you don't need to pass in post_parts
+        self.render("photos_main.html", headline_photos=a_headline, photo_list_of_lists=a_list)
+        
+
+    def get(self):
         all_photos = db.GqlQuery("SELECT * FROM Photo ORDER BY created DESC").fetch(1000)
 
         MAX_IMG_ON_ROW_INT = 7
@@ -681,7 +688,7 @@ class AllPhotos(Handler):
         if len(all_photos) < 1:
             # no images so pass in an empty list
             photo_all_rows_list = []
-            self.render("photos_main.html", headline_photos="Sorry - gallery is empty", photo_list_of_lists=photo_all_rows_list)
+            self.render_front("Sorry - gallery is empty", photo_all_rows_list)
         else:
             # how many rows do we need: len(all_photos) / MAX_IMG_ON_ROW_DECIMAL
             rows_needed_decimal = len(all_photos) / MAX_IMG_ON_ROW_DECIMAL
@@ -725,15 +732,8 @@ class AllPhotos(Handler):
             
 ##            logging.debug("length outer list = " + str(len(photo_all_rows_list)))
             
-            # passing contents into the html file, nb you don't need to pass in post_parts
-            self.render("photos_main.html", headline_photos="Click photo to enlarge", photo_list_of_lists=photo_all_rows_list)
-        
-
-    def get(self):
-
-        
-        self.render_front()
-
+            self.render_front("Click photo to enlarge", photo_all_rows_list)
+            
 
     def post(self):
         self.render_front()

@@ -235,7 +235,18 @@ def is_there_a_tag(some_string):
     return False
 
 
+# for blog
+def selected_value_dropdown(author_chosen, author_option_value):
+    """ Takes in two strings: author_chosen, author_option_value
+        return a certain string"""
 
+    if author_chosen == author_option_value:
+        return "selected"
+    else:
+        return ""
+
+
+    
 ##################################################################################################################
 
 def is_food_item_valid(food_description):

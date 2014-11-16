@@ -2,6 +2,7 @@ import random
 import string
 
 from google.appengine.ext import db
+import main
 
 
 
@@ -65,6 +66,33 @@ def find_blog_posts_between(max_results, date_time_oldest, date_time_youngest):
     in_between_blog_posts = db.GqlQuery("SELECT * FROM BlogPost where created > :1 AND created < :2 ORDER BY created DESC", date_time_oldest, date_time_youngest).fetch(max_results)
 
     return in_between_blog_posts
+
+
+def find_blog_posts_between_and_younger(max_results, date_time_oldest, date_time_youngest, id_blog_post):
+    """ Takes a number max_results and two dateTimes: date_time_youngest and date_time_oldest, and an id_blog_post.
+        Then perform db.GqlQuery and returns blog posts from database where 'created' is in between the two dateTimes and where
+        posts are younger than post with id_blog_post"""
+
+    specific_blog_post = main.BlogPost.get_by_id(int(id_blog_post))
+    
+    in_between_and_younger_blog_posts = db.GqlQuery("SELECT * FROM BlogPost where created > :1 AND created < :2 AND created > :3 ORDER BY created ASC", date_time_oldest,
+                                                    date_time_youngest, specific_blog_post.created).fetch(max_results)
+
+    return in_between_and_younger_blog_posts
+
+def find_blog_posts_between_and_older(max_results, date_time_oldest, date_time_youngest, id_blog_post):
+    """ Takes a number max_results and two dateTimes: date_time_youngest and date_time_oldest, and an id_blog_post.
+        Then perform db.GqlQuery and returns blog posts from database where 'created' is in between the two dateTimes and where
+        posts are older than post with id_blog_post"""
+
+    specific_blog_post = main.BlogPost.get_by_id(int(id_blog_post))
+    
+    in_between_and_older_blog_posts = db.GqlQuery("SELECT * FROM BlogPost where created > :1 AND created < :2 AND created < :3 ORDER BY created DESC", date_time_oldest,
+                                                    date_time_youngest, specific_blog_post.created).fetch(max_results)
+
+    return in_between_and_older_blog_posts
+
+
 
 
 

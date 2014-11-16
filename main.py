@@ -486,8 +486,28 @@ class FullYearBlogPosts (Handler):
             # from the Python package, datetime
             end_of_previous_year = datetime(year_integer - 1, 12, 31)
             start_of_next_year = datetime(year_integer + 1, 01, 01)
-            
-            all_blog_posts = dataFunctions.find_blog_posts_between(1000, end_of_previous_year, start_of_next_year)
+
+            POSTS_PER_PAGE = 3
+
+            # maybe a link has been clicked!!!
+            a_first_post_id = self.request.get("after_id")  # if newer posts link is clicked, there is a_first_post_id
+            a_last_post_id = self.request.get("before_id")  # if older posts link is clicked, there is a_last_post_id
+
+
+            if a_first_post_id:   # newer posts link is clicked, we wanna find younger posts
+                
+                all_blog_posts = dataFunctions.find_blog_posts_between_and_younger(POSTS_PER_PAGE, end_of_previous_year, start_of_next_year, a_first_post_id)
+
+                # reverse, cause you get ASC and you want DESC
+                all_blog_posts.reverse()
+                
+            elif a_last_post_id:    # older posts link is clicked, we wanna find older posts
+
+                all_blog_posts = dataFunctions.find_blog_posts_between_and_older(POSTS_PER_PAGE, end_of_previous_year, start_of_next_year, a_last_post_id)
+
+            else:    # neither newer or older link has been clicked. This is the year link that has been clicked
+                # find blog posts for this specific year
+                all_blog_posts = dataFunctions.find_blog_posts_between(POSTS_PER_PAGE, end_of_previous_year, start_of_next_year)
 
             if len(all_blog_posts) < 1:   # nothing to display, checks if user just type in a random year that doesn't exist in menu yet
                 self.redirect('/')

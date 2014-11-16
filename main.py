@@ -552,7 +552,7 @@ class SingleBlogPost(Handler):
         
         if blog_post_id:  # means there is a blog_post_id
             #logging.debug("goes into if statement")
-            specific_blog_post = BlogPost.get_by_id(int(blog_post))  # get the specific_blog_post with the specific id (blog_post_id)
+            specific_blog_post = BlogPost.get_by_id(int(blog_post_id))  # get the specific_blog_post with the specific id (blog_post_id)
             if specific_blog_post:
                 self.render_front(specific_blog_post, make_dict_blog())
             else:

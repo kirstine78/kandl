@@ -235,7 +235,8 @@ def is_there_a_tag(some_string):
     return False
 
 
-# for blog
+# for blog used inside blog_post_entry.html. made possible with
+# jinja_env.globals.update(selected_value_dropdown=validation.selected_value_dropdown) inside main.py
 def selected_value_dropdown(author_chosen, author_option_value):
     """ Takes in two strings: author_chosen, author_option_value
         return a certain string"""

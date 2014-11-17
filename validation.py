@@ -22,7 +22,7 @@ import logging
 ##        return False
     
 
-# for blog
+# for blog post entry
 def are_all_fields_filled(headline, text):
     """takes in strings.
         Return boolean. False if any string are empty"""
@@ -260,6 +260,34 @@ def selected_value_dropdown(author_chosen, author_option_value):
         return "selected"
     else:
         return ""
+
+# for contact
+def are_all_contact_fields_filled(name, email, message):
+    """ takes in 3 strings.
+        Return boolean and 3 strings"""
+    
+    the_boolean = False
+
+    name_err="You have to fill out Name"
+    email_err="Email incorrect"
+    message_err="You have to fill out Message"
+    
+    if name:
+        name_err=""
+    if email:
+
+        # check for minimum 3 chars
+        if len(email) > 2 and "@" in email and email[-1] != "@" and email[0] != "@":
+            email_err=""
+    if message:
+        message_err=""
+        
+        
+    if name and email and len(email) > 2 and "@" in email and email[-1] != "@" and email[0] != "@" and message:
+        the_boolean=True
+
+    return the_boolean, name_err, email_err, message_err
+
 
 
     

@@ -914,13 +914,46 @@ class AboutUs(Handler):
     def get(self):
         self.render("about.html")
         
-
+# '/contact', ContactUs
 class ContactUs(Handler):
+    def render_contact_us(self, name, name_error,
+                          email, email_error,
+                          message, message_error):
+        
+        self.render("contact.html", user_name_content=name , user_name_error=name_error,
+                    user_email_content=email, user_email_error=email_error,
+                    user_message_content=message, user_message_error=message_error)
+        
     def get(self):
-        self.render("contact.html")
+        
+        self.render_contact_us("", "", "", "", "", "")
+
+
+    def post(self):
+        # check if valid username
+
+        username_input = self.request.get("user_name")
+        user_email_input = self.request.get("user_email").strip()
+        user_message_input = self.request.get("user_message")  # textarea
+
+        # check if all fields are filled out and get the error messages
+        all_fields_filled, name_error, email_error, message_error = validation.are_all_contact_fields_filled(username_input, user_email_input, user_message_input)
+
+        if all_fields_filled:
+            self.render_contact_us("", "", "", "", "", "")
+
+        # else
+        else:  # not all fields filled out
+            self.render_contact_us(username_input, name_error,
+                                   user_email_input, email_error,
+                                   user_message_input, message_error)
+        
         
 
 
+    
+
+    
 app = webapp2.WSGIApplication([('/login', LoginHandler),
                                ('/logout', LogoutHandler),
                                ('/add_blog_post', AddNewBlogPost),

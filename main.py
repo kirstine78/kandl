@@ -26,6 +26,9 @@
 import validation
 import passwordValid
 import dataFunctions
+
+import emailFunctions
+
 import math
 import cgi
 import re
@@ -942,10 +945,19 @@ class ContactUs(Handler):
         all_fields_filled, name_error, email_error, message_error = validation.are_all_contact_fields_filled(username_input, user_email_input, user_message_input)
 
         if all_fields_filled:
+            
+            logging.debug("Email is SEND")
+
+            # send user_message_input to email blogkirstine@gmail.com
+            emailFunctions.sendEmail(username_input, user_email_input, user_message_input)
+                
             self.render_contact_us("", "", "", "", "", "")
 
         # else
         else:  # not all fields filled out
+            
+            logging.debug("Email NOT send")
+            
             self.render_contact_us(username_input, name_error,
                                    user_email_input, email_error,
                                    user_message_input, message_error)

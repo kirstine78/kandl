@@ -1,0 +1,24 @@
+{% extends "base_layout.html" %}
+{% block body %}
+
+		<div class="row" style="padding-top: 10px;">
+			<div class="col-1"></div>
+			<div class="col-10" >
+				
+				{% if length(submission_content) > 0 %}
+					<div class="contact_submission">{{submission_content}}</div>
+				{% endif %}
+				
+				<br>
+				<br>
+				<br>
+				<br>
+				
+			</div>
+			<div class="col-1 end"></div>
+			
+			
+		</div>
+
+
+{% endblock %}

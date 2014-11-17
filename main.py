@@ -921,17 +921,19 @@ class AboutUs(Handler):
         
 # '/contact', ContactUs
 class ContactUs(Handler):
-    def render_contact_us(self, name, name_error,
+    def render_contact_us(self, submission_cont,
+                          name, name_error,
                           email, email_error,
                           message, message_error):
         
-        self.render("contact.html", user_name_content=name , user_name_error=name_error,
+        self.render("contact.html", submission_content=submission_cont,
+                    user_name_content=name , user_name_error=name_error,
                     user_email_content=email, user_email_error=email_error,
                     user_message_content=message, user_message_error=message_error)
         
     def get(self):
         
-        self.render_contact_us("", "", "", "", "", "")
+        self.render_contact_us("", "", "", "", "", "", "")
 
 
     def post(self):
@@ -950,19 +952,29 @@ class ContactUs(Handler):
 
             # send user_message_input to email blogkirstine@gmail.com
             emailFunctions.sendEmail(username_input, user_email_input, user_message_input)
-                
-            self.render_contact_us("", "", "", "", "", "")
+
+            self.redirect('/contact_success')
 
         # else
         else:  # not all fields filled out
             
             logging.debug("Email NOT send")
             
-            self.render_contact_us(username_input, name_error,
+            self.render_contact_us("Sorry, we couldn't send your message  -  check the fields below", 
+                                   username_input, name_error,
                                    user_email_input, email_error,
                                    user_message_input, message_error)
         
         
+# '/contact_success', ContactUsSuccess
+class ContactUsSuccess(Handler):
+    def render_success(self, submission_cont):
+        
+        self.render("contact_success.html", submission_content=submission_cont)
+        
+    def get(self):
+        
+        self.render_success("Thank you  -  your message has been sent")
 
 
     
@@ -980,7 +992,8 @@ app = webapp2.WSGIApplication([('/login', LoginHandler),
                                ('/add_video', AddVideo),
                                ('/videos', AllVideos),
                                ('/about', AboutUs),
-                               ('/contact', ContactUs)], debug=True)
+                               ('/contact', ContactUs),
+                               ('/contact_success', ContactUsSuccess)], debug=True)
 
 
 

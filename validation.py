@@ -268,9 +268,9 @@ def are_all_contact_fields_filled(name, email, message):
     
     the_boolean = False
 
-    name_err="You have to fill out Name"
-    email_err="Email incorrect"
-    message_err="You have to fill out Message"
+    name_err="Enter your Name"
+    email_err="E-mail is incorrect"
+    message_err="Write a Message"
     
     if name:
         name_err=""

@@ -4,9 +4,19 @@
 		<div class="row" style="padding-top: 10px;">
 			<div class="col-1"></div>
 			<div class="col-10" >
+				
 				<div class="contact_headline">You are welcome to contact us</div>
-					<br>
+					
 				<form method="post">
+				
+					{% if length(submission_content) > 0 %}
+							<p style="color:red; font-weight: bold; white-space:pre;">{{submission_content}}</p>
+					{% endif %}
+					
+					{% if length(submission_content) < 1 %}
+						<br>
+					{% endif %}
+					
 					
 					<label>
 						<div>*Your name</div><input type="text" name="user_name" value="{{user_name_content}}" style="width:600px;" maxlength="80" onkeypress="return event.keyCode!=13">
@@ -32,7 +42,6 @@
 					<br>
 					
 					<input type="submit" value="Send">
-					<input type="reset" value="Clear All Fields">
 				</form>
 				<br>
 				<br>

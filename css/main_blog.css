@@ -1,6 +1,6 @@
-* {
+/* * {
 	border: 1px solid red !important;
-} 
+}  */
 
 * {
 	-webkit-box-sizing: border-box;
@@ -86,9 +86,27 @@
 }
 
 .helper_tags {
-	font-size: 12px;
+	font-size: 11px;
 }
 
+.landscape_img {
+	width:100%;
+	height:480px;
+}
+
+.portrait_img {
+	width:75%;
+	height:640px;
+}
+
+.txt_below_img_italic {
+	font-size:13px;
+}
+
+.div_gap_between_imgs {
+	height:9px;
+	width:100%;
+}
 
 /* .blog_img {
 	padding-right: 38px;

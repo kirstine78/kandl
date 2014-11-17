@@ -6,24 +6,33 @@
 			<div class="col-10" >
 				<div class="contact_headline">You are welcome to contact us</div>
 					<br>
-				<form action="contact.php" method="post">
-					*Your name
-					<br>
-					<input type="text" name="cf_name" style="width:600px;" onkeypress="return event.keyCode!=13">
-					<br>
-					<br>
-					*Your e-mail
-					<br>
-					<input type="text" name="cf_email" style="width:600px;" onkeypress="return event.keyCode!=13">
+				<form method="post">
+					
+					<label>
+						<div>*Your name</div><input type="text" name="user_name" value="{{user_name_content}}" style="width:600px;" onkeypress="return event.keyCode!=13">
+						
+						<span class="error_message_red">{{user_name_error}}</span>
+					</label>
 					<br>
 					<br>
-					*Message
+					
+					<label>
+						<div>*Your e-mail</div><input type="text" name="user_email" value="{{user_email_content}}" style="width:600px;" onkeypress="return event.keyCode!=13">
+						
+						<span class="error_message_red">{{user_email_error}}</span>
+					</label>
 					<br>
-					<textarea name="cf_message" style="width:700px; height:300px;"></textarea>
+					<br>
+					
+					<label>
+						<div>*Message</div><textarea name="user_message" style="width:700px; height:300px;"></textarea>
+						<span class="error_message_red">{{user_message_error}}</span>
+					</label>
 					<br>
 					<br>
+					
 					<input type="submit" value="Send">
-					<input type="reset" value="Clear">
+					<input type="reset" value="Clear All">
 				</form>
 				<br>
 				<br>

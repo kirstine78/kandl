@@ -363,7 +363,18 @@ class AddNewBlogPost(Handler):
 
         # check if all mandatory fields are filled out
         if validation.are_all_fields_filled(headline_blog, text_blog):
-            bp.put()
+
+            # then also check if links www.xxxxx and img xxxxx.jpg has been substituted by the author
+            if validation.are_xxxxx_substituted(text_blog):
+                bp.put()
+                #display blank page
+                # render "blog_post_entry.html"!
+                self.render_blank_blog_post()
+                
+            else:  # xxxxx is not substituted
+                # render "blog_post_entry.html" and display error message and redisplay what was filled in
+                self.render_AddNewBlogPost("Substitute the 'xxxxx'", bp, author_blog)
+            
 
 ##            # can't do the below before bp is put()
 ##            for post_part in blog_post_parts_list:
@@ -371,11 +382,9 @@ class AddNewBlogPost(Handler):
 ##                post_part.parent_blog_post = bp
 ##                post_part.put()
 
-            #display blank page
-            # render "blog_post_entry.html"!
-            self.render_blank_blog_post()
             
-        else:  # not all mandatory fields filled out
+            
+        else:  # not all mandatory fields are filled out
             # render "blog_post_entry.html" and display error message and redisplay what was filled in
             self.render_AddNewBlogPost('Headline and/or Text missing', bp, author_blog)
 

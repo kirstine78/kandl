@@ -45,7 +45,7 @@ def are_all_fields_filled(headline, text):
 
 # for blog
 def are_xxxxx_substituted(text):
-    """ takes in a string. check if links www.xxxxx and img xxxxx.jpg
+    """ takes in a string. check if links www.xxxxx and img xxxxx.jpg etc.
         has been substituted by the author.
         Return boolean."""
 

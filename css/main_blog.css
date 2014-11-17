@@ -1,6 +1,6 @@
-/* * {
+* {
 	border: 1px solid red !important;
-}  */
+} 
 
 * {
 	-webkit-box-sizing: border-box;
@@ -85,6 +85,9 @@
 	white-space:pre-wrap;
 }
 
+.helper_tags {
+	font-size: 12px;
+}
 .blog_img {
 	padding-right: 38px;
 }

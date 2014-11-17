@@ -277,13 +277,13 @@ def are_all_contact_fields_filled(name, email, message):
     if email:
 
         # check for minimum 3 chars
-        if len(email) > 2 and "@" in email and email[-1] != "@" and email[0] != "@":
+        if len(email) > 2 and "@" in email and email[-1] != "@" and email[0] != "@" and " " not in email:
             email_err=""
     if message:
         message_err=""
         
         
-    if name and email and len(email) > 2 and "@" in email and email[-1] != "@" and email[0] != "@" and message:
+    if name and email and len(email) > 2 and "@" in email and email[-1] != "@" and email[0] != "@" and " " not in email and message:
         the_boolean=True
 
     return the_boolean, name_err, email_err, message_err

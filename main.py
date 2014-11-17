@@ -428,7 +428,7 @@ class AllBlogPosts(Handler):
             logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
 
             # older_link shall appear no matter what
-            older_link = "Older posts >"
+            older_link = "Older posts &#9658;"
 
             # decide if newer_link shall be "< Newer posts" or ""
             newer_link = validation.get_newer_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
@@ -460,7 +460,7 @@ class AllBlogPosts(Handler):
             logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
 
             # newer_link shall appear no matter what
-            newer_link = "< Newer posts"
+            newer_link = "&#9668; Newer posts"
             
             # decide if older_link shall be "Older posts >" or ""
             older_link = validation.get_older_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
@@ -517,7 +517,7 @@ class FullYearBlogPosts (Handler):
             if a_first_post_id:   # newer posts link is clicked, we wanna find younger posts
 
                 # older_link shall appear no matter what
-                older_link = "Older posts >"
+                older_link = "Older posts &#9658;"
 
                 # decide if newer_link shall be "< Newer posts" or ""
                 all_blog_posts_plus_one = dataFunctions.find_blog_posts_between_and_younger(POSTS_PER_PAGE + 1, end_of_previous_year, start_of_next_year, a_first_post_id)
@@ -535,7 +535,7 @@ class FullYearBlogPosts (Handler):
             elif a_last_post_id:    # older posts link is clicked, we wanna find older posts
                 
                 # newer_link shall appear no matter what
-                newer_link = "< Newer posts"
+                newer_link = "&#9668; Newer posts"
                 
                 # decide if older_link shall be "Older posts >" or ""
                 all_blog_posts_plus_one = dataFunctions.find_blog_posts_between_and_older(POSTS_PER_PAGE + 1, end_of_previous_year, start_of_next_year, a_last_post_id)
@@ -845,7 +845,7 @@ class AllVideos(Handler):
             logging.debug("length of all_videos_plus_one = " + str(len(all_videos_plus_one)))
 
             # next_link shall appear no matter what
-            next_link = "Next >"
+            next_link = "Next &#9658;"
 
             # decide if previous_link shall be "< Previous" or ""
             previous_link = validation.get_previous_link(all_videos_plus_one, VIDEOS_PER_PAGE)
@@ -876,7 +876,7 @@ class AllVideos(Handler):
             logging.debug("length of all_videos_plus_one = " + str(len(all_videos_plus_one)))
 
             # previous_link shall appear no matter what
-            previous_link = "< Previous"
+            previous_link = "&#9668; Previous"
             
             # decide if next_link shall be "Next >" or ""
             next_link = validation.get_next_link(all_videos_plus_one, VIDEOS_PER_PAGE)

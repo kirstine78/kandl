@@ -47,6 +47,11 @@
 
 					<p><b> * = mandatory fields </b></p>
 					<p>Helpful template for links: &lt;a href="http://www.xxx" target="_blank"&gt;txt&lt;/a&gt;</p>
+					
+					<p>Helpful template for landscaper photos: &lt;img src="../images/xxx.jpg" alt="photo" width="100%" height="480"&gt;</p>
+					
+					
+					
 					<label>
 						Choose author:
 						{% set author=author_chosen %}
@@ -70,25 +75,7 @@
 					<br>
 					
 					
-					{% for i in range(0,4,1) %}
-						<div class="post_part_input{{i|string}}">
-							<label>
-								<div>Landscape or Portrait img (l/p):</div> <input type="text" name="L_or_P_img{{i|string}}" value="{{pp_list[i].img_format}}" style="width:20px;" maxlength="1" onkeypress="return event.keyCode!=13">
-							</label>
-							<br>
-							<label>
-								<div>Image (file name):</div> <input type="text" name="img{{i|string}}" value="{{pp_list[i].img}}" style="width:450px;" onkeypress="return event.keyCode!=13">
-							</label>
-							
-							<br>
-							<label>
-								<div>Text below big image (some description):</div> <input type="text" name="text_below_img{{i|string}}" value="{{pp_list[i].txt_below_img}}" maxlength="60" style="width:450px;" onkeypress="return event.keyCode!=13">
-							</label>
-							<br>
-							<br>
-							<br>
-						</div>
-					{% endfor %}
+					
 					
 					<input id="margin_butt" class="button" type="submit">
 				</form>

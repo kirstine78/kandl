@@ -76,13 +76,13 @@ class BlogPost(db.Model): # abbreviated 'bp'
     _string_date_new = ""
 
 
-class PostPart(db.Model):  # abbreviated 'pp'
-    parent_blog_post = db.ReferenceProperty(BlogPost, collection_name='post_parts')   # ReferenceProperty reference to another db.Model
-    
-    img_format = db.StringProperty(required = False)
-    img = db.StringProperty(required = False)
-    txt_below_img = db.StringProperty(required = False)
-    rank = db.StringProperty(required = False)
+##class PostPart(db.Model):  # abbreviated 'pp'
+##    parent_blog_post = db.ReferenceProperty(BlogPost, collection_name='post_parts')   # ReferenceProperty reference to another db.Model
+##    
+##    img_format = db.StringProperty(required = False)
+##    img = db.StringProperty(required = False)
+##    txt_below_img = db.StringProperty(required = False)
+##    rank = db.StringProperty(required = False)
 
 
 class RegisteredUsers(db.Model):  #  --> ru
@@ -269,28 +269,30 @@ class LogoutHandler(Handler):
         
 # '/add_blog_post'    
 class AddNewBlogPost(Handler):
-    def render_AddNewBlogPost(self, error_msg, bp_db, a_pp_list, an_author):
+    def render_AddNewBlogPost(self, error_msg, bp_db, an_author):
         
-        self.render("blog_post_entry.html", error_message=error_msg, bp=bp_db, pp_list=a_pp_list, author_chosen=an_author)
+        self.render("blog_post_entry.html", error_message=error_msg, bp=bp_db, author_chosen=an_author)
 
     def render_blank_blog_post(self):
         # create BlogPost item in db
         bp = BlogPost(headline = "", text = "")
-
-        post_parts_list = []
         
-        for i in range(1,5,1):
-        
+        self.render_AddNewBlogPost("", bp, "by Kirstine Brørup Nielsen")
 
-            pp = PostPart(img_format = "",
-                          img = "",
-                          txt_below_img = "",
-                          rank = "")
-
-            post_parts_list.append(pp)
-        
-        # render "blog_post_entry.html" 
-        self.render_AddNewBlogPost("", bp, post_parts_list, "by Kirstine Brørup Nielsen")
+##        post_parts_list = []
+##        
+##        for i in range(1,5,1):
+##        
+##
+##            pp = PostPart(img_format = "",
+##                          img = "",
+##                          txt_below_img = "",
+##                          rank = "")
+##
+##            post_parts_list.append(pp)
+##        
+##        # render "blog_post_entry.html" 
+##        self.render_AddNewBlogPost("", bp, post_parts_list, "by Kirstine Brørup Nielsen")
 
  
     def get(self):
@@ -334,25 +336,25 @@ class AddNewBlogPost(Handler):
 
         #logging.debug("bp.text = " + bp.text)
 
-        # list for all post parts
-        blog_post_parts_list = []
-        
-        # if different amount of img's is needed then change the second paramter in range(a,b,c)
-        for i in range(0,4,1):
-            
-            L_P_blog = self.request.get("L_or_P_img"+str(i)).strip()  # a string
-            img_blog = self.request.get("img"+str(i)).strip()  # a string
-            text_below_img_blog = self.request.get("text_below_img"+str(i)).strip()  # a string
-            rank_img = str(i)
-
-            
-            # create PostPart item in db
-            pp = PostPart(img_format = L_P_blog,
-                          img = img_blog,
-                          txt_below_img = text_below_img_blog,
-                          rank = rank_img)
-
-            blog_post_parts_list.append(pp)
+##        # list for all post parts
+##        blog_post_parts_list = []
+##        
+##        # if different amount of img's is needed then change the second paramter in range(a,b,c)
+##        for i in range(0,4,1):
+##            
+##            L_P_blog = self.request.get("L_or_P_img"+str(i)).strip()  # a string
+##            img_blog = self.request.get("img"+str(i)).strip()  # a string
+##            text_below_img_blog = self.request.get("text_below_img"+str(i)).strip()  # a string
+##            rank_img = str(i)
+##
+##            
+##            # create PostPart item in db
+##            pp = PostPart(img_format = L_P_blog,
+##                          img = img_blog,
+##                          txt_below_img = text_below_img_blog,
+##                          rank = rank_img)
+##
+##            blog_post_parts_list.append(pp)
         
         
 
@@ -363,11 +365,11 @@ class AddNewBlogPost(Handler):
         if validation.are_all_fields_filled(headline_blog, text_blog):
             bp.put()
 
-            # can't do the below before bp is put()
-            for post_part in blog_post_parts_list:
-                #logging.debug("post_part.txt_below_img = " + post_part.txt_below_img)
-                post_part.parent_blog_post = bp
-                post_part.put()
+##            # can't do the below before bp is put()
+##            for post_part in blog_post_parts_list:
+##                #logging.debug("post_part.txt_below_img = " + post_part.txt_below_img)
+##                post_part.parent_blog_post = bp
+##                post_part.put()
 
             #display blank page
             # render "blog_post_entry.html"!
@@ -375,7 +377,7 @@ class AddNewBlogPost(Handler):
             
         else:  # not all mandatory fields filled out
             # render "blog_post_entry.html" and display error message and redisplay what was filled in
-            self.render_AddNewBlogPost('Headline and/or Text missing', bp, blog_post_parts_list, author_blog)
+            self.render_AddNewBlogPost('Headline and/or Text missing', bp, author_blog)
 
 
         
@@ -388,7 +390,7 @@ class AllBlogPosts(Handler):
         
         
     def get(self):
-        POSTS_PER_PAGE = 10
+        POSTS_PER_PAGE = 3
 
         # maybe a link has been clicked!!!
         a_first_post_id = self.request.get("after_id")  # if newer posts link is clicked, there is a_first_post_id
@@ -493,7 +495,7 @@ class FullYearBlogPosts (Handler):
             end_of_previous_year = datetime(year_integer - 1, 12, 31)
             start_of_next_year = datetime(year_integer + 1, 01, 01)
 
-            POSTS_PER_PAGE = 10
+            POSTS_PER_PAGE = 3
 
             # maybe a link has been clicked!!!
             a_first_post_id = self.request.get("after_id")  # if newer posts link is clicked, there is a_first_post_id

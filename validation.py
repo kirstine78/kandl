@@ -55,7 +55,7 @@ def are_xxxxx_substituted(text):
         return True
 
     
-# for blog - photos
+# for blog - add photos
 def are_format_and_img_file_filled_correct(a_format_l_or_p, an_img_file):
     """takes in strings.
         Return boolean. False if any string are empty"""

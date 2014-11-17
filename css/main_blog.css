@@ -1,6 +1,6 @@
-* {
+/* * {
 	border: 1px solid red !important;
-} 
+}  */
 
 * {
 	-webkit-box-sizing: border-box;
@@ -131,7 +131,7 @@ a.new_old_link:hover {
 	color:#F88017;
 }
 
-.post_part_input0 {
+/* .post_part_input0 {
 	color:black;
 }
 
@@ -145,7 +145,7 @@ a.new_old_link:hover {
 
 .post_part_input3{
 	color:green;
-}
+} */
 
 .col-1 {
 	width: 8.33%;

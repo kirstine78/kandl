@@ -355,30 +355,37 @@ class AllBlogPosts(Handler):
 
             # find out the created date of the post with a_first_post_id (the first post of the 3 (POSTS_PER_PAGE) shown on specific page)
             first_post = BlogPost.get_by_id(int(a_first_post_id))  # get the blogpost with the specific id (a_first_post_id)
-            created_first_post = first_post.created
-            
-            # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)            
-            #created_first_post = created_first_post[0:19]
-            
-##            logging.debug("created_first_post = " + str(created_first_post))
 
-            # if 'newer posts' has been clicked we know that there are at least POSTS_PER_PAGE posts to show
-            # find the younger posts to be shown
-            all_blog_posts_plus_one = dataFunctions.find_newer_blog_posts(POSTS_PER_PAGE + 1, created_first_post)
-            
-##            logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
+            # check if first_post exists
+            if first_post:
+                created_first_post = first_post.created
+                
+                # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)            
+                #created_first_post = created_first_post[0:19]
+                
+    ##            logging.debug("created_first_post = " + str(created_first_post))
 
-            # older_link shall appear no matter what
-            older_link = "Older posts &#9658;"
+                # if 'newer posts' has been clicked we know that there are at least POSTS_PER_PAGE posts to show
+                # find the younger posts to be shown
+                all_blog_posts_plus_one = dataFunctions.find_newer_blog_posts(POSTS_PER_PAGE + 1, created_first_post)
+                
+    ##            logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
 
-            # decide if newer_link shall be "< Newer posts" or ""
-            newer_link = validation.get_newer_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
+                # older_link shall appear no matter what
+                older_link = "Older posts &#9658;"
 
-            # get list of only POSTS_PER_PAGE or less
-            all_blog_posts = dataFunctions.find_newer_blog_posts(POSTS_PER_PAGE, created_first_post)
+                # decide if newer_link shall be "< Newer posts" or ""
+                newer_link = validation.get_newer_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
 
-            # revers the list
-            all_blog_posts.reverse()
+                # get list of only POSTS_PER_PAGE or less
+                all_blog_posts = dataFunctions.find_newer_blog_posts(POSTS_PER_PAGE, created_first_post)
+
+                # revers the list
+                all_blog_posts.reverse()
+
+            else:   # user has typed some random shit in, and first_post doesn't exist
+                self.redirect('/')
+                return
                 
             
 
@@ -388,26 +395,33 @@ class AllBlogPosts(Handler):
             
             # find out the created date of the post with a_last_post_id
             last_post = BlogPost.get_by_id(int(a_last_post_id))  # get the blogpost with the specific id (a_last_post_id)
-            created_last_post = last_post.created
 
-            # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)
-            #created_last_post = created_last_post[0:19]
-            
-##            logging.debug("created_last_post = " + str(created_last_post))
-            
-            # find the next posts to be shown
-            all_blog_posts_plus_one = dataFunctions.find_older_blog_posts(POSTS_PER_PAGE + 1, created_last_post)
-            
-##            logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
+            # check if last_post exists
+            if last_post:
+                created_last_post = last_post.created
 
-            # newer_link shall appear no matter what
-            newer_link = "&#9668; Newer posts"
-            
-            # decide if older_link shall be "Older posts >" or ""
-            older_link = validation.get_older_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
+                # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)
+                #created_last_post = created_last_post[0:19]
+                
+    ##            logging.debug("created_last_post = " + str(created_last_post))
+                
+                # find the next posts to be shown
+                all_blog_posts_plus_one = dataFunctions.find_older_blog_posts(POSTS_PER_PAGE + 1, created_last_post)
+                
+    ##            logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
 
-            # get list of only POSTS_PER_PAGE or less
-            all_blog_posts = dataFunctions.find_older_blog_posts(POSTS_PER_PAGE, created_last_post)
+                # newer_link shall appear no matter what
+                newer_link = "&#9668; Newer posts"
+                
+                # decide if older_link shall be "Older posts >" or ""
+                older_link = validation.get_older_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
+
+                # get list of only POSTS_PER_PAGE or less
+                all_blog_posts = dataFunctions.find_older_blog_posts(POSTS_PER_PAGE, created_last_post)
+
+            else:   # user has typed some random shit in, and last_post doesn't exist
+                self.redirect('/')
+                return
 
         # else, no id, then just render the very first posts
         else:
@@ -650,6 +664,7 @@ class AllPhotos(Handler):
             # find out the created date of the photo with a_first_photo_id (the first photo of the 3 (ROWS_PER_PAGE) shown on specific page)
             first_photo = Photo.get_by_id(int(a_first_photo_id))  # get the blogpost with the specific id (a_first_photo_id)
 
+            # check if first_photo exists
             if first_photo:
                 created_first_photo = first_photo.created
                 
@@ -690,6 +705,7 @@ class AllPhotos(Handler):
             # find out the created date of the photo with a_last_photo_id
             last_photo = Photo.get_by_id(int(a_last_photo_id))  # get the photo with the specific id (a_last_photo_id)
 
+            # check if last_photo exists
             if last_photo:
                 created_last_photo = last_photo.created
 
@@ -876,6 +892,7 @@ class AllVideos(Handler):
             # find out the created date of the video with a_first_video_id (the first video of the 3 (VIDEOS_PER_PAGE) shown on specific page)
             first_video = Video.get_by_id(int(a_first_video_id))  # get the video with the specific id (a_first_video_id)
 
+            # check if first_video exists
             if first_video:
                 created_first_video = first_video.created
                 
@@ -915,6 +932,7 @@ class AllVideos(Handler):
             # find out the created date of the video with a_last_video_id
             last_video = Video.get_by_id(int(a_last_video_id))  # get the video with the specific id (a_last_video_id)
 
+            # check if last_video exists
             if last_video:
                 created_last_video = last_video.created
 

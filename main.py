@@ -875,29 +875,36 @@ class AllVideos(Handler):
 
             # find out the created date of the video with a_first_video_id (the first video of the 3 (VIDEOS_PER_PAGE) shown on specific page)
             first_video = Video.get_by_id(int(a_first_video_id))  # get the video with the specific id (a_first_video_id)
-            created_first_video = first_video.created
-            
-            # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)            
-            #created_last_video = created_last_video[0:19]
-            
-##            logging.debug("created_first_video = " + str(created_first_video))
 
-            # if 'Previous' has been clicked we know that there are at least 3 (VIDEOS_PER_PAGE) videos to show
-            # find the previous videos to be shown
-            all_videos_plus_one = db.GqlQuery("SELECT * FROM Video WHERE created > :1 ORDER BY created ASC", created_first_video).fetch(VIDEOS_PER_PAGE+1)
-##            logging.debug("length of all_videos_plus_one = " + str(len(all_videos_plus_one)))
+            if first_video:
+                created_first_video = first_video.created
+                
+                # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)            
+                #created_last_video = created_last_video[0:19]
+                
+    ##            logging.debug("created_first_video = " + str(created_first_video))
 
-            # next_link shall appear no matter what
-            next_link = "Next &#9658;"
+                # if 'Previous' has been clicked we know that there are at least 3 (VIDEOS_PER_PAGE) videos to show
+                # find the previous videos to be shown
+                all_videos_plus_one = db.GqlQuery("SELECT * FROM Video WHERE created > :1 ORDER BY created ASC", created_first_video).fetch(VIDEOS_PER_PAGE+1)
+    ##            logging.debug("length of all_videos_plus_one = " + str(len(all_videos_plus_one)))
 
-            # decide if previous_link shall be "< Previous" or ""
-            previous_link = validation.get_previous_link(all_videos_plus_one, VIDEOS_PER_PAGE)
+                # next_link shall appear no matter what
+                next_link = "Next &#9658;"
+
+                # decide if previous_link shall be "< Previous" or ""
+                previous_link = validation.get_previous_link(all_videos_plus_one, VIDEOS_PER_PAGE)
 
 
-            all_videos = db.GqlQuery("SELECT * FROM Video WHERE created > :1 ORDER BY created ASC", created_first_video).fetch(VIDEOS_PER_PAGE)
+                all_videos = db.GqlQuery("SELECT * FROM Video WHERE created > :1 ORDER BY created ASC", created_first_video).fetch(VIDEOS_PER_PAGE)
 
-            # revers the list
-            all_videos.reverse()
+                # revers the list
+                all_videos.reverse()
+
+            else:   # user has typed some random shit in
+                self.redirect('/videos')
+                return
+                
                 
             
 
@@ -907,25 +914,31 @@ class AllVideos(Handler):
             
             # find out the created date of the video with a_last_video_id
             last_video = Video.get_by_id(int(a_last_video_id))  # get the video with the specific id (a_last_video_id)
-            created_last_video = last_video.created
 
-            # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)
-            #created_last_video = created_last_video[0:19]
-            
-##            logging.debug("created_last_video = " + str(created_last_video))
-            
-            # find the next videos to be shown
-            all_videos_plus_one = db.GqlQuery("SELECT * FROM Video WHERE created < :1 ORDER BY created DESC", created_last_video).fetch(VIDEOS_PER_PAGE+1)
-##            logging.debug("length of all_videos_plus_one = " + str(len(all_videos_plus_one)))
+            if last_video:
+                created_last_video = last_video.created
 
-            # previous_link shall appear no matter what
-            previous_link = "&#9668; Previous"
-            
-            # decide if next_link shall be "Next >" or ""
-            next_link = validation.get_next_link(all_videos_plus_one, VIDEOS_PER_PAGE)
+                # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)
+                #created_last_video = created_last_video[0:19]
+                
+    ##            logging.debug("created_last_video = " + str(created_last_video))
+                
+                # find the next videos to be shown
+                all_videos_plus_one = db.GqlQuery("SELECT * FROM Video WHERE created < :1 ORDER BY created DESC", created_last_video).fetch(VIDEOS_PER_PAGE+1)
+    ##            logging.debug("length of all_videos_plus_one = " + str(len(all_videos_plus_one)))
 
-            # only get list of 3 or less
-            all_videos = db.GqlQuery("SELECT * FROM Video WHERE created < :1 ORDER BY created DESC", created_last_video).fetch(VIDEOS_PER_PAGE)
+                # previous_link shall appear no matter what
+                previous_link = "&#9668; Previous"
+                
+                # decide if next_link shall be "Next >" or ""
+                next_link = validation.get_next_link(all_videos_plus_one, VIDEOS_PER_PAGE)
+
+                # only get list of 3 or less
+                all_videos = db.GqlQuery("SELECT * FROM Video WHERE created < :1 ORDER BY created DESC", created_last_video).fetch(VIDEOS_PER_PAGE)
+
+            else:   # user has typed some random shit in
+                self.redirect('/videos')
+                return
 
         # else, no id, then just render the very first videos
         else:

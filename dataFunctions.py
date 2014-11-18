@@ -27,6 +27,7 @@ def retrieveUserId(userName):
     return None
 
 
+#### for blog posts ###
 
 def find_all_blog_posts():
     """ Perform db.GqlQuery and returns all blog posts from database """
@@ -93,6 +94,35 @@ def find_blog_posts_between_and_older(max_results, date_time_oldest, date_time_y
     return in_between_and_older_blog_posts
 
 
+### for photos ###
+
+def find_all_photos():
+    """ Perform db.GqlQuery and returns all photos from database """
+    return find_limited_photos(1000)
+
+
+def find_limited_photos(max_results):
+    """ Takes a number max_results and perform db.GqlQuery and returns photos from database within limit of max_results """
+
+    limited_photos = db.GqlQuery("SELECT * FROM Photo ORDER BY created DESC").fetch(max_results)
+    return limited_photos
+
+def find_newer_photos(max_results, date_time):
+    """ Takes a number max_results and a date_time, then perform db.GqlQuery and
+        returns photos from database where 'created' is bigger than date_time (newer photos)"""
+    
+    newer_photos = db.GqlQuery("SELECT * FROM Photo WHERE created > :1 ORDER BY created ASC", date_time).fetch(max_results)
+
+    return newer_photos
+
+
+def find_older_photos(max_results, date_time):
+    """ Takes a number max_results and a date_time, then perform db.GqlQuery and
+        returns photos from database where 'created' is smaller than date_time (older photos)"""
+    
+    older_photos = db.GqlQuery("SELECT * FROM Photo WHERE created < :1 ORDER BY created DESC", date_time).fetch(max_results)
+
+    return older_photos
 
 
 

@@ -79,15 +79,6 @@ class BlogPost(db.Model): # abbreviated 'bp'
     _string_date_new = ""
 
 
-##class PostPart(db.Model):  # abbreviated 'pp'
-##    parent_blog_post = db.ReferenceProperty(BlogPost, collection_name='post_parts')   # ReferenceProperty reference to another db.Model
-##    
-##    img_format = db.StringProperty(required = False)
-##    img = db.StringProperty(required = False)
-##    txt_below_img = db.StringProperty(required = False)
-##    rank = db.StringProperty(required = False)
-
-
 class RegisteredUsers(db.Model):  #  --> ru
     name = db.StringProperty(required = True)
     password_hashed = db.StringProperty(required = True)  # (name + pw + salt) hexdigested and then pipe salt with format "hexdigestedValue|salt"
@@ -282,21 +273,6 @@ class AddNewBlogPost(Handler):
         
         self.render_AddNewBlogPost("", bp, "by Kirstine Brørup Nielsen")
 
-##        post_parts_list = []
-##        
-##        for i in range(1,5,1):
-##        
-##
-##            pp = PostPart(img_format = "",
-##                          img = "",
-##                          txt_below_img = "",
-##                          rank = "")
-##
-##            post_parts_list.append(pp)
-##        
-##        # render "blog_post_entry.html" 
-##        self.render_AddNewBlogPost("", bp, post_parts_list, "by Kirstine Brørup Nielsen")
-
  
     def get(self):
         the_RU = check_user_id_cookie(self.request)
@@ -335,34 +311,7 @@ class AddNewBlogPost(Handler):
         
         # create BlogPost item in db
         bp = BlogPost(headline = headline_blog, text = text_blog, author = author_blog)
-        
-
-        #logging.debug("bp.text = " + bp.text)
-
-##        # list for all post parts
-##        blog_post_parts_list = []
-##        
-##        # if different amount of img's is needed then change the second paramter in range(a,b,c)
-##        for i in range(0,4,1):
-##            
-##            L_P_blog = self.request.get("L_or_P_img"+str(i)).strip()  # a string
-##            img_blog = self.request.get("img"+str(i)).strip()  # a string
-##            text_below_img_blog = self.request.get("text_below_img"+str(i)).strip()  # a string
-##            rank_img = str(i)
-##
-##            
-##            # create PostPart item in db
-##            pp = PostPart(img_format = L_P_blog,
-##                          img = img_blog,
-##                          txt_below_img = text_below_img_blog,
-##                          rank = rank_img)
-##
-##            blog_post_parts_list.append(pp)
-        
-        
-
-        #logging.debug("bp.string_date = " + bp.string_date)
-        
+               
 
         # check if all mandatory fields are filled out
         if validation.are_all_fields_filled(headline_blog, text_blog):
@@ -377,14 +326,6 @@ class AddNewBlogPost(Handler):
             else:  # xxxxx is not substituted
                 # render "blog_post_entry.html" and display error message and redisplay what was filled in
                 self.render_AddNewBlogPost("Substitute the 'xxxxx'", bp, author_blog)
-            
-
-##            # can't do the below before bp is put()
-##            for post_part in blog_post_parts_list:
-##                #logging.debug("post_part.txt_below_img = " + post_part.txt_below_img)
-##                post_part.parent_blog_post = bp
-##                post_part.put()
-
             
             
         else:  # not all mandatory fields are filled out
@@ -410,7 +351,7 @@ class AllBlogPosts(Handler):
         
         # if there is a_first_post_id, then 'newer posts' has been clicked
         if a_first_post_id:
-            logging.debug("Goes into if: 'newer posts' has been clicked")
+##            logging.debug("Goes into if: 'newer posts' has been clicked")
 
             # find out the created date of the post with a_first_post_id (the first post of the 3 (POSTS_PER_PAGE) shown on specific page)
             first_post = BlogPost.get_by_id(int(a_first_post_id))  # get the blogpost with the specific id (a_first_post_id)
@@ -419,13 +360,13 @@ class AllBlogPosts(Handler):
             # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)            
             #created_first_post = created_first_post[0:19]
             
-            logging.debug("created_first_post = " + str(created_first_post))
+##            logging.debug("created_first_post = " + str(created_first_post))
 
             # if 'newer posts' has been clicked we know that there are at least POSTS_PER_PAGE posts to show
             # find the younger posts to be shown
             all_blog_posts_plus_one = dataFunctions.find_newer_blog_posts(POSTS_PER_PAGE + 1, created_first_post)
             
-            logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
+##            logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
 
             # older_link shall appear no matter what
             older_link = "Older posts &#9658;"
@@ -443,7 +384,7 @@ class AllBlogPosts(Handler):
 
         # elif there is a_last_post_id, then 'older posts' has been clicked
         elif a_last_post_id:
-            logging.debug("Goes into else if: 'older posts' has been clicked")
+##            logging.debug("Goes into else if: 'older posts' has been clicked")
             
             # find out the created date of the post with a_last_post_id
             last_post = BlogPost.get_by_id(int(a_last_post_id))  # get the blogpost with the specific id (a_last_post_id)
@@ -452,12 +393,12 @@ class AllBlogPosts(Handler):
             # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)
             #created_last_post = created_last_post[0:19]
             
-            logging.debug("created_last_post = " + str(created_last_post))
+##            logging.debug("created_last_post = " + str(created_last_post))
             
             # find the next posts to be shown
             all_blog_posts_plus_one = dataFunctions.find_older_blog_posts(POSTS_PER_PAGE + 1, created_last_post)
             
-            logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
+##            logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
 
             # newer_link shall appear no matter what
             newer_link = "&#9668; Newer posts"
@@ -471,7 +412,7 @@ class AllBlogPosts(Handler):
         # else, no id, then just render the very first posts
         else:
             
-            logging.debug("Goes into else: just display very first posts")
+##            logging.debug("Goes into else: just display very first posts")
             all_blog_posts_plus_one = dataFunctions.find_limited_blog_posts(POSTS_PER_PAGE + 1)
 
             # newer_link shall never appear no matter what
@@ -552,7 +493,7 @@ class FullYearBlogPosts (Handler):
                 
                 # decide if older_link shall be "Older posts >" or ""
                 all_blog_posts_plus_one = dataFunctions.find_blog_posts_between(POSTS_PER_PAGE + 1, end_of_previous_year, start_of_next_year)
-                logging.debug("in year: length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
+##                logging.debug("in year: length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
                 older_link = validation.get_older_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
             
                 # find blog posts for this specific year, get list of only POSTS_PER_PAGE or less
@@ -616,20 +557,18 @@ class SingleBlogPost(Handler):
 
     def get(self):        
         blog_post_id = self.request.get("single_post_id")  # if any single blog post is clicked, there is: blog_post_id (format string)
-
-        #logging.debug("blog_post = " + blog_post)
         
         if blog_post_id:  # means there is a blog_post_id
-            #logging.debug("goes into if statement")
+##            logging.debug("goes into if statement")
             specific_blog_post = BlogPost.get_by_id(int(blog_post_id))  # get the specific_blog_post with the specific id (blog_post_id)
             if specific_blog_post:
                 self.render_front(specific_blog_post, make_dict_blog())
             else:
-                #logging.debug("goes into first else statement")
+##                logging.debug("goes into first else statement")
                 self.redirect('/')
                 
         else:  # no blog post
-            #logging.debug("goes into else statement")
+##            logging.debug("goes into else statement")
             self.redirect('/')
 
 
@@ -678,10 +617,7 @@ class AddPhoto(Handler):
             # render "photos_add_photo.html"!
             self.render_AddPhoto("", "", "", "")
 
-        else:
-            # don't process - instead redisplay page
-            
-            # not all mandatory fields filled out
+        else:   # not all mandatory fields filled out, so don't process - instead redisplay page            
             # render "photos_add_photo.html" and display error message and redisplay what was filled in
             self.render_AddPhoto('Mandatory field(s) either missing or wrong', L_P_photo, img_file, text_below_img)
 
@@ -689,46 +625,137 @@ class AddPhoto(Handler):
 
 # '/photos'   
 class AllPhotos(Handler):
-    def render_front(self, a_headline, a_list):  # 'youngest' created date shown first by default
-        # passing contents into the html file, nb you don't need to pass in post_parts
-        self.render("photos_main.html", headline_photos=a_headline, photo_list_of_lists=a_list)
+    def render_front(self, a_headline, a_list, a_newer_link, an_older_link):  # 'youngest' created date shown first by default
+        # passing contents into the html file
+        self.render("photos_main.html", headline_photos=a_headline, photo_list_of_lists=a_list,
+                    new_link=a_newer_link, old_link=an_older_link)
         
 
     def get(self):
-        all_photos = db.GqlQuery("SELECT * FROM Photo ORDER BY created DESC").fetch(1000)
 
-        MAX_IMG_ON_ROW_INT = 7
-        MAX_IMG_ON_ROW_DECIMAL = 7.0
+        ROWS_PER_PAGE = 5  # constant to decide the max rows to show per page
         
-        logging.debug("length of all_photos = " + str(len(all_photos)))
+        MAX_IMG_ON_ROW_INT = 7
+
+        MAX_IMG_ON_ROW_DECIMAL = 7.0
+
+        # maybe a link has been clicked!!!
+        a_first_photo_id = self.request.get("after_id")  # if previous link is clicked, there is a_first_photo_id
+        a_last_photo_id = self.request.get("before_id")  # if next link is clicked, there is a_last_photo_id
+
+        # if there is a_first_photo_id, then 'previous' has been clicked
+        if a_first_photo_id:
+##            logging.debug("Goes into if: 'previous' has been clicked")
+
+            # find out the created date of the photo with a_first_photo_id (the first photo of the 3 (ROWS_PER_PAGE) shown on specific page)
+            first_photo = Photo.get_by_id(int(a_first_photo_id))  # get the blogpost with the specific id (a_first_photo_id)
+            created_first_photo = first_photo.created
+            
+            # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)            
+            #created_first_photo = created_first_photo[0:19]
+            
+##            logging.debug("created_first_photo = " + str(created_first_photo))
+
+            # if 'previous' has been clicked we know that there are at least ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT photos to show
+            # find the younger photos to be shown
+            all_photos_plus_one = dataFunctions.find_newer_photos(ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT + 1, created_first_photo)
+            
+##            logging.debug("length of all_photos_plus_one = " + str(len(all_photos_plus_one)))
+
+            # older_link shall appear no matter what
+            older_link = "Next &#9658;"
+
+            # decide if newer_link shall be "< previous" or ""
+            newer_link = validation.get_previous_link(all_photos_plus_one, ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT)
+
+            # get list of only ROWS_PER_PAGE  * MAX_IMG_ON_ROW_INT or less
+            all_photos = dataFunctions.find_newer_photos(ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT, created_first_photo)
+
+            # revers the list
+            all_photos.reverse()
+                
+            
+
+        # elif there is a_last_photo_id, then 'next' has been clicked
+        elif a_last_photo_id:
+##            logging.debug("Goes into else if: 'next' has been clicked")
+            
+            # find out the created date of the photo with a_last_photo_id
+            last_photo = Photo.get_by_id(int(a_last_photo_id))  # get the photo with the specific id (a_last_photo_id)
+            created_last_photo = last_photo.created
+
+            # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)
+            #created_last_photo = created_last_photo[0:19]
+            
+##            logging.debug("created_last_photo = " + str(created_last_photo))
+            
+            # find the next photos to be shown
+            all_photos_plus_one = dataFunctions.find_older_photos(ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT + 1, created_last_photo)
+            
+##            logging.debug("length of all_photos_plus_one = " + str(len(all_photos_plus_one)))
+
+            # newer_link shall appear no matter what
+            newer_link = "&#9668; Previous"
+            
+            # decide if older_link shall be "Next >" or ""
+            older_link = validation.get_next_link(all_photos_plus_one, ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT)
+
+            # get list of only ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT or less
+            all_photos = dataFunctions.find_older_photos(ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT, created_last_photo)
+
+
+
+        # else, no id, then just render the very first photos
+        else:
+            
+##            logging.debug("Goes into else: just display very first photos")
+            all_photos_plus_one = dataFunctions.find_limited_photos(ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT + 1)
+
+            # newer_link shall never appear no matter what
+            newer_link = ""
+            
+            # decide if older_link shall be "Next >" or ""
+            older_link = validation.get_next_link(all_photos_plus_one, ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT)
+
+            # get list of only ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT or less
+            all_photos = dataFunctions.find_limited_photos(ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT)    
+
+
+        # Below how the rows are organized
+        
+##        logging.debug("length of all_photos = " + str(len(all_photos)))
 
         if len(all_photos) < 1:
             # no images so pass in an empty list
             photo_all_rows_list = []
-            self.render_front("Sorry - gallery is empty", photo_all_rows_list)
+            self.render_front("Sorry - Photo gallery is empty", photo_all_rows_list, newer_link, older_link)
         else:
             # how many rows do we need: len(all_photos) / MAX_IMG_ON_ROW_DECIMAL
             rows_needed_decimal = len(all_photos) / MAX_IMG_ON_ROW_DECIMAL
 ##            logging.debug("rows_needed_decimal = " + str(rows_needed_decimal))
-            
+
+            # always round up
             rows_needed_round = math.ceil(rows_needed_decimal)
 ##            logging.debug("rows_needed_round = " + str(rows_needed_round))
-            
+
+            # convert to an integer
             rows_needed_int = int(rows_needed_round)
 ##            logging.debug("rows_needed_int = " + str(rows_needed_int))
 
-            if (len(all_photos) % MAX_IMG_ON_ROW_INT) != 0:
+            if (len(all_photos) % MAX_IMG_ON_ROW_INT) != 0:   # fully filled rows will be one less than total rows
 ##                logging.debug("goes into not equal zero")
-                
                 rows_fully_filled = rows_needed_int - 1
-            else:
+                
+            else:  # no leftovers (that means no row that is not fully filled)
 ##                logging.debug("goes into equal zero")
                 rows_fully_filled = rows_needed_int
+
+            # calculate how many img's there shall be in the the row not fully filled    
             amount_img_in_row_not_filled = len(all_photos) % MAX_IMG_ON_ROW_INT
 ##            logging.debug("rows_fully_filled = " + str(rows_fully_filled))
 ##            logging.debug("amount_img_in_row_not_filled = " + str(amount_img_in_row_not_filled))
 
-            # create a list of lists where each inner list represent a row (max 7 img's in a row)
+            # create a list of lists where each inner list represents a row (max 7 img's in a row)
             photo_all_rows_list = []  # will become a list of lists
             
             counter = 0
@@ -740,16 +767,19 @@ class AllPhotos(Handler):
                 photo_all_rows_list.append(single_row)
 ##            logging.debug("length outer list = " + str(len(photo_all_rows_list)))
 
-            single_row = []  
-            for img in range(amount_img_in_row_not_filled):
-                single_row.append(all_photos[counter])
-                counter = counter + 1
-            photo_all_rows_list.append(single_row)
+            # only if we need a not fully filled row do the following if statement
+            if (len(all_photos) % MAX_IMG_ON_ROW_INT) != 0:
+##                logging.debug("we construct a not full row")
+                single_row = []  
+                for img in range(amount_img_in_row_not_filled):
+                    single_row.append(all_photos[counter])
+                    counter = counter + 1
+                photo_all_rows_list.append(single_row)
                 
             
 ##            logging.debug("length outer list = " + str(len(photo_all_rows_list)))
             
-            self.render_front("Click photo to enlarge", photo_all_rows_list)
+            self.render_front("Click photo to enlarge", photo_all_rows_list, newer_link, older_link)
             
 
     def post(self):
@@ -828,7 +858,7 @@ class AllVideos(Handler):
         
         # if there is a_first_video_id, then 'Previous' has been clicked
         if a_first_video_id:
-            logging.debug("Goes into if: 'Previous' has been clicked")
+##            logging.debug("Goes into if: 'Previous' has been clicked")
 
             # find out the created date of the video with a_first_video_id (the first video of the 3 (VIDEOS_PER_PAGE) shown on specific page)
             first_video = Video.get_by_id(int(a_first_video_id))  # get the video with the specific id (a_first_video_id)
@@ -837,12 +867,12 @@ class AllVideos(Handler):
             # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)            
             #created_last_video = created_last_video[0:19]
             
-            logging.debug("created_first_video = " + str(created_first_video))
+##            logging.debug("created_first_video = " + str(created_first_video))
 
             # if 'Previous' has been clicked we know that there are at least 3 (VIDEOS_PER_PAGE) videos to show
             # find the previous videos to be shown
             all_videos_plus_one = db.GqlQuery("SELECT * FROM Video WHERE created > :1 ORDER BY created ASC", created_first_video).fetch(VIDEOS_PER_PAGE+1)
-            logging.debug("length of all_videos_plus_one = " + str(len(all_videos_plus_one)))
+##            logging.debug("length of all_videos_plus_one = " + str(len(all_videos_plus_one)))
 
             # next_link shall appear no matter what
             next_link = "Next &#9658;"
@@ -860,7 +890,7 @@ class AllVideos(Handler):
 
         # elif there is a_last_video_id, then 'Next' has been clicked
         elif a_last_video_id:
-            logging.debug("Goes into else if: 'Next' has been clicked")
+##            logging.debug("Goes into else if: 'Next' has been clicked")
             
             # find out the created date of the video with a_last_video_id
             last_video = Video.get_by_id(int(a_last_video_id))  # get the video with the specific id (a_last_video_id)
@@ -869,11 +899,11 @@ class AllVideos(Handler):
             # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)
             #created_last_video = created_last_video[0:19]
             
-            logging.debug("created_last_video = " + str(created_last_video))
+##            logging.debug("created_last_video = " + str(created_last_video))
             
             # find the next videos to be shown
             all_videos_plus_one = db.GqlQuery("SELECT * FROM Video WHERE created < :1 ORDER BY created DESC", created_last_video).fetch(VIDEOS_PER_PAGE+1)
-            logging.debug("length of all_videos_plus_one = " + str(len(all_videos_plus_one)))
+##            logging.debug("length of all_videos_plus_one = " + str(len(all_videos_plus_one)))
 
             # previous_link shall appear no matter what
             previous_link = "&#9668; Previous"
@@ -887,7 +917,7 @@ class AllVideos(Handler):
         # else, no id, then just render the very first videos
         else:
             
-            logging.debug("Goes into else: just display very first videos")
+##            logging.debug("Goes into else: just display very first videos")
             all_videos_plus_one = db.GqlQuery("SELECT * FROM Video ORDER BY created DESC").fetch(VIDEOS_PER_PAGE+1)
 
             # previous_link shall never appear no matter what
@@ -898,7 +928,7 @@ class AllVideos(Handler):
 
             # only get list of 3 or less
             all_videos = db.GqlQuery("SELECT * FROM Video ORDER BY created DESC").fetch(VIDEOS_PER_PAGE)
-            logging.debug("lenght all_videos = " + str(len(all_videos)))
+##            logging.debug("lenght all_videos = " + str(len(all_videos)))
 
             if len(all_videos) < 1:
                 headline="Sorry - no videos"
@@ -948,7 +978,7 @@ class ContactUs(Handler):
 
         if all_fields_filled:
             
-            logging.debug("Email is SEND")
+##            logging.debug("Email is SEND")
 
             # send user_message_input to email blogkirstine@gmail.com
             emailFunctions.sendEmail(username_input, user_email_input, user_message_input)
@@ -958,7 +988,7 @@ class ContactUs(Handler):
         # else
         else:  # not all fields filled out
             
-            logging.debug("Email NOT send")
+##            logging.debug("Email NOT send")
             
             self.render_contact_us("Sorry, we couldn't send your message  -  check the fields below", 
                                    username_input, name_error,

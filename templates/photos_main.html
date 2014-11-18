@@ -9,47 +9,47 @@
 				
 			</div>
 			<div class="col-1 end"></div>
-		</div>
+	</div>
 		
 
-		<div class="row" style="padding-top: 10px;">
-			<div class="col-1"></div>
-			<div class="col-10" >
-				
-				
-				{% for image_list in photo_list_of_lists %}
-				<div class="row" style=" white-space: wrap;">	
-					{% for image in image_list %}
-						{% if image.img_format == "l" %}
-							<div class="col-77" >
-								<img id="specific_img_land" src="../images/{{image.img}}" alt="photo" href="klematis_big.htm">
-							</div>
-						{% endif %}
-						{% if image.img_format == "p" %}
-							<div class="col-77" >
-								<img id="specific_img_portrait" src="../images/{{image.img}}" alt="photo" href="klematis_big.htm">
-							</div>
-						{% endif %}
-					{% endfor %}
-				</div>
+	<div class="row" style="padding-top: 10px;">
+		<div class="col-1"></div>
+		<div class="col-10" >
+			
+			
+			{% for image_list in photo_list_of_lists %}
+			<div class="row" style=" white-space: wrap;">	
+				{% for image in image_list %}
+					{% if image.img_format == "l" %}
+						<div class="col-77" >
+							<img id="specific_img_land" src="../images/{{image.img}}" alt="photo" href="klematis_big.htm">
+						</div>
+					{% endif %}
+					{% if image.img_format == "p" %}
+						<div class="col-77" >
+							<img id="specific_img_portrait" src="../images/{{image.img}}" alt="photo" href="klematis_big.htm">
+						</div>
+					{% endif %}
 				{% endfor %}
+			</div>
+			{% endfor %}
+		</div>
+		<div class="col-1 end"></div>
+	</div>
+		
+		
+	{% if length(photo_list_of_lists) > 0 %}
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-10" style="display:flex; ">
+				<div class="col-4"></div>
+				<div class="col-2" style="padding-bottom:50px; text-align: center;"><a class="new_old_link" href="/photos?after_id={{photo_list_of_lists[0][0].key().id()}}">{{new_link}}</a></div>
+				<div class="col-2" style="text-align: center;"><a class="new_old_link" href="/photos?before_id={{photo_list_of_lists[-1][-1].key().id()}}">{{old_link}}</a></div>
+				<div class="col-4"></div>
 			</div>
 			<div class="col-1 end"></div>
 		</div>
-		
-		
-		{% if length(photo_list_of_lists) > 0 %}
-			<div class="row">
-				<div class="col-1"></div>
-				<div class="col-10" style="display:flex; ">
-					<div class="col-4"></div>
-					<div class="col-2" style="padding-bottom:50px; text-align: center;"><a class="new_old_link" href="/photos?after_id={{photo_list_of_lists[0][0].key().id()}}">{{new_link}}</a></div>
-					<div class="col-2" style="text-align: center;"><a class="new_old_link" href="/photos?before_id={{photo_list_of_lists[-1][-1].key().id()}}">{{old_link}}</a></div>
-					<div class="col-4"></div>
-				</div>
-				<div class="col-1 end"></div>
-			</div>
-		{% endif %}
+	{% endif %}
 	
 {% endblock %}
 

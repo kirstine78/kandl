@@ -353,11 +353,12 @@ class AllBlogPosts(Handler):
         if a_first_post_id:
 ##            logging.debug("Goes into if: 'newer posts' has been clicked")
 
-            # find out the created date of the post with a_first_post_id (the first post of the 3 (POSTS_PER_PAGE) shown on specific page)
+            # find out the post with a_first_post_id (the first post of the 3 (POSTS_PER_PAGE) shown on specific page)
             first_post = BlogPost.get_by_id(int(a_first_post_id))  # get the blogpost with the specific id (a_first_post_id)
 
             # check if first_post exists
             if first_post:
+                # find out the created date of the post with a_first_post_id
                 created_first_post = first_post.created
                 
                 # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)            
@@ -393,11 +394,12 @@ class AllBlogPosts(Handler):
         elif a_last_post_id:
 ##            logging.debug("Goes into else if: 'older posts' has been clicked")
             
-            # find out the created date of the post with a_last_post_id
+            # find the post with a_last_post_id
             last_post = BlogPost.get_by_id(int(a_last_post_id))  # get the blogpost with the specific id (a_last_post_id)
 
             # check if last_post exists
             if last_post:
+                # find out the created date of the post with a_last_post_id
                 created_last_post = last_post.created
 
                 # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)
@@ -471,34 +473,52 @@ class FullYearBlogPosts (Handler):
 
             if a_first_post_id:   # newer posts link is clicked, we wanna find younger posts
 
-                # older_link shall appear no matter what
-                older_link = "Older posts &#9658;"
+                # get the post with that id
+                post_with_that_id = BlogPost.get_by_id(int(a_first_post_id))  # get the blogpost with the specific id (a_first_post_id)
 
-                # decide if newer_link shall be "< Newer posts" or ""
-                all_blog_posts_plus_one = dataFunctions.find_blog_posts_between_and_younger(POSTS_PER_PAGE + 1, end_of_previous_year, start_of_next_year, a_first_post_id)
-##                logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
-                newer_link = validation.get_newer_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
+                if post_with_that_id:
 
-                # get list of only POSTS_PER_PAGE or less
-                all_blog_posts = dataFunctions.find_blog_posts_between_and_younger(POSTS_PER_PAGE, end_of_previous_year, start_of_next_year, a_first_post_id)
+                    # older_link shall appear no matter what
+                    older_link = "Older posts &#9658;"
 
-                # reverse, cause you get ASC and you want DESC
-                all_blog_posts.reverse()
+                    # decide if newer_link shall be "< Newer posts" or ""
+                    all_blog_posts_plus_one = dataFunctions.find_blog_posts_between_and_younger(POSTS_PER_PAGE + 1, end_of_previous_year, start_of_next_year, a_first_post_id)
+    ##                logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
+                    newer_link = validation.get_newer_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
+
+                    # get list of only POSTS_PER_PAGE or less
+                    all_blog_posts = dataFunctions.find_blog_posts_between_and_younger(POSTS_PER_PAGE, end_of_previous_year, start_of_next_year, a_first_post_id)
+
+                    # reverse, cause you get ASC and you want DESC
+                    all_blog_posts.reverse()
+
+                else:   # user has typed some random shit in for id, and post_with_that_id doesn't exist
+                    self.redirect('/')
+                    return
 
                 
                 
             elif a_last_post_id:    # older posts link is clicked, we wanna find older posts
-                
-                # newer_link shall appear no matter what
-                newer_link = "&#9668; Newer posts"
-                
-                # decide if older_link shall be "Older posts >" or ""
-                all_blog_posts_plus_one = dataFunctions.find_blog_posts_between_and_older(POSTS_PER_PAGE + 1, end_of_previous_year, start_of_next_year, a_last_post_id)
-##                logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
-                older_link = validation.get_older_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
 
-                # get just the amount (POSTS_PER_PAGE)
-                all_blog_posts = dataFunctions.find_blog_posts_between_and_older(POSTS_PER_PAGE, end_of_previous_year, start_of_next_year, a_last_post_id)
+                # get the post with that id
+                post_with_that_id = BlogPost.get_by_id(int(a_last_post_id))  # get the blogpost with the specific id (a_last_post_id)
+
+                if post_with_that_id:
+                
+                    # newer_link shall appear no matter what
+                    newer_link = "&#9668; Newer posts"
+                    
+                    # decide if older_link shall be "Older posts >" or ""
+                    all_blog_posts_plus_one = dataFunctions.find_blog_posts_between_and_older(POSTS_PER_PAGE + 1, end_of_previous_year, start_of_next_year, a_last_post_id)
+    ##                logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
+                    older_link = validation.get_older_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
+
+                    # get just the amount (POSTS_PER_PAGE)
+                    all_blog_posts = dataFunctions.find_blog_posts_between_and_older(POSTS_PER_PAGE, end_of_previous_year, start_of_next_year, a_last_post_id)
+
+                else:   # user has typed some random shit in for id, and post_with_that_id doesn't exist
+                    self.redirect('/')
+                    return
 
             else:    # neither newer or older link has been clicked. This is the year link that has been clicked
 
@@ -661,11 +681,12 @@ class AllPhotos(Handler):
         if a_first_photo_id:
 ##            logging.debug("Goes into if: 'previous' has been clicked")
 
-            # find out the created date of the photo with a_first_photo_id (the first photo of the 3 (ROWS_PER_PAGE) shown on specific page)
+            # find out the photo with a_first_photo_id (the first photo of the 3 (ROWS_PER_PAGE) shown on specific page)
             first_photo = Photo.get_by_id(int(a_first_photo_id))  # get the blogpost with the specific id (a_first_photo_id)
 
             # check if first_photo exists
             if first_photo:
+                # find out the created date of the photo with a_first_photo_id
                 created_first_photo = first_photo.created
                 
                 # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)            
@@ -702,11 +723,12 @@ class AllPhotos(Handler):
         elif a_last_photo_id:
 ##            logging.debug("Goes into else if: 'next' has been clicked")
             
-            # find out the created date of the photo with a_last_photo_id
+            # find out the photo with a_last_photo_id
             last_photo = Photo.get_by_id(int(a_last_photo_id))  # get the photo with the specific id (a_last_photo_id)
 
             # check if last_photo exists
             if last_photo:
+                # find out the created date of the photo with a_last_photo_id
                 created_last_photo = last_photo.created
 
                 # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)
@@ -889,11 +911,12 @@ class AllVideos(Handler):
         if a_first_video_id:
 ##            logging.debug("Goes into if: 'Previous' has been clicked")
 
-            # find out the created date of the video with a_first_video_id (the first video of the 3 (VIDEOS_PER_PAGE) shown on specific page)
+            # find out the video with a_first_video_id (the first video of the 3 (VIDEOS_PER_PAGE) shown on specific page)
             first_video = Video.get_by_id(int(a_first_video_id))  # get the video with the specific id (a_first_video_id)
 
             # check if first_video exists
             if first_video:
+                # find out the created date of the video with a_first_video_id
                 created_first_video = first_video.created
                 
                 # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)            
@@ -929,11 +952,12 @@ class AllVideos(Handler):
         elif a_last_video_id:
 ##            logging.debug("Goes into else if: 'Next' has been clicked")
             
-            # find out the created date of the video with a_last_video_id
+            # find out the video with a_last_video_id
             last_video = Video.get_by_id(int(a_last_video_id))  # get the video with the specific id (a_last_video_id)
 
             # check if last_video exists
             if last_video:
+                # find out the created date of the video with a_last_video_id
                 created_last_video = last_video.created
 
                 # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)

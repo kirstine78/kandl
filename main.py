@@ -649,30 +649,37 @@ class AllPhotos(Handler):
 
             # find out the created date of the photo with a_first_photo_id (the first photo of the 3 (ROWS_PER_PAGE) shown on specific page)
             first_photo = Photo.get_by_id(int(a_first_photo_id))  # get the blogpost with the specific id (a_first_photo_id)
-            created_first_photo = first_photo.created
-            
-            # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)            
-            #created_first_photo = created_first_photo[0:19]
-            
-##            logging.debug("created_first_photo = " + str(created_first_photo))
 
-            # if 'previous' has been clicked we know that there are at least ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT photos to show
-            # find the younger photos to be shown
-            all_photos_plus_one = dataFunctions.find_newer_photos(ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT + 1, created_first_photo)
-            
-##            logging.debug("length of all_photos_plus_one = " + str(len(all_photos_plus_one)))
+            if first_photo:
+                created_first_photo = first_photo.created
+                
+                # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)            
+                #created_first_photo = created_first_photo[0:19]
+                
+    ##            logging.debug("created_first_photo = " + str(created_first_photo))
 
-            # older_link shall appear no matter what
-            older_link = "Next &#9658;"
+                # if 'previous' has been clicked we know that there are at least ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT photos to show
+                # find the younger photos to be shown
+                all_photos_plus_one = dataFunctions.find_newer_photos(ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT + 1, created_first_photo)
+                
+    ##            logging.debug("length of all_photos_plus_one = " + str(len(all_photos_plus_one)))
 
-            # decide if newer_link shall be "< previous" or ""
-            newer_link = validation.get_previous_link(all_photos_plus_one, ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT)
+                # older_link shall appear no matter what
+                older_link = "Next &#9658;"
 
-            # get list of only ROWS_PER_PAGE  * MAX_IMG_ON_ROW_INT or less
-            all_photos = dataFunctions.find_newer_photos(ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT, created_first_photo)
+                # decide if newer_link shall be "< previous" or ""
+                newer_link = validation.get_previous_link(all_photos_plus_one, ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT)
 
-            # revers the list
-            all_photos.reverse()
+                # get list of only ROWS_PER_PAGE  * MAX_IMG_ON_ROW_INT or less
+                all_photos = dataFunctions.find_newer_photos(ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT, created_first_photo)
+
+                # revers the list
+                all_photos.reverse()
+
+            else:   # user has typed some random shit in
+                self.redirect('/photos')
+                return
+
                 
             
 
@@ -682,26 +689,32 @@ class AllPhotos(Handler):
             
             # find out the created date of the photo with a_last_photo_id
             last_photo = Photo.get_by_id(int(a_last_photo_id))  # get the photo with the specific id (a_last_photo_id)
-            created_last_photo = last_photo.created
 
-            # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)
-            #created_last_photo = created_last_photo[0:19]
-            
-##            logging.debug("created_last_photo = " + str(created_last_photo))
-            
-            # find the next photos to be shown
-            all_photos_plus_one = dataFunctions.find_older_photos(ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT + 1, created_last_photo)
-            
-##            logging.debug("length of all_photos_plus_one = " + str(len(all_photos_plus_one)))
+            if last_photo:
+                created_last_photo = last_photo.created
 
-            # newer_link shall appear no matter what
-            newer_link = "&#9668; Previous"
-            
-            # decide if older_link shall be "Next >" or ""
-            older_link = validation.get_next_link(all_photos_plus_one, ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT)
+                # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)
+                #created_last_photo = created_last_photo[0:19]
+                
+    ##            logging.debug("created_last_photo = " + str(created_last_photo))
+                
+                # find the next photos to be shown
+                all_photos_plus_one = dataFunctions.find_older_photos(ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT + 1, created_last_photo)
+                
+    ##            logging.debug("length of all_photos_plus_one = " + str(len(all_photos_plus_one)))
 
-            # get list of only ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT or less
-            all_photos = dataFunctions.find_older_photos(ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT, created_last_photo)
+                # newer_link shall appear no matter what
+                newer_link = "&#9668; Previous"
+                
+                # decide if older_link shall be "Next >" or ""
+                older_link = validation.get_next_link(all_photos_plus_one, ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT)
+
+                # get list of only ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT or less
+                all_photos = dataFunctions.find_older_photos(ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT, created_last_photo)
+
+            else:   # user has typed some random shit in
+                self.redirect('/photos')
+                return
 
 
 

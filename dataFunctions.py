@@ -1,5 +1,6 @@
 import random
 import string
+import math
 
 from google.appengine.ext import db
 import main
@@ -125,6 +126,71 @@ def find_older_photos(max_results, date_time):
     return older_photos
 
 
+# Photo helper function to organize the rows correctly
+def get_rows_of_photos_list_of_list(list_of_photos_db_query, max_img_each_row_decimal, max_img_each_row_integer):
+    """ Takes a list of photos (list_of_photos_db_query), two numbers (max_img_each_row_decimal & max_img_each_row_integer)
+        returns a list of lists with each inner list representing a row with img's """
+
+    all_the_photos = list_of_photos_db_query
+    length_all_photos = len(all_the_photos)
+    
+    MAX_IMGS_ON_ROW_DECIMAL = max_img_each_row_decimal
+    MAX_IMGS_ON_ROW_INT = max_img_each_row_integer
+
+    
+    # how many rows do we need: len(all_the_photos) / MAX_IMGS_ON_ROW_DECIMAL
+    rows_needed_decimal = length_all_photos / MAX_IMGS_ON_ROW_DECIMAL
+##            logging.debug("rows_needed_decimal = " + str(rows_needed_decimal))
+
+    # always round up
+    rows_needed_round = math.ceil(rows_needed_decimal)
+##            logging.debug("rows_needed_round = " + str(rows_needed_round))
+
+    # convert to an integer
+    rows_needed_int = int(rows_needed_round)
+##            logging.debug("rows_needed_int = " + str(rows_needed_int))
+
+    if (length_all_photos % MAX_IMGS_ON_ROW_INT) != 0:   # fully filled rows will be one less than total rows
+##                logging.debug("goes into not equal zero")
+        rows_fully_filled = rows_needed_int - 1
+        
+    else:  # no leftovers (that means no row that is not fully filled)
+##                logging.debug("goes into equal zero")
+        rows_fully_filled = rows_needed_int
+
+    # calculate how many img's there shall be in the the row not fully filled    
+    amount_img_in_row_not_filled = length_all_photos % MAX_IMGS_ON_ROW_INT
+##            logging.debug("rows_fully_filled = " + str(rows_fully_filled))
+##            logging.debug("amount_img_in_row_not_filled = " + str(amount_img_in_row_not_filled))
+
+    # create a list of lists where each inner list represents a row (We have decided max 7 img's in a row)
+    list_of_lists = []  # will become a list of lists with each inner list representing a row with img's
+    
+    counter = 0
+    for photo in range(rows_fully_filled):
+        single_row = []
+        for i in range (MAX_IMGS_ON_ROW_INT):
+            single_row.append(all_the_photos[counter])
+            counter = counter + 1
+        list_of_lists.append(single_row)
+##            logging.debug("length outer list = " + str(len(list_of_lists)))
+
+    # only if we need a not fully filled row do the following if statement
+    if (length_all_photos % MAX_IMGS_ON_ROW_INT) != 0:
+##                logging.debug("we construct a not full row")
+        single_row = []  
+        for img in range(amount_img_in_row_not_filled):
+            single_row.append(all_the_photos[counter])
+            counter = counter + 1
+        list_of_lists.append(single_row)
+        
+    
+##            logging.debug("length outer list = " + str(len(list_of_lists)))
+
+    return list_of_lists
+
+                
+    
 
 ###########################################################################################################
 def randomword():

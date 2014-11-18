@@ -582,6 +582,7 @@ class FullMonthBlogPosts (Handler):
             self.redirect('/')
 
 
+
 # '/single_blog_post'     
 class SingleBlogPost(Handler):
     def render_front(self, a_single_blog_posts, a_dict_blog):
@@ -606,12 +607,12 @@ class SingleBlogPost(Handler):
             self.redirect('/')
 
 
+
 # '/add_photo'    
 class AddPhoto(Handler):
     def render_AddPhoto(self, error_msg, an_img_format, an_img, a_txt_below):
         
         self.render("photos_add_photo.html", error_message=error_msg, img_format=an_img_format, img=an_img, txt_below_img=a_txt_below)
-
 
  
     def get(self):
@@ -772,64 +773,18 @@ class AllPhotos(Handler):
             all_photos = dataFunctions.find_limited_photos(ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT)    
 
 
-        # Below how the rows are organized
-        
+                
 ##        logging.debug("length of all_photos = " + str(len(all_photos)))
 
+        # check if there are any img's to show in gallery
         if len(all_photos) < 1:
             # no images so pass in an empty list
             photo_all_rows_list = []
             self.render_front("Sorry - Photo gallery is empty", photo_all_rows_list, newer_link, older_link)
         else:
-            # how many rows do we need: len(all_photos) / MAX_IMG_ON_ROW_DECIMAL
-            rows_needed_decimal = len(all_photos) / MAX_IMG_ON_ROW_DECIMAL
-##            logging.debug("rows_needed_decimal = " + str(rows_needed_decimal))
-
-            # always round up
-            rows_needed_round = math.ceil(rows_needed_decimal)
-##            logging.debug("rows_needed_round = " + str(rows_needed_round))
-
-            # convert to an integer
-            rows_needed_int = int(rows_needed_round)
-##            logging.debug("rows_needed_int = " + str(rows_needed_int))
-
-            if (len(all_photos) % MAX_IMG_ON_ROW_INT) != 0:   # fully filled rows will be one less than total rows
-##                logging.debug("goes into not equal zero")
-                rows_fully_filled = rows_needed_int - 1
-                
-            else:  # no leftovers (that means no row that is not fully filled)
-##                logging.debug("goes into equal zero")
-                rows_fully_filled = rows_needed_int
-
-            # calculate how many img's there shall be in the the row not fully filled    
-            amount_img_in_row_not_filled = len(all_photos) % MAX_IMG_ON_ROW_INT
-##            logging.debug("rows_fully_filled = " + str(rows_fully_filled))
-##            logging.debug("amount_img_in_row_not_filled = " + str(amount_img_in_row_not_filled))
-
-            # create a list of lists where each inner list represents a row (max 7 img's in a row)
-            photo_all_rows_list = []  # will become a list of lists
-            
-            counter = 0
-            for photo in range(rows_fully_filled):
-                single_row = []
-                for i in range (MAX_IMG_ON_ROW_INT):
-                    single_row.append(all_photos[counter])
-                    counter = counter + 1
-                photo_all_rows_list.append(single_row)
-##            logging.debug("length outer list = " + str(len(photo_all_rows_list)))
-
-            # only if we need a not fully filled row do the following if statement
-            if (len(all_photos) % MAX_IMG_ON_ROW_INT) != 0:
-##                logging.debug("we construct a not full row")
-                single_row = []  
-                for img in range(amount_img_in_row_not_filled):
-                    single_row.append(all_photos[counter])
-                    counter = counter + 1
-                photo_all_rows_list.append(single_row)
-                
-            
-##            logging.debug("length outer list = " + str(len(photo_all_rows_list)))
-            
+            # call function that organizes the rows and returns a list of lists
+            photo_all_rows_list = dataFunctions.get_rows_of_photos_list_of_list(all_photos, MAX_IMG_ON_ROW_DECIMAL, MAX_IMG_ON_ROW_INT)
+                        
             self.render_front("Click photo to enlarge", photo_all_rows_list, newer_link, older_link)
             
 

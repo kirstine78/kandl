@@ -222,6 +222,7 @@ def get_blog_posts_and_links_if_nextlink_clicked(an_id, a_post, are_there_betwee
 
 
 # Helper to get list of photos/videos and newer older/links for Photo/Video WHEN previous link (newer link) has been clicked!!!
+# a post can be a post in Photo/Video
 def get_posts_and_links_if_prevlink_clicked(a_post, is_it_photos, find_previous_link, max_per_page):
     """ Takes a post, a_post. A boolean is_it_photos and a number max_per_page. A boolean find_previous_link.
         Returns list of all posts and the links strings"""  
@@ -271,9 +272,10 @@ def get_posts_and_links_if_prevlink_clicked(a_post, is_it_photos, find_previous_
 
 
 
-# Helper to get list of posts and newer/older links for Post/Video WHEN previous link (newer link) has been clicked!!!
-def get_posts_and_links_if_nextlink_clicked(a_post, is_it_photos, find_newer_link, max_posts_per_page):
-    """ Takes blogpost, a_post. A boolean is_it_photos and a number max_posts_per_page. A boolean find_newer_link.
+# Helper to get list of posts and newer/older links for Post/Video WHEN next link (older link) has been clicked!!!
+# a post can be a post in Photo/Video
+def get_posts_and_links_if_nextlink_clicked(a_post, is_it_photos, find_newer_link, max_per_page):
+    """ Takes a post, a_post. A boolean is_it_photos and a number max_per_page. A boolean find_newer_link.
         Returns list of all posts and the links strings"""
     
     # find out the created date of the post a_post
@@ -281,21 +283,21 @@ def get_posts_and_links_if_nextlink_clicked(a_post, is_it_photos, find_newer_lin
 
     if is_it_photos:  # is_it_photos True  (for Photo)
         # find the next photos to be shown
-        all_posts_plus_one = dataFunctions.find_older_photos(max_posts_per_page + 1, created_post)
+        all_posts_plus_one = find_older_photos(max_per_page + 1, created_post)
 
         ##            logging.debug("length of all_posts_plus_one = " + str(len(all_posts_plus_one)))
 
         # get list of only max_posts_per_page or less
-        all_posts = dataFunctions.find_older_photos(max_posts_per_page, created_post)
+        all_posts = find_older_photos(max_per_page, created_post)
 
 
     else:   # is_it_photos False  (for Video)
         # find the next videos to be shown
-        all_posts_plus_one = db.GqlQuery("SELECT * FROM Video WHERE created < :1 ORDER BY created DESC", created_post).fetch(max_posts_per_page+1)
+        all_posts_plus_one = db.GqlQuery("SELECT * FROM Video WHERE created < :1 ORDER BY created DESC", created_post).fetch(max_per_page+1)
         ##            logging.debug("length of all_posts_plus_one = " + str(len(all_posts_plus_one)))
 
         # only get list of 3 or less
-        all_posts = db.GqlQuery("SELECT * FROM Video WHERE created < :1 ORDER BY created DESC", created_post).fetch(max_posts_per_page)
+        all_posts = db.GqlQuery("SELECT * FROM Video WHERE created < :1 ORDER BY created DESC", created_post).fetch(max_per_page)
         
 
     if find_newer_link:  # find_newer_link True

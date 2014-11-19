@@ -588,7 +588,7 @@ class AllPhotos(Handler):
 
     def get(self):
 
-        ROWS_PER_PAGE = 5  # constant to decide the max rows to show per page
+        ROWS_PER_PAGE = 3  # constant to decide the max rows to show per page
         
         MAX_IMG_ON_ROW_INT = 7
 
@@ -626,28 +626,10 @@ class AllPhotos(Handler):
 
             # check if last_photo exists
             if last_photo:
-                # find out the created date of the photo with a_last_photo_id
-                created_last_photo = last_photo.created
 
-                # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)
-                #created_last_photo = created_last_photo[0:19]
+                # call helperfunction that returns list of photos, string for link1 and string for link2
+                all_photos, newer_link, older_link = dataFunctions.get_posts_and_links_if_nextlink_clicked(last_photo, True, False, ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT)
                 
-    ##            logging.debug("created_last_photo = " + str(created_last_photo))
-                
-                # find the next photos to be shown
-                all_photos_plus_one = dataFunctions.find_older_photos(ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT + 1, created_last_photo)
-                
-    ##            logging.debug("length of all_photos_plus_one = " + str(len(all_photos_plus_one)))
-
-                # newer_link shall appear no matter what
-                newer_link = "&#9668; Previous"
-                
-                # decide if older_link shall be "Next >" or ""
-                older_link = validation.get_next_link(all_photos_plus_one, ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT)
-
-                # get list of only ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT or less
-                all_photos = dataFunctions.find_older_photos(ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT, created_last_photo)
-
             else:   # user has typed some random shit in
                 self.redirect('/photos')
                 return
@@ -744,9 +726,9 @@ class AddVideo(Handler):
             
 # '/videos'   
 class AllVideos(Handler):
-    def render_front(self, a_headline, an_all_videos, a_next_link, a_previous_link):
+    def render_front(self, a_headline, an_all_videos, a_previous_link, a_next_link):
         # passing contents into the html file
-        self.render("videos_main.html", headline_videos=a_headline, video_list=an_all_videos, old_link = a_next_link, new_link = a_previous_link)
+        self.render("videos_main.html", headline_videos=a_headline, video_list=an_all_videos, new_link = a_previous_link, old_link = a_next_link)
         
 
     def get(self):
@@ -769,7 +751,7 @@ class AllVideos(Handler):
             # check if first_video exists
             if first_video:
                 # call helperfunction that returns list of videos, string for link1 and string for link2
-                all_videos, previous_link, next_link = dataFunctions.get_posts_and_links_if_prevlink_clicked(first_video, False, True, VIDEOS_PER_PAGE)
+                all_videos, newer_link, older_link = dataFunctions.get_posts_and_links_if_prevlink_clicked(first_video, False, True, VIDEOS_PER_PAGE)
 
 
             else:   # user has typed some random shit in
@@ -788,26 +770,30 @@ class AllVideos(Handler):
 
             # check if last_video exists
             if last_video:
-                # find out the created date of the video with a_last_video_id
-                created_last_video = last_video.created
+                # call helperfunction that returns list of photos, string for link1 and string for link2
+                all_videos, newer_link, older_link = dataFunctions.get_posts_and_links_if_nextlink_clicked(last_video, False, False, VIDEOS_PER_PAGE)
 
-                # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)
-                #created_last_video = created_last_video[0:19]
                 
-    ##            logging.debug("created_last_video = " + str(created_last_video))
-                
-                # find the next videos to be shown
-                all_videos_plus_one = db.GqlQuery("SELECT * FROM Video WHERE created < :1 ORDER BY created DESC", created_last_video).fetch(VIDEOS_PER_PAGE+1)
-    ##            logging.debug("length of all_videos_plus_one = " + str(len(all_videos_plus_one)))
-
-                # previous_link shall appear no matter what
-                previous_link = "&#9668; Previous"
-                
-                # decide if next_link shall be "Next >" or ""
-                next_link = validation.get_next_link(all_videos_plus_one, VIDEOS_PER_PAGE)
-
-                # only get list of 3 or less
-                all_videos = db.GqlQuery("SELECT * FROM Video WHERE created < :1 ORDER BY created DESC", created_last_video).fetch(VIDEOS_PER_PAGE)
+##                # find out the created date of the video with a_last_video_id
+##                created_last_video = last_video.created
+##
+##                # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)
+##                #created_last_video = created_last_video[0:19]
+##                
+##    ##            logging.debug("created_last_video = " + str(created_last_video))
+##                
+##                # find the next videos to be shown
+##                all_videos_plus_one = db.GqlQuery("SELECT * FROM Video WHERE created < :1 ORDER BY created DESC", created_last_video).fetch(VIDEOS_PER_PAGE+1)
+##    ##            logging.debug("length of all_videos_plus_one = " + str(len(all_videos_plus_one)))
+##
+##                # previous_link shall appear no matter what
+##                previous_link = "&#9668; Previous"
+##                
+##                # decide if next_link shall be "Next >" or ""
+##                next_link = validation.get_next_link(all_videos_plus_one, VIDEOS_PER_PAGE)
+##
+##                # only get list of 3 or less
+##                all_videos = db.GqlQuery("SELECT * FROM Video WHERE created < :1 ORDER BY created DESC", created_last_video).fetch(VIDEOS_PER_PAGE)
 
             else:   # user has typed some random shit in
                 self.redirect('/videos')
@@ -820,10 +806,10 @@ class AllVideos(Handler):
             all_videos_plus_one = db.GqlQuery("SELECT * FROM Video ORDER BY created DESC").fetch(VIDEOS_PER_PAGE+1)
 
             # previous_link shall never appear no matter what
-            previous_link = ""
+            newer_link = ""
             
             # decide if next_link shall be "Next >" or ""
-            next_link = validation.get_next_link(all_videos_plus_one, VIDEOS_PER_PAGE)
+            older_link = validation.get_next_link(all_videos_plus_one, VIDEOS_PER_PAGE)
 
             # only get list of 3 or less
             all_videos = db.GqlQuery("SELECT * FROM Video ORDER BY created DESC").fetch(VIDEOS_PER_PAGE)
@@ -832,7 +818,7 @@ class AllVideos(Handler):
             if len(all_videos) < 1:
                 headline="Sorry - no videos"
         
-        self.render_front(headline, all_videos, next_link, previous_link)
+        self.render_front(headline, all_videos, newer_link, older_link)
 
 
     def post(self):

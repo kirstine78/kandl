@@ -184,11 +184,11 @@ def get_blog_posts_and_links_if_nextlink_clicked(an_id, a_post, are_there_betwee
 
     if are_there_between_factor:  # are_there_between_factor True  (for FullYear)
 
-        all_blog_posts_plus_one = find_blog_posts_between_and_younger(max_posts_per_page + 1, an_end_of_previous_year, a_start_of_next_year, an_id)
+        all_blog_posts_plus_one = find_blog_posts_between_and_older(max_posts_per_page + 1, an_end_of_previous_year, a_start_of_next_year, an_id)
     ##                logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
 
         # get list of only max_posts_per_page or less
-        all_blog_posts = find_blog_posts_between_and_younger(max_posts_per_page, an_end_of_previous_year, a_start_of_next_year, an_id)
+        all_blog_posts = find_blog_posts_between_and_older(max_posts_per_page, an_end_of_previous_year, a_start_of_next_year, an_id)
 
         
     else:   # are_there_between_factor False  (AllBlogPosts)
@@ -197,16 +197,13 @@ def get_blog_posts_and_links_if_nextlink_clicked(an_id, a_post, are_there_betwee
 
         # if 'newer posts' has been clicked we know that there are at least max_posts_per_page posts to show
         # find the posts to be shown
-        all_blog_posts_plus_one = find_newer_blog_posts(max_posts_per_page + 1, created_post)
+        all_blog_posts_plus_one = find_older_blog_posts(max_posts_per_page + 1, created_post)
         
     ##            logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
 
         # get list of only max_posts_per_page or less
-        all_blog_posts = find_newer_blog_posts(max_posts_per_page, created_post)
+        all_blog_posts = find_older_blog_posts(max_posts_per_page, created_post)
 
-
-    # reverse, cause you get ASC and you want DESC
-    all_blog_posts.reverse()
 
     if find_next_link:  # find_next_link True
         # decide if newer_link shall be "< Newer posts" or ""

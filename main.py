@@ -214,9 +214,11 @@ class LoginHandler(Handler):
         else:
             self.loginError("")
 
+
     def loginError(self, name):
         error_log_in = "Invalid login"
         self.write_form(name, error_log_in)
+
 
         
 # '/logout', LogoutHandler 
@@ -266,6 +268,7 @@ class AddNewBlogPost(Handler):
     def render_AddNewBlogPost(self, error_msg, bp_db, an_author):
         
         self.render("blog_post_entry.html", error_message=error_msg, bp=bp_db, author_chosen=an_author)
+
 
     def render_blank_blog_post(self):
         # create BlogPost item in db
@@ -471,8 +474,9 @@ class FullYearBlogPosts (Handler):
 # '/full_month'
 class FullMonthBlogPosts (Handler):
     def render_front(self, a_list_all_month_posts, a_dict_blog):
-            
+        
         self.render("blog_entire_month.html", list_all_month_posts=a_list_all_month_posts, dict_bloggi=a_dict_blog) # passing contents into the html file
+
 
     def get(self):
         a_year_and_month = self.request.get("year_and_month")  # if any year is clicked, there is: a_year_and_month
@@ -510,6 +514,7 @@ class SingleBlogPost(Handler):
             
         self.render("blog_single_post.html",  single_blog_posts=a_single_blog_posts,
                     dict_bloggi=a_dict_blog) # passing contents into the html file
+
 
     def get(self):        
         blog_post_id = self.request.get("single_post_id")  # if any single blog post is clicked, there is: blog_post_id (format string)
@@ -588,7 +593,7 @@ class AllPhotos(Handler):
 
     def get(self):
 
-        ROWS_PER_PAGE = 3  # constant to decide the max rows to show per page
+        ROWS_PER_PAGE = 5  # constant to decide the max rows to show per page
         
         MAX_IMG_ON_ROW_INT = 7
 
@@ -614,9 +619,6 @@ class AllPhotos(Handler):
                 self.redirect('/photos')
                 return
 
-                
-            
-
         # elif there is a_last_photo_id, then 'next' has been clicked
         elif a_last_photo_id:
 ##            logging.debug("Goes into else if: 'next' has been clicked")
@@ -634,11 +636,8 @@ class AllPhotos(Handler):
                 self.redirect('/photos')
                 return
 
-
-
         # else, no id, then just render the very first photos
         else:
-            
 ##            logging.debug("Goes into else: just display very first photos")
             all_photos_plus_one = dataFunctions.find_limited_photos(ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT + 1)
 
@@ -651,8 +650,6 @@ class AllPhotos(Handler):
             # get list of only ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT or less
             all_photos = dataFunctions.find_limited_photos(ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT)    
 
-
-                
 ##        logging.debug("length of all_photos = " + str(len(all_photos)))
 
         # check if there are any img's to show in gallery
@@ -671,6 +668,7 @@ class AllPhotos(Handler):
         self.render_front()
 
 
+
 # '/add_video'    
 class AddVideo(Handler):
     def render_AddVideo(self, error_msg, an_iframe_tag_input):
@@ -678,7 +676,6 @@ class AddVideo(Handler):
         self.render("videos_add_video.html", error_message=error_msg, iframe_tag_input=an_iframe_tag_input)
 
 
- 
     def get(self):
         the_RU = check_user_id_cookie(self.request)
         
@@ -722,7 +719,6 @@ class AddVideo(Handler):
             self.render_AddVideo('Mandatory field is missing', the_iframe_tag)
 
 
-
             
 # '/videos'   
 class AllVideos(Handler):
@@ -758,9 +754,6 @@ class AllVideos(Handler):
                 self.redirect('/videos')
                 return
                 
-                
-            
-
         # elif there is a_last_video_id, then 'Next' has been clicked
         elif a_last_video_id:
 ##            logging.debug("Goes into else if: 'Next' has been clicked")
@@ -773,35 +766,12 @@ class AllVideos(Handler):
                 # call helperfunction that returns list of photos, string for link1 and string for link2
                 all_videos, newer_link, older_link = dataFunctions.get_posts_and_links_if_nextlink_clicked(last_video, False, False, VIDEOS_PER_PAGE)
 
-                
-##                # find out the created date of the video with a_last_video_id
-##                created_last_video = last_video.created
-##
-##                # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)
-##                #created_last_video = created_last_video[0:19]
-##                
-##    ##            logging.debug("created_last_video = " + str(created_last_video))
-##                
-##                # find the next videos to be shown
-##                all_videos_plus_one = db.GqlQuery("SELECT * FROM Video WHERE created < :1 ORDER BY created DESC", created_last_video).fetch(VIDEOS_PER_PAGE+1)
-##    ##            logging.debug("length of all_videos_plus_one = " + str(len(all_videos_plus_one)))
-##
-##                # previous_link shall appear no matter what
-##                previous_link = "&#9668; Previous"
-##                
-##                # decide if next_link shall be "Next >" or ""
-##                next_link = validation.get_next_link(all_videos_plus_one, VIDEOS_PER_PAGE)
-##
-##                # only get list of 3 or less
-##                all_videos = db.GqlQuery("SELECT * FROM Video WHERE created < :1 ORDER BY created DESC", created_last_video).fetch(VIDEOS_PER_PAGE)
-
             else:   # user has typed some random shit in
                 self.redirect('/videos')
                 return
 
         # else, no id, then just render the very first videos
         else:
-            
 ##            logging.debug("Goes into else: just display very first videos")
             all_videos_plus_one = db.GqlQuery("SELECT * FROM Video ORDER BY created DESC").fetch(VIDEOS_PER_PAGE+1)
 
@@ -824,10 +794,8 @@ class AllVideos(Handler):
     def post(self):
         self.render_front()
 
-
-
-     
-
+  
+'/about', AboutUs
 class AboutUs(Handler):
     def get(self):
         self.render("about.html")
@@ -845,9 +813,9 @@ class ContactUs(Handler):
                     user_name_content=name , user_name_error=name_error,
                     user_email_content=email, user_email_error=email_error,
                     user_message_content=message, user_message_error=message_error)
+
         
     def get(self):
-        
         self.render_contact_us("", "", "", "", "", "", "")
 
 
@@ -880,19 +848,19 @@ class ContactUs(Handler):
                                    user_email_input, email_error,
                                    user_message_input, message_error)
         
+
         
 # '/contact_success', ContactUsSuccess
 class ContactUsSuccess(Handler):
     def render_success(self, submission_cont):
         
         self.render("contact_success.html", submission_content=submission_cont)
+
         
     def get(self):
         
         self.render_success("Thank you  -  your message has been sent")
 
-
-    
 
     
 app = webapp2.WSGIApplication([('/login', LoginHandler),
@@ -910,8 +878,4 @@ app = webapp2.WSGIApplication([('/login', LoginHandler),
                                ('/contact', ContactUs),
                                ('/contact_success', ContactUsSuccess)], debug=True)
 
-
-
-                               
-
-
+            

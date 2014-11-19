@@ -794,8 +794,9 @@ class AllVideos(Handler):
     def post(self):
         self.render_front()
 
+
   
-'/about', AboutUs
+# '/about', AboutUs
 class AboutUs(Handler):
     def get(self):
         self.render("about.html")

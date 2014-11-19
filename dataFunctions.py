@@ -128,8 +128,8 @@ def find_older_photos(max_results, date_time):
 
 
 # Helper to get list of blogposts and newer older links for BlogPost
-def get_blog_posts_and_links(an_id, a_post, are_there_between_factor, an_end_of_previous_year, a_start_of_next_year, max_posts_per_page):
-    """ Takes an_id and blogpost, a_post. A boolean are_there_between_factor and a number max_posts_per_page.
+def get_blog_posts_and_links(an_id, a_post, are_there_between_factor, an_end_of_previous_year, a_start_of_next_year, find_next_link, max_posts_per_page):
+    """ Takes an_id and blogpost, a_post. A boolean are_there_between_factor and a number max_posts_per_page. A boolean find_next_link.
         Returns list of all blog posts and the links strings"""  
 
     if are_there_between_factor:  # are_there_between_factor True  (for FullYear)
@@ -159,11 +159,19 @@ def get_blog_posts_and_links(an_id, a_post, are_there_between_factor, an_end_of_
     # reverse, cause you get ASC and you want DESC
     all_blog_posts.reverse()
 
-    # decide if newer_link shall be "< Newer posts" or ""
-    newer_link = validation.get_newer_link(all_blog_posts_plus_one, max_posts_per_page)
+    if find_next_link:  # find_next_link True
+        # decide if newer_link shall be "< Newer posts" or ""
+        newer_link = validation.get_newer_link(all_blog_posts_plus_one, max_posts_per_page)
 
-    # older_link shall appear no matter what
-    older_link = "Older posts &#9658;"
+        # older_link shall appear no matter what
+        older_link = "Older posts &#9658;"
+
+    else:   # find_next_link False
+        # newer_link shall appear no matter what 
+        newer_link = "&#9668; Newer posts"
+
+        # decide if older_link shall be "Older posts >" or ""  
+        older_link = validation.get_older_link(all_blog_posts_plus_one, max_posts_per_page)
 
     return all_blog_posts, newer_link, older_link
 

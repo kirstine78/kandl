@@ -359,7 +359,7 @@ class AllBlogPosts(Handler):
             # check if first_post exists
             if first_post:
 
-                all_blog_posts, newer_link, older_link = dataFunctions.get_blog_posts_and_links(a_first_post_id, first_post, False, "", "", POSTS_PER_PAGE)
+                all_blog_posts, newer_link, older_link = dataFunctions.get_blog_posts_and_links(a_first_post_id, first_post, False, "", "", True, POSTS_PER_PAGE)
 
             else:   # user has typed some random shit in, and first_post doesn't exist
                 self.redirect('/')

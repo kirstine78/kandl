@@ -128,13 +128,12 @@ def find_older_photos(max_results, date_time):
 
 
 # Helper to get list of blogposts and newer older links for BlogPost
-def get_blog_posts_and_links(an_id, a_post, are_there_between_factor, an_end_of_previous_year, a_start_of_next_year, find_next_link, max_posts_per_page):
+def get_blog_posts_and_links_if_prevlink_clicked(an_id, a_post, are_there_between_factor, an_end_of_previous_year, a_start_of_next_year, find_next_link, max_posts_per_page):
     """ Takes an_id and blogpost, a_post. A boolean are_there_between_factor and a number max_posts_per_page. A boolean find_next_link.
         Returns list of all blog posts and the links strings"""  
 
     if are_there_between_factor:  # are_there_between_factor True  (for FullYear)
 
-        # decide if newer_link shall be "< Newer posts" or ""
         all_blog_posts_plus_one = find_blog_posts_between_and_younger(max_posts_per_page + 1, an_end_of_previous_year, a_start_of_next_year, an_id)
     ##                logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
 
@@ -147,7 +146,7 @@ def get_blog_posts_and_links(an_id, a_post, are_there_between_factor, an_end_of_
         created_post = a_post.created
 
         # if 'newer posts' has been clicked we know that there are at least max_posts_per_page posts to show
-        # find the younger posts to be shown
+        # find the posts to be shown
         all_blog_posts_plus_one = find_newer_blog_posts(max_posts_per_page + 1, created_post)
         
     ##            logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))

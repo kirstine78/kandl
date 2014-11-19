@@ -1,6 +1,7 @@
 import random
 import string
 import math
+import validation
 
 from google.appengine.ext import db
 import main
@@ -126,6 +127,47 @@ def find_older_photos(max_results, date_time):
     return older_photos
 
 
+# Helper to get list of blogposts and newer older links for BlogPost
+def get_blog_posts_and_links(an_id, a_post, are_there_between_factor, an_end_of_previous_year, a_start_of_next_year, max_posts_per_page):
+    """ Takes an_id and blogpost, a_post. A boolean are_there_between_factor and a number max_posts_per_page.
+        Returns list of all blog posts and the links strings"""  
+
+    if are_there_between_factor:  # are_there_between_factor True  (for FullYear)
+
+        # decide if newer_link shall be "< Newer posts" or ""
+        all_blog_posts_plus_one = find_blog_posts_between_and_younger(max_posts_per_page + 1, an_end_of_previous_year, a_start_of_next_year, an_id)
+    ##                logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
+
+        # get list of only max_posts_per_page or less
+        all_blog_posts = find_blog_posts_between_and_younger(max_posts_per_page, end_of_previous_year, start_of_next_year, an_id)
+
+        
+    else:   # are_there_between_factor False  (AllBlogPosts)
+        # find out the created date of the post with an_id
+        created_post = a_post.created
+
+        # if 'newer posts' has been clicked we know that there are at least max_posts_per_page posts to show
+        # find the younger posts to be shown
+        all_blog_posts_plus_one = find_newer_blog_posts(max_posts_per_page + 1, created_post)
+        
+    ##            logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
+
+        # get list of only max_posts_per_page or less
+        all_blog_posts = find_newer_blog_posts(max_posts_per_page, created_post)
+
+
+    # reverse, cause you get ASC and you want DESC
+    all_blog_posts.reverse()
+
+    # decide if newer_link shall be "< Newer posts" or ""
+    newer_link = validation.get_newer_link(all_blog_posts_plus_one, max_posts_per_page)
+
+    # older_link shall appear no matter what
+    older_link = "Older posts &#9658;"
+
+    return all_blog_posts, newer_link, older_link
+
+
 # Photo helper function to organize the rows correctly
 def get_rows_of_photos_list_of_list(list_of_photos_db_query, max_img_each_row_decimal, max_img_each_row_integer):
     """ Takes a list of photos (list_of_photos_db_query), two numbers (max_img_each_row_decimal & max_img_each_row_integer)
@@ -142,7 +184,7 @@ def get_rows_of_photos_list_of_list(list_of_photos_db_query, max_img_each_row_de
     rows_needed_decimal = length_all_photos / MAX_IMGS_ON_ROW_DECIMAL
 ##            logging.debug("rows_needed_decimal = " + str(rows_needed_decimal))
 
-    # always round up
+    # always rounds up
     rows_needed_round = math.ceil(rows_needed_decimal)
 ##            logging.debug("rows_needed_round = " + str(rows_needed_round))
 

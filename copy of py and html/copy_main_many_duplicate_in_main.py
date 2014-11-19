@@ -361,6 +361,33 @@ class AllBlogPosts(Handler):
 
                 all_blog_posts, newer_link, older_link = dataFunctions.get_blog_posts_and_links(a_first_post_id, first_post, False, "", "", POSTS_PER_PAGE)
 
+                
+##                # find out the created date of the post with a_first_post_id
+##                created_first_post = first_post.created
+##                
+##                # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)            
+##                #created_first_post = created_first_post[0:19]
+##                
+##    ##            logging.debug("created_first_post = " + str(created_first_post))
+##
+##                # if 'newer posts' has been clicked we know that there are at least POSTS_PER_PAGE posts to show
+##                # find the younger posts to be shown
+##                all_blog_posts_plus_one = dataFunctions.find_newer_blog_posts(POSTS_PER_PAGE + 1, created_first_post)
+##                
+##    ##            logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
+##
+##                # older_link shall appear no matter what
+##                older_link = "Older posts &#9658;"
+##
+##                # decide if newer_link shall be "< Newer posts" or ""
+##                newer_link = validation.get_newer_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
+##
+##                # get list of only POSTS_PER_PAGE or less
+##                all_blog_posts = dataFunctions.find_newer_blog_posts(POSTS_PER_PAGE, created_first_post)
+##
+##                # revers the list
+##                all_blog_posts.reverse()
+
             else:   # user has typed some random shit in, and first_post doesn't exist
                 self.redirect('/')
                 return

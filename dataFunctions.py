@@ -224,7 +224,7 @@ def get_blog_posts_and_links_if_nextlink_clicked(an_id, a_post, are_there_betwee
 # Helper to get list of photos/videos and newer older/links for Photo/Video WHEN previous link (newer link) has been clicked!!!
 def get_posts_and_links_if_prevlink_clicked(a_post, is_it_photos, find_previous_link, max_per_page):
     """ Takes a post, a_post. A boolean is_it_photos and a number max_per_page. A boolean find_previous_link.
-        Returns list of all blog posts and the links strings"""  
+        Returns list of all posts and the links strings"""  
 
 
     # find out the created date of the post a_post
@@ -269,6 +269,50 @@ def get_posts_and_links_if_prevlink_clicked(a_post, is_it_photos, find_previous_
 
     return all_posts, newer_link, older_link
 
+
+
+# Helper to get list of posts and newer/older links for Post/Video WHEN previous link (newer link) has been clicked!!!
+def get_posts_and_links_if_nextlink_clicked(a_post, is_it_photos, find_newer_link, max_posts_per_page):
+    """ Takes blogpost, a_post. A boolean is_it_photos and a number max_posts_per_page. A boolean find_newer_link.
+        Returns list of all posts and the links strings"""
+    
+    # find out the created date of the post a_post
+    created_post = a_post.created
+
+    if is_it_photos:  # is_it_photos True  (for Photo)
+        # find the next photos to be shown
+        all_posts_plus_one = dataFunctions.find_older_photos(max_posts_per_page + 1, created_post)
+
+        ##            logging.debug("length of all_posts_plus_one = " + str(len(all_posts_plus_one)))
+
+        # get list of only max_posts_per_page or less
+        all_posts = dataFunctions.find_older_photos(max_posts_per_page, created_post)
+
+
+    else:   # is_it_photos False  (for Video)
+        # find the next videos to be shown
+        all_posts_plus_one = db.GqlQuery("SELECT * FROM Video WHERE created < :1 ORDER BY created DESC", created_post).fetch(max_posts_per_page+1)
+        ##            logging.debug("length of all_posts_plus_one = " + str(len(all_posts_plus_one)))
+
+        # only get list of 3 or less
+        all_posts = db.GqlQuery("SELECT * FROM Video WHERE created < :1 ORDER BY created DESC", created_post).fetch(max_posts_per_page)
+        
+
+    if find_newer_link:  # find_newer_link True
+        # decide if newer_link shall be "< Previous" or ""
+        newer_link = validation.get_previous_link(all_posts_plus_one, max_per_page)
+
+        # older_link shall appear no matter what
+        older_link = "Next &#9658;"
+
+    else:   # find_newer_link False
+        # newer_link shall appear no matter what 
+        newer_link = "&#9668; Previous"
+
+        # decide if older_link shall be "Next >" or ""  
+        older_link = validation.get_next_link(all_posts_plus_one, max_per_page)
+
+    return all_posts, newer_link, older_link
 
 
 

@@ -301,18 +301,13 @@ class AddNewBlogPost(Handler):
         headline_blog_messy = self.request.get("headline").strip()  # a string
         text_blog = self.request.get("text").strip()  # a text area...
         author_blog = self.request.get("author_blog_post") 
-	
-##        logging.debug("author_blog = " + author_blog)
-
         
         #make sure first letter in string is upper case
         headline_blog = validation.upper_case_first_letter(headline_blog_messy)
-        
-        
+                
         # create BlogPost item in db
         bp = BlogPost(headline = headline_blog, text = text_blog, author = author_blog)
                
-
         # check if all mandatory fields are filled out
         if validation.are_all_fields_filled(headline_blog, text_blog):
 
@@ -366,7 +361,6 @@ class AllBlogPosts(Handler):
                 return
                 
             
-
         # elif there is a_last_post_id, then 'older posts' has been clicked
         elif a_last_post_id:
 ##            logging.debug("Goes into else if: 'older posts' has been clicked")
@@ -376,32 +370,8 @@ class AllBlogPosts(Handler):
 
             # check if last_post exists
             if last_post:
-
                 # call helperfunction that returns list of posts, string for link1 and string for link2
                 all_blog_posts, newer_link, older_link = dataFunctions.get_blog_posts_and_links_if_nextlink_clicked(a_last_post_id, last_post, False, "", "", False, POSTS_PER_PAGE)
-
-                
-##                # find out the created date of the post with a_last_post_id
-##                created_last_post = last_post.created
-##
-##                # to avoid: BadQueryError: Type Cast Error: unable to cast ['2014-11-11 18:09:25.495000'] with operation DATETIME (unconverted data remains: .495000)
-##                #created_last_post = created_last_post[0:19]
-##                
-##    ##            logging.debug("created_last_post = " + str(created_last_post))
-##                
-##                # find the next posts to be shown
-##                all_blog_posts_plus_one = dataFunctions.find_older_blog_posts(POSTS_PER_PAGE + 1, created_last_post)
-##                
-##    ##            logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
-##
-##                # newer_link shall appear no matter what
-##                newer_link = "&#9668; Newer posts"
-##                
-##                # decide if older_link shall be "Older posts >" or ""
-##                older_link = validation.get_older_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
-##
-##                # get list of only POSTS_PER_PAGE or less
-##                all_blog_posts = dataFunctions.find_older_blog_posts(POSTS_PER_PAGE, created_last_post)
 
             else:   # user has typed some random shit in, and last_post doesn't exist
                 self.redirect('/')
@@ -409,7 +379,6 @@ class AllBlogPosts(Handler):
 
         # else, no id, then just render the very first posts
         else:
-            
 ##            logging.debug("Goes into else: just display very first posts")
             all_blog_posts_plus_one = dataFunctions.find_limited_blog_posts(POSTS_PER_PAGE + 1)
 
@@ -437,7 +406,6 @@ class FullYearBlogPosts (Handler):
     def get(self):
         a_year = self.request.get("year")  # if any year is clicked, there is: a_year
 
-
         if a_year:   # means there is a a_year
             # turn a_year into an int
             year_integer = int(a_year)
@@ -453,45 +421,32 @@ class FullYearBlogPosts (Handler):
             a_last_post_id = self.request.get("before_id")  # if older posts link is clicked, there is a_last_post_id
 
             if a_first_post_id:   # newer posts link is clicked, we wanna find younger posts
-
                 # get the post with that id
                 post_with_that_id = BlogPost.get_by_id(int(a_first_post_id))  # get the blogpost with the specific id (a_first_post_id)
 
                 if post_with_that_id:
                     # call helperfunction that returns list of posts, string for link1 and string for link2
-                    all_blog_posts, newer_link, older_link = dataFunctions.get_blog_posts_and_links_if_prevlink_clicked(a_first_post_id, post_with_that_id,
-                                                                                                                        True, end_of_previous_year, start_of_next_year, True, POSTS_PER_PAGE)
+                    all_blog_posts, newer_link, older_link = dataFunctions.get_blog_posts_and_links_if_prevlink_clicked(a_first_post_id, post_with_that_id, True,
+                                                                                                                        end_of_previous_year, start_of_next_year, True, POSTS_PER_PAGE)
                     
                 else:   # user has typed some random shit in for id, and post_with_that_id doesn't exist
                     self.redirect('/')
                     return
-
-                
                 
             elif a_last_post_id:    # older posts link is clicked, we wanna find older posts
-
                 # get the post with that id
                 post_with_that_id = BlogPost.get_by_id(int(a_last_post_id))  # get the blogpost with the specific id (a_last_post_id)
 
                 if post_with_that_id:
-                
-                    # newer_link shall appear no matter what
-                    newer_link = "&#9668; Newer posts"
-                    
-                    # decide if older_link shall be "Older posts >" or ""
-                    all_blog_posts_plus_one = dataFunctions.find_blog_posts_between_and_older(POSTS_PER_PAGE + 1, end_of_previous_year, start_of_next_year, a_last_post_id)
-    ##                logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
-                    older_link = validation.get_older_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
-
-                    # get just the amount (POSTS_PER_PAGE)
-                    all_blog_posts = dataFunctions.find_blog_posts_between_and_older(POSTS_PER_PAGE, end_of_previous_year, start_of_next_year, a_last_post_id)
+                    # call helperfunction that returns list of posts, string for link1 and string for link2
+                    all_blog_posts, newer_link, older_link = dataFunctions.get_blog_posts_and_links_if_nextlink_clicked(a_last_post_id, post_with_that_id, True,
+                                                                                                                        end_of_previous_year, start_of_next_year, False, POSTS_PER_PAGE)
 
                 else:   # user has typed some random shit in for id, and post_with_that_id doesn't exist
                     self.redirect('/')
                     return
 
             else:    # neither newer or older link has been clicked. This is the year link that has been clicked
-
                 # newer_link shall never appear no matter what
                 newer_link = ""
                 
@@ -513,9 +468,6 @@ class FullYearBlogPosts (Handler):
 
 
 
-
-      
-
 # '/full_month'
 class FullMonthBlogPosts (Handler):
     def render_front(self, a_list_all_month_posts, a_dict_blog):
@@ -533,7 +485,6 @@ class FullMonthBlogPosts (Handler):
 
         # find all blogposts
         all_blog_posts = dataFunctions.find_all_blog_posts()    
-
         
         only_specific_month = []  # list to contain blogposts
 
@@ -618,8 +569,7 @@ class AddPhoto(Handler):
             photo = Photo(img_format = L_P_photo, img = img_file, txt_below_img=text_below_img)
             photo.put()
             
-            #display blank page
-            # render "photos_add_photo.html"!
+            #display blank page, render "photos_add_photo.html"!
             self.render_AddPhoto("", "", "", "")
 
         else:   # not all mandatory fields filled out, so don't process - instead redisplay page            

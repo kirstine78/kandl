@@ -454,20 +454,23 @@ class FullYearBlogPosts (Handler):
                 post_with_that_id = BlogPost.get_by_id(int(a_first_post_id))  # get the blogpost with the specific id (a_first_post_id)
 
                 if post_with_that_id:
+                    all_blog_posts, newer_link, older_link = dataFunctions.get_blog_posts_and_links_if_prevlink_clicked(a_first_post_id, post_with_that_id,
+                                                                                                                        True, end_of_previous_year, start_of_next_year, True, POSTS_PER_PAGE)
+                    
 
-                    # older_link shall appear no matter what
-                    older_link = "Older posts &#9658;"
-
-                    # decide if newer_link shall be "< Newer posts" or ""
-                    all_blog_posts_plus_one = dataFunctions.find_blog_posts_between_and_younger(POSTS_PER_PAGE + 1, end_of_previous_year, start_of_next_year, a_first_post_id)
-    ##                logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
-                    newer_link = validation.get_newer_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
-
-                    # get list of only POSTS_PER_PAGE or less
-                    all_blog_posts = dataFunctions.find_blog_posts_between_and_younger(POSTS_PER_PAGE, end_of_previous_year, start_of_next_year, a_first_post_id)
-
-                    # reverse, cause you get ASC and you want DESC
-                    all_blog_posts.reverse()
+##                    # older_link shall appear no matter what
+##                    older_link = "Older posts &#9658;"
+##
+##                    # decide if newer_link shall be "< Newer posts" or ""
+##                    all_blog_posts_plus_one = dataFunctions.find_blog_posts_between_and_younger(POSTS_PER_PAGE + 1, end_of_previous_year, start_of_next_year, a_first_post_id)
+##    ##                logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
+##                    newer_link = validation.get_newer_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
+##
+##                    # get list of only POSTS_PER_PAGE or less
+##                    all_blog_posts = dataFunctions.find_blog_posts_between_and_younger(POSTS_PER_PAGE, end_of_previous_year, start_of_next_year, a_first_post_id)
+##
+##                    # reverse, cause you get ASC and you want DESC
+##                    all_blog_posts.reverse()
 
                 else:   # user has typed some random shit in for id, and post_with_that_id doesn't exist
                     self.redirect('/')

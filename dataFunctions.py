@@ -129,7 +129,7 @@ def find_older_photos(max_results, date_time):
 
 # Helper to get list of blogposts and newer older links for BlogPost WHEN previous link (newer link) has been clicked!!!
 def get_blog_posts_and_links_if_prevlink_clicked(an_id, a_post, are_there_between_factor, an_end_of_previous_year, a_start_of_next_year, find_newer_link, max_posts_per_page):
-    """ Takes an_id and blogpost, a_post. A boolean are_there_between_factor and a number max_posts_per_page. A boolean find_next_link.
+    """ Takes an_id and blogpost, a_post. A boolean are_there_between_factor and a number max_posts_per_page. A boolean find_newer_link.
         Returns list of all blog posts and the links strings"""  
 
     if are_there_between_factor:  # are_there_between_factor True  (for FullYear)
@@ -146,7 +146,6 @@ def get_blog_posts_and_links_if_prevlink_clicked(an_id, a_post, are_there_betwee
         # find out the created date of the post with an_id
         created_post = a_post.created
 
-        # if 'newer posts' has been clicked we know that there are at least max_posts_per_page posts to show
         # find the posts to be shown
         all_blog_posts_plus_one = find_newer_blog_posts(max_posts_per_page + 1, created_post)
 ##            logging.debug("length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
@@ -179,7 +178,7 @@ def get_blog_posts_and_links_if_prevlink_clicked(an_id, a_post, are_there_betwee
 
 # Helper to get list of blogposts and newer older links for BlogPost WHEN next link (older link) has been clicked!!!
 def get_blog_posts_and_links_if_nextlink_clicked(an_id, a_post, are_there_between_factor, an_end_of_previous_year, a_start_of_next_year, find_newer_link, max_posts_per_page):
-    """ Takes an_id and blogpost, a_post. A boolean are_there_between_factor and a number max_posts_per_page. A boolean find_next_link.
+    """ Takes an_id and blogpost, a_post. A boolean are_there_between_factor and a number max_posts_per_page. A boolean find_newer_link.
         Returns list of all blog posts and the links strings"""  
 
     if are_there_between_factor:  # are_there_between_factor True  (for FullYear)
@@ -195,7 +194,6 @@ def get_blog_posts_and_links_if_nextlink_clicked(an_id, a_post, are_there_betwee
         # find out the created date of the post with an_id
         created_post = a_post.created
 
-        # if 'newer posts' has been clicked we know that there are at least max_posts_per_page posts to show
         # find the posts to be shown
         all_blog_posts_plus_one = find_older_blog_posts(max_posts_per_page + 1, created_post)
         
@@ -220,6 +218,57 @@ def get_blog_posts_and_links_if_nextlink_clicked(an_id, a_post, are_there_betwee
         older_link = validation.get_older_link(all_blog_posts_plus_one, max_posts_per_page)
 
     return all_blog_posts, newer_link, older_link
+
+
+
+# Helper to get list of photos/videos and newer older/links for Photo/Video WHEN previous link (newer link) has been clicked!!!
+def get_posts_and_links_if_prevlink_clicked(a_post, is_it_photos, find_previous_link, max_per_page):
+    """ Takes a post, a_post. A boolean is_it_photos and a number max_per_page. A boolean find_previous_link.
+        Returns list of all blog posts and the links strings"""  
+
+
+    # find out the created date of the post a_post
+    created_post = a_post.created
+        
+    if is_it_photos:  # is_it_photos True  (for Photo)
+
+        # find the younger photos to be shown
+        all_posts_plus_one = find_newer_photos(max_per_page + 1, created_post)
+
+        ##            logging.debug("length of all_posts_plus_one = " + str(len(all_posts_plus_one)))
+        
+        # get list of only max_per_page or less
+        all_posts = find_newer_photos(max_per_page, created_post)
+
+        
+    else:   # is_it_photos False  (for Video)
+        
+        # find the posts to be shown
+        all_posts_plus_one = db.GqlQuery("SELECT * FROM Video WHERE created > :1 ORDER BY created ASC", created_post).fetch(max_per_page+1)
+##            logging.debug("length of all_posts_plus_one = " + str(len(all_posts_plus_one)))
+
+        # get list of only max_posts_per_page or less
+        all_posts = db.GqlQuery("SELECT * FROM Video WHERE created > :1 ORDER BY created ASC", created_post).fetch(max_per_page)
+
+    # reverse, cause you get ASC and you want DESC
+    all_posts.reverse()
+
+    if find_previous_link:  # find_previous_link True
+        # decide if newer_link shall be "< Previous" or ""
+        newer_link = validation.get_previous_link(all_posts_plus_one, max_per_page)
+
+        # older_link shall appear no matter what
+        older_link = "Next &#9658;"
+
+    else:   # find_previous_link False
+        # newer_link shall appear no matter what 
+        newer_link = "&#9668; Previous"
+
+        # decide if older_link shall be "Next >" or ""  
+        older_link = validation.get_next_link(all_posts_plus_one, max_per_page)
+
+    return all_posts, newer_link, older_link
+
 
 
 

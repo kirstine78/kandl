@@ -275,8 +275,13 @@ def are_all_contact_fields_filled(name, email, message):
 
 # use method when you display blog posts in the different html files. All, FullYear, Month etc
 def do_substitutions(text):
-    """ Takes in a string, text. Substitutes the image location with the constant"""
-    return text.format(img_location = "../images/")
+    """ Takes in a string, text. Substitutes the image location with the constant, IMAGES_LOCATION.
+        Return the text with the substitution made"""
+
+    # if name of folder where img's are is changed then change the constant name to the same
+    IMAGES_LOCATION = "../images/"
+    
+    return text.format(img_location = IMAGES_LOCATION)
 
 
 

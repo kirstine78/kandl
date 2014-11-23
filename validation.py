@@ -3,24 +3,7 @@ from datetime import datetime
 from datetime import date
 #import info_entered
 import logging
-
-
-### for blog
-##def is_date_valid(a_date):
-##    """ Takes in a string a_date in "dd-mm-yyyy" format'.
-##        Check if there is a date entered AND if it is valid date.
-##        Returns boolean"""
-##    
-##    
-##    try:
-##        #logging.debug("string passed in: " + a_date)
-##        date_object = datetime.strptime(a_date, '%d-%m-%Y').date()  ###################
-##        #logging.debug("string passed in AFTER: " + a_date)
-##        return True
-##            
-##    except ValueError:
-##        return False
-    
+   
 
 # for blog post entry
 def are_all_fields_filled(headline, text):
@@ -290,5 +273,12 @@ def are_all_contact_fields_filled(name, email, message):
     return the_boolean, name_err, email_err, message_err
 
 
+# use method when you display blog posts in the different html files. All, FullYear, Month etc
+def do_substitutions(text):
+    """ Takes in a string, text. Substitutes the image location with the constant"""
+    return text.format(img_location = "../images/")
 
 
+
+
+                       

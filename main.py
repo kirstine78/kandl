@@ -50,6 +50,7 @@ jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), a
 jinja_env.globals.update(format_the_date=validation.convert_to_letter_month)  # lets me use validation inside html.
 jinja_env.globals.update(numeric_to_alphabetic_month=validation.numeric_to_alpabetic)  # lets me use validation inside html.
 jinja_env.globals.update(selected_value_dropdown=validation.selected_value_dropdown)  # lets me use validation inside html.
+jinja_env.globals.update(do_substitutions=validation.do_substitutions)  # lets me use validation inside html.
 jinja_env.globals.update(length=len)
 
 

@@ -7,7 +7,7 @@
 			
 			<div class="blog_headline">{{single_blog_posts.headline}}</div>
 			<div class="blog_date">{{format_the_date(single_blog_posts.created)}}     <i>{{single_blog_posts.author}}</i></div>
-			<div class="blog_text">{{single_blog_posts.text}}</div>
+			<div class="blog_text">{{do_substitutions(single_blog_posts.text)}}</div>
 			
 			<br>
 			<br>

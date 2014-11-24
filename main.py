@@ -24,7 +24,6 @@
 # -*- coding: cp1252 -*-
 
 import validation
-import passwordValid
 import dataFunctions
 
 import emailFunctions
@@ -46,9 +45,11 @@ from google.appengine.ext import db
 
 
 # if name of folder where img's are is changed then change the constant name to the same
-BLOG_IMAGES_LOCATION = "../images/blog/"
+BLOG_IMAGES_LOCATION = "../images/blog/"  # used in validation.do_substitutions
+BLOG_VIDEOS_LOCATION = "../videos/"   # used in validation.do_substitutions
+
 GALLERY_IMAGES_LOCATION = "../images/gallery/"  # uses this in # '/photos'   class AllPhotos(Handler)
-GENERAL_IMAGES_LOCATION = "../images/"  # for example the top image in the base layout
+GENERAL_IMAGES_LOCATION = "../images/general/"  # for example the top image in the base layout
 
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
@@ -355,7 +356,7 @@ class AllBlogPosts(Handler):
         
         
     def get(self):
-        POSTS_PER_PAGE = 3
+        POSTS_PER_PAGE = 10
 
         # maybe a link has been clicked!!!
         a_first_post_id = self.request.get("after_id")  # if newer posts link is clicked, there is a_first_post_id
@@ -431,7 +432,7 @@ class FullYearBlogPosts (Handler):
             end_of_previous_year = datetime(year_integer - 1, 12, 31)
             start_of_next_year = datetime(year_integer + 1, 01, 01)
 
-            POSTS_PER_PAGE = 3
+            POSTS_PER_PAGE = 10
 
             # maybe a link has been clicked!!!
             a_first_post_id = self.request.get("after_id")  # if newer posts link is clicked, there is a_first_post_id
@@ -745,7 +746,7 @@ class AllVideos(Handler):
         
         headline="Videos"
 
-        VIDEOS_PER_PAGE = 3
+        VIDEOS_PER_PAGE = 10
 
         # maybe a link has been clicked!!!
         a_first_video_id = self.request.get("after_id")  # if Previous link is clicked, there is a_first_video_id

@@ -381,3 +381,6 @@ def get_rows_of_photos_list_of_list(list_of_photos_db_query, max_img_each_row_de
 ##            logging.debug("length outer list = " + str(len(list_of_lists)))
 
     return list_of_lists
+
+                
+

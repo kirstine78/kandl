@@ -281,7 +281,7 @@ def do_substitutions(text):
     """ Takes in a string, text. Substitutes the image location with the constant, IMAGES_LOCATION.
         Return the text with the substitution made"""
    
-    return text.format(img_location = main.BLOG_IMAGES_LOCATION)
+    return text.format(img_location = main.BLOG_IMAGES_LOCATION, video_location = main.BLOG_VIDEOS_LOCATION)
 
 
                        

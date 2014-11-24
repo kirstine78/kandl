@@ -22,14 +22,12 @@
 				{% for image in image_list %}
 					{% if image.img_format == "l" %}
 						<div class="col-77" >
-							<a href="../images/{{image.img}}">
-							<img id="specific_img_land" src="../images/{{image.img}}" alt="photo" href="photo">
-							</a>
+							<img id="specific_img_land" src="{{gallery_images_location}}{{image.img}}" alt="photo" href="photo">
 						</div>
 					{% endif %}
 					{% if image.img_format == "p" %}
 						<div class="col-77" >
-							<img id="specific_img_portrait" src="../images/{{image.img}}" alt="photo" href="photo">
+							<img id="specific_img_portrait" src="{{gallery_images_location}}{{image.img}}" alt="photo" href="photo">
 						</div>
 					{% endif %}
 				{% endfor %}

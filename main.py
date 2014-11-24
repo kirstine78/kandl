@@ -45,15 +45,26 @@ from datetime import date
 from google.appengine.ext import db
 
 
+# if name of folder where img's are is changed then change the constant name to the same
+BLOG_IMAGES_LOCATION = "../images/blog/"
+GALLERY_IMAGES_LOCATION = "../images/gallery/"  # uses this in # '/photos'   class AllPhotos(Handler)
+GENERAL_IMAGES_LOCATION = "../images/"  # for example the top image in the base layout
+
+
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape=False)
 jinja_env.globals.update(format_the_date=validation.convert_to_letter_month)  # lets me use validation inside html.
 jinja_env.globals.update(numeric_to_alphabetic_month=validation.numeric_to_alpabetic)  # lets me use validation inside html.
 jinja_env.globals.update(selected_value_dropdown=validation.selected_value_dropdown)  # lets me use validation inside html.
-jinja_env.globals.update(do_substitutions=validation.do_substitutions)  # lets me use validation inside html.
+jinja_env.globals.update(do_substitutions=validation.do_substitutions)  # lets me use this inside html.
 jinja_env.globals.update(length=len)
+jinja_env.globals['gallery_images_location']=GALLERY_IMAGES_LOCATION
+jinja_env.globals['general_images_location']=GENERAL_IMAGES_LOCATION
 
 
+
+
+    
 def add_response_headers(response):
     response.headers.add_header("Cache-Control", "no-cache, no-store, must-revalidate") # HTTP 1.1.
     response.headers.add_header("Pragma", "no-cache")  # HTTP 1.0.
@@ -161,6 +172,8 @@ def make_dict_blog():
                 # append specific blogpost to the list
                 dictionary[a_year][a_month].append(blog_post)
     return dictionary
+
+
 
 
     

@@ -25,6 +25,7 @@
 
 import validation
 import dataFunctions
+import passwordValid
 
 import emailFunctions
 
@@ -895,4 +896,4 @@ app = webapp2.WSGIApplication([('/login', LoginHandler),
                                ('/contact_success', ContactUsSuccess)], debug=True)
 
             
-# ('/add_user', AddUserHandler)
+## ('/add_user', AddUserHandler)

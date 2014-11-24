@@ -10,7 +10,7 @@ def sendEmail(usersName, usersEmailAddress, usersMessage):
     logging.debug("usersMessage is %s" %usersMessage)
 
     # even though it is user that sends email to us, it has to be from our admin email...
-    admin_email = "noreply@freeze-it.appspotmail.com"
+    admin_email = "kirstine78@gmail.com"
     
     message = mail.EmailMessage(sender=admin_email, subject="VISITOR: %s - CONTACTING US" %usersName)
 

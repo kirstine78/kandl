@@ -10,12 +10,4 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
-- kind: PostPart
-  properties:
-  - name: parent_blog_post
-  - name: rank
 
-- kind: PostPart
-  properties:
-  - name: parent_blog_post
-  - name: txt_below_img

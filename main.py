@@ -243,8 +243,8 @@ class LogoutHandler(Handler):
         #set cookie value to 'empty'
         self.response.headers.add_header('Set-Cookie', 'user_id=; Path=/')
 
-        #then redirect to '/login' LoginHandler
-        self.redirect("/login")
+        #then redirect to '/'
+        self.redirect("/")
 
 
 
@@ -300,8 +300,8 @@ class AddNewBlogPost(Handler):
         if the_RU:
             self.render_blank_blog_post()
         else:
-            # false user, not loged in
-            self.redirect('/')
+            # false user, not logged in
+            self.redirect('/logout')
 
 
     def post(self):
@@ -311,8 +311,8 @@ class AddNewBlogPost(Handler):
         if the_RU:
             self.process_post()
         else:
-            # false user, not loged in
-            self.redirect('/')
+            # false user, not logged in
+            self.redirect('/logout')
 
 
     def process_post(self):            
@@ -346,6 +346,146 @@ class AddNewBlogPost(Handler):
             # render "blog_post_entry.html" and display error message and redisplay what was filled in
             self.render_AddNewBlogPost('Headline and/or Text missing', bp, author_blog)
 
+            
+
+# '/edit_blog_post', EditBlogPost
+class EditBlogPost(Handler):
+    def render_EditBlogPost(self, list_of_posts):
+        
+        self.render("blog_post_edit.html", blog_posts=list_of_posts)
+
+    def get(self):
+        the_RU = check_user_id_cookie(self.request)
+        
+        # if user is correct
+        if the_RU:
+            all_blog_posts = dataFunctions.find_all_blog_posts()
+            
+            self.render_EditBlogPost(all_blog_posts)
+        else:
+            # false user, not logged in
+            self.redirect('/logout')
+
+
+    def post(self):
+        the_RU = check_user_id_cookie(self.request)
+        
+        # if user is correct
+        if the_RU:
+            # id data (which check boxes has administrator checked) put in a variable
+            list_of_id_checked = self.request.get_all("delete")  # returns a list of id strings
+
+            # delete button data (if delete button clicked, list will have 1 item else no item in list)
+            one_item_delete_button_list = self.request.get_all("delete_button")  # there is only 1 delete_button
+
+            if len(one_item_delete_button_list) == 1:  # delete button is clicked
+                # loop through list_of_id_checked and remove matches from db
+                for an_id in list_of_id_checked:
+                    # find the item with the specific id in db
+                    match = BlogPost.get_by_id(int(an_id))
+                    # remove the item
+                    if match:
+                        BlogPost.delete(match)
+                time.sleep(0.7)  # to delay so db table gets displayed correct
+                
+            self.redirect('/edit_blog_post')
+        else:
+            # false user, not logged in
+            self.redirect('/logout')
+
+
+
+# '/edit_specific_blog_post', EditSpecificBlogPost
+class EditSpecificBlogPost(Handler):
+    def render_EditSpecificBlogPost(self, error_msg, a_headline, a_text, an_author, some_id):
+        
+        self.render("blog_post_edit_specific.html", error_message=error_msg, headline=a_headline, text=a_text, author_chosen=an_author, item_id=some_id)
+
+
+    def get(self):
+        
+        the_RU = check_user_id_cookie(self.request)
+            
+        if the_RU:
+            an_id = self.request.get("id")  # if any BlogPost headline is clicked, there is an_id
+        
+            if an_id:  # means there is an item to edit
+                specific_item = BlogPost.get_by_id(int(an_id))  # get the item with the specific id (an_id)
+
+                if specific_item:
+                    
+                    an_item_id = an_id
+                    an_error_message = ""
+                    # render "blog_post_edit_specific.html" with correct params!
+                    self.render_EditSpecificBlogPost(an_error_message, specific_item.headline, specific_item.text, specific_item.author, an_item_id)
+
+                else:  # no specific_item
+                    self.redirect('/logout')
+
+            else:  # no id,
+                self.redirect('/logout')
+            
+        else:  # no the_RU
+            self.redirect('/logout')
+            
+
+
+
+    def post(self):
+        
+        the_RU = check_user_id_cookie(self.request)
+            
+        # if user is correct
+        if the_RU:
+            an_item_id = self.request.get("item_ID")  # this is a string "455646501654613" format
+##            logging.debug("an_item_id: " + an_item_id)
+
+            if an_item_id:
+                self.process_post(an_item_id)
+            else:  #no an_item_id
+                self.redirect('/logout')
+                
+        else:
+            # false user, not logged in
+            self.redirect('/logout')
+
+            
+    def process_post(self, an_id):        
+        # data that user has entered
+        headline_blog_messy = self.request.get("headline").strip()  # a string
+        text_blog = self.request.get("text").strip()  # a text area...
+        author_blog = self.request.get("author_blog_post") 
+        
+        #make sure first letter in string is upper case
+        headline_blog = validation.upper_case_first_letter(headline_blog_messy)
+               
+        # check if all mandatory fields are filled out
+        if validation.are_all_fields_filled(headline_blog, text_blog):
+
+            # then also check if links www.xxxxx and img xxxxx.jpg has been substituted by the author
+            if validation.are_xxxxx_substituted(text_blog):  # success ok to edit
+                
+                the_item = BlogPost.get_by_id(int(an_id))  # get the item with the specific id (an_item_id)
+                        
+                # update
+                the_item.headline = headline_blog
+                the_item.text = text_blog
+                the_item.author = author_blog
+                 
+                the_item.put()
+                time.sleep(0.7)  # to delay so db table gets displayed correct
+                self.redirect("/edit_blog_post")  # tells the browser to go to '/edit_blog_post' and the response is empty
+
+                
+            else:  # xxxxx is not substituted
+                # render "blog_post_edit_specific.html" and display error message and redisplay what was filled in
+                self.render_EditSpecificBlogPost("Substitute the 'xxxxx'", headline_blog, text_blog, author_blog, an_id)
+            
+            
+        else:  # not all mandatory fields are filled out
+            # render "blog_post_edit_specific.html" and display error message and redisplay what was filled in
+            self.render_EditSpecificBlogPost('Headline and/or Text missing', headline_blog, text_blog, author_blog, an_id)
+            
 
         
 # '/'   
@@ -564,7 +704,7 @@ class AddPhoto(Handler):
         if the_RU:
             self.render_AddPhoto("", "", "", "")
         else:
-            # false user, not loged in
+            # false user, not logged in
             self.redirect('/')
 
 
@@ -575,7 +715,7 @@ class AddPhoto(Handler):
         if the_RU:
             self.process_add_photo()
         else:
-            # false user, not loged in
+            # false user, not logged in
             self.redirect('/')
 
 
@@ -699,7 +839,7 @@ class AddVideo(Handler):
         if the_RU:
             self.render_AddVideo("", "")
         else:
-            # false user, not loged in
+            # false user, not logged in
             self.redirect('/')
 
 
@@ -710,7 +850,7 @@ class AddVideo(Handler):
         if the_RU:
             self.process_add_video()
         else:
-            # false user, not loged in
+            # false user, not logged in
             self.redirect('/')
 
 
@@ -883,6 +1023,8 @@ class ContactUsSuccess(Handler):
 app = webapp2.WSGIApplication([('/login', LoginHandler),
                                ('/logout', LogoutHandler),
                                ('/add_blog_post', AddNewBlogPost),
+                               ('/edit_blog_post', EditBlogPost),
+                               ('/edit_specific_blog_post', EditSpecificBlogPost),
                                ('/', AllBlogPosts),
                                ('/full_year', FullYearBlogPosts),
                                ('/full_month', FullMonthBlogPosts),

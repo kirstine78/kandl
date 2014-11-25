@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Blog - edit</title>
+	<link rel="stylesheet" href="../css/main_blog.css">
+	<link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+	
+</head>
+<body>
+
+	<div class="grid">
+		<div class="row">
+		
+			
+			<div class="col-9">
+					<p ><b>Edit or delete blog post</b></p>
+					
+					
+					
+					
+					<form method="post">
+						{% if blog_posts != None %}
+							<table style="width:100%; ">
+								<tr>
+									<th style="width:20%;">Date</th>
+									<th style="width:70%;">Headline</th>
+									<th style="width:10%; "><input name="delete_button" type="submit" value="Delete" onclick="return confirm('Are you sure?')"></input></th>
+								</tr>
+								{% for post in blog_posts %}
+									<tr>
+												
+										<td style="padding-left:2px; padding-right:2px; ">{{format_the_date(post.created)}}</td>
+										<td style="padding-left:5px; padding-right:8px; "><a href="/edit_specific_blog_post?id={{post.key().id()}}" style="color:black; text-decoration:none;"><div>{{post.headline}}</div></a></td>
+										
+										<td class="delete_box" ><input type="checkbox" name="delete" value="{{post.key().id()}}"></td>
+									</tr>
+								{% endfor %}
+							</table>
+						{% endif %}
+						
+					</form>
+			</div>
+			
+			<div class="col-1"></div>
+			<div class="col-2">
+				<input class="button" type="submit" value="Log out" id="margin_butt" onclick="window.location.href='/logout';">
+				<br>
+				<br>
+				<input  type="button" value="Go to add Blog" onclick="window.location.href='/add_blog_post';"/>
+				<br>
+				<br>
+				<input  type="button" value="Go to add Photo" onclick="window.location.href='/add_photo';"/>
+				<br>
+				<br>				
+				<input  type="button" value="Go to add Video" onclick="window.location.href='/add_video';"/>
+				
+			</div>
+			
+		</div>
+		
+	</div>
+
+</body>
+</html>

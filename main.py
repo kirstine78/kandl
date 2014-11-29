@@ -817,7 +817,7 @@ class AllPhotos(Handler):
             # call function that organizes the rows and returns a list of lists
             photo_all_rows_list = dataFunctions.get_rows_of_photos_list_of_list(all_photos, MAX_IMG_ON_ROW_DECIMAL, MAX_IMG_ON_ROW_INT)
                         
-            self.render_front("Click photo to enlarge", photo_all_rows_list, newer_link, older_link)
+            self.render_front("Click photo to enlarge - click again to close", photo_all_rows_list, newer_link, older_link)
             
 
     def post(self):

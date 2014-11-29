@@ -240,7 +240,7 @@ a.link_menu_dd:hover {
 	text-align:center;
 }
 
-#specific_img_land {
+.specific_img_land {
     /* display: inline; */
 	display: block;
     margin-left: auto;
@@ -253,14 +253,14 @@ a.link_menu_dd:hover {
 	
 }
 
-#specific_img_land:hover  {
+.specific_img_land:hover  {
     /* border: 1px solid #0000ff; */
 	-webkit-box-shadow:5px 5px 5px #999999;
 	-moz-box-shadow: 5px 5px 5px #999999;
 	box-shadow:5px 5px 5px #999999;
 }
 
-#specific_img_portrait {
+.specific_img_portrait {
     /* display: inline; */
 	display: block;
     margin-left: auto;
@@ -273,12 +273,60 @@ a.link_menu_dd:hover {
 	
 }
 
-#specific_img_portrait:hover  {
+.specific_img_portrait:hover  {
     /* border: 1px solid #0000ff; */
 	-webkit-box-shadow:5px 5px 5px #999999;
 	-moz-box-shadow: 5px 5px 5px #999999;
 	box-shadow:5px 5px 5px #999999;
 }
+
+#divLargerImage_land
+{
+    display: none;
+    width: 800px;
+    height: 600px;
+    position: absolute;
+	top:0;
+	bottom:0;
+    left: 0;
+	margin-top:auto;
+	margin-bottom:auto;
+	right: 0;
+	margin-left:auto;
+	margin-right:auto;
+    z-index: 99;
+}
+
+#divLargerImage_portrait
+{
+    display: none;
+    width: 600px;
+    height: 800px;
+    position: absolute;
+	top:0;
+	bottom:0;
+    left: 0;
+	margin-top:auto;
+	margin-bottom:auto;
+	right: 0;
+	margin-left:auto;
+	margin-right:auto;
+    z-index: 99;
+}
+
+#divOverlay
+{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #CCC;
+    opacity: 0.5;
+    width: 100%;
+    height: 100%;
+    z-index: 98;
+}
+
 
 .contact_headline{
 	width: 100%;

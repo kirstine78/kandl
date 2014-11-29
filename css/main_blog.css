@@ -280,8 +280,8 @@ a.link_menu_dd:hover {
 	box-shadow:5px 5px 5px #999999;
 }
 
-#divLargerImage_land
-{
+#div_land {
+	/* border: 1px solid blue !important; */
     display: none;
     width: 800px;
     height: 600px;
@@ -294,11 +294,10 @@ a.link_menu_dd:hover {
 	right: 0;
 	margin-left:auto;
 	margin-right:auto;
-    z-index: 99;
+    z-index: 98;
 }
 
-#divLargerImage_portrait
-{
+#div_portrait {
     display: none;
     width: 600px;
     height: 800px;
@@ -311,11 +310,11 @@ a.link_menu_dd:hover {
 	right: 0;
 	margin-left:auto;
 	margin-right:auto;
-    z-index: 99;
+    z-index: 98;
 }
 
-#divOverlay
-{
+#divOverlay {
+	/* border: 1px solid green !important; */
     display: none;
     position: absolute;
     top: 0;
@@ -324,9 +323,13 @@ a.link_menu_dd:hover {
     opacity: 0.5;
     width: 100%;
     height: 100%;
-    z-index: 98;
+    z-index: 97;
 }
 
+#text_below_img {
+	padding-top:18px;
+	z-index: 98;
+}
 
 .contact_headline{
 	width: 100%;

@@ -3,26 +3,35 @@
 	<script type="text/javascript">
 	$(function(){
 		$('.specific_img_land').click(function () {
+		
 			var $img = $(this);
-			$('#divLargerImage_land').html($img.clone().height(600).width(800)).add($('#divOverlay')).fadeIn();
+			$('#divLargerImage_land').html($img.clone().height(600).width(800)).add($('#div_land'));
+			var $alt = $img.attr("alt");
+			$('#text_below_img').html($alt).add($('#div_land'));
+			$('#div_land').add($('#divOverlay')).fadeIn();
+			
 		});
 
-		$('#divLargerImage_land').add($('#divOverlay')).click(function () {
-			$('#divLargerImage_land').add($('#divOverlay')).fadeOut(function () {
-				$('#divLargerImage_land').empty();
+		$('#div_land').add($('#divOverlay')).click(function () {
+			$('#div_land').add($('#divOverlay')).fadeOut(function () {
+				$('#div_land').empty();
 			});
 		});
 		
 		
 		
 		$('.specific_img_portrait').click(function () {
+		
 			var $img = $(this);
-			$('#divLargerImage_portrait').html($img.clone().height(800).width(600)).add($('#divOverlay')).fadeIn();
+			$('#divLargerImage_portrait').html($img.clone().height(800).width(600));
+			var $alt = $img.attr("alt");
+			$('#text_below_img').html($alt);
+			$('#div_portrait').add($('#divOverlay')).fadeIn();
 		});
 
-		$('#divLargerImage_portrait').add($('#divOverlay')).click(function () {
-			$('#divLargerImage_portrait').add($('#divOverlay')).fadeOut(function () {
-				$('#divLargerImage_portrait').empty();
+		$('#div_portrait').add($('#divOverlay')).click(function () {
+			$('#div_portrait').add($('#divOverlay')).fadeOut(function () {
+				$('#div_portrait').empty();
 			});
 		});
 		
@@ -55,12 +64,12 @@
 				{% for image in image_list %}
 					{% if image.img_format == "l" %}
 						<div class="col-77" >
-							<a href="#"><img class="specific_img_land" src="{{gallery_images_location}}{{image.img}}" alt="photo" href="photo"></a>
+							<a href="#"><img class="specific_img_land" src="{{gallery_images_location}}{{image.img}}" alt="{{image.txt_below_img}}" href="photo"></a>
 						</div>
 					{% endif %}
 					{% if image.img_format == "p" %}
 						<div class="col-77" >
-							<a href="#"><img class="specific_img_portrait" src="{{gallery_images_location}}{{image.img}}" alt="photo" href="photo"></a>
+							<a href="#"><img class="specific_img_portrait" src="{{gallery_images_location}}{{image.img}}" alt="{{image.txt_below_img}}" href="photo"></a>
 						</div>
 					{% endif %}
 				{% endfor %}
@@ -83,10 +92,20 @@
 			<div class="col-1 end"></div>
 		</div>
 	{% endif %}
+	
+	<div id="div_land">
+		
+	</div>
 	<div id="divLargerImage_land"></div>
-	<div id="divLargerImage_portrait"></div>
-
-<div id="divOverlay"></div>
+	<div id="text_below_img"></div>	
+	
+	<div id="div_portrait">
+		<div id="divLargerImage_portrait"></div>
+		<div id="text_below_img"></div>	
+	</div>
+	
+	<div id="divOverlay"></div>
+	
 {% endblock %}
 
 

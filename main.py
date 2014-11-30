@@ -725,7 +725,7 @@ class AddPhoto(Handler):
         img_file = self.request.get("img_file").strip()  # a string
         text_below_img = self.request.get("text_below_img").strip()  # a string
 
-        if validation.are_format_and_img_file_filled_correct(L_P_photo, img_file):
+        if validation.are_format_and_img_file_and_text_filled_correct(L_P_photo, img_file, text_below_img):
             # process by creating Photo item in db
             photo = Photo(img_format = L_P_photo, img = img_file, txt_below_img=text_below_img)
             photo.put()

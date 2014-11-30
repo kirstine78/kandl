@@ -39,18 +39,19 @@ def are_xxxxx_substituted(text):
 
     
 # for blog - add photos
-def are_format_and_img_file_filled_correct(a_format_l_or_p, an_img_file):
+def are_format_and_img_file_and_text_filled_correct(a_format_l_or_p, an_img_file, a_text):
     """takes in strings.
         Return boolean. False if any string are empty"""
 
-    if a_format_l_or_p and an_img_file:
+    if a_format_l_or_p and an_img_file and a_text:
 
         
         the_format = a_format_l_or_p
         the_img_file = an_img_file
+        the_txt = a_text
 
 
-        if len(the_format) < 1 or len(the_img_file) < 1:
+        if len(the_format) < 1 or len(the_img_file) < 1 or len(the_txt) < 1:
             return False
         else:
             if the_format == "l" or the_format == "p":

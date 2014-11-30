@@ -278,33 +278,11 @@ a.link_menu_dd:hover {
 	box-shadow:5px 5px 5px #999999;
 }
 
-#div_land {
+#div_img_popup {
 	/* border: 1px solid blue !important; */
-    
-    /* width: 800px;
-    height: 600px; */
     
 	display: none;
 	position: absolute;
-	top:0;
-	bottom:0;
-    left: 0;
-	margin-top:auto;
-	margin-bottom:auto;
-	right: 0;
-	margin-left:auto;
-	margin-right:auto;
-    z-index: 98;
-}
-
-
-#div_portrait {
-    
-    /* width: 600px;
-    height: 800px; */
-	
-	display: none;
-    position: absolute;
 	top:0;
 	bottom:0;
     left: 0;

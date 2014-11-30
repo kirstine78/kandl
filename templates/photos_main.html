@@ -2,7 +2,7 @@
 {% block head %}
 	<script type="text/javascript">
 	$(function(){
-		$('.specific_img_land').click(function () {
+		$('.thumbnail').click(function () {
 		
 			var $img = $(this);
 			var urlBigImage = $img.data('big-url');
@@ -19,78 +19,32 @@
 
 			}).error(function(){
 			  //do something if image cannot load
-			  console.log("error not displaying big landscape img");
+			  console.log("error not displaying big img");
 			});
 			console.log("bigImage.height="+bigImage.height);
 			console.log("bigImage.height="+$(bigImage).height);
-			$('#div_land').height(bigImage.height);
-			$('#div_land').width(bigImage.width);
+			$('#div_img_popup').height(bigImage.height);
+			$('#div_img_popup').width(bigImage.width);
 			
 			bigImage.onload = function() {
-				$('#div_land').height(this.height);
-				$('#div_land').width(this.width);
+				$('#div_img_popup').height(this.height);
+				$('#div_img_popup').width(this.width);
 			}
 			
-			$('#divLargerImage_land').html(bigImage);
+			$('#divLargerImage').html(bigImage);
 			var $alt = $img.attr("alt");
-			$('#text_below_img_land').html($alt);
-			$('#div_land').add($('#divOverlay')).fadeIn();
+			$('#text_below_img').html($alt);
+			$('#div_img_popup').add($('#divOverlay')).fadeIn();
 			
 		});
 
-		$('#div_land').add($('#divOverlay')).click(function () {
-			$('#div_land').add($('#divOverlay')).fadeOut(function () {
-				$('#divLargerImage_land').empty();
-				$('#text_below_img_land').empty();
+		$('#div_img_popup').add($('#divOverlay')).click(function () {
+			$('#div_img_popup').add($('#divOverlay')).fadeOut(function () {
+				$('#divLargerImage').empty();
+				$('#text_below_img').empty();
 			});
 		});
 		
-		
-		
-		$('.specific_img_portrait').click(function () {
-		
-			var $img = $(this);
-			var urlBigImage = $img.data('big-url');
-			var bigImage = new Image();
-			$(bigImage).load(function(){
-
-				$('.container').append($(this));
-
-			}).attr({
-
-				src: urlBigImage,
-				class: "big_img"
-				
-
-			}).error(function(){
-			  //do something if image cannot load
-			  console.log("error not displaying big portrait img");
-			});
-			console.log("bigImage.height="+bigImage.height);
-			console.log("bigImage.height="+$(bigImage).height);
-			$('#div_portrait').height(bigImage.height);
-			$('#div_portrait').width(bigImage.width);
-			
-			bigImage.onload = function() {
-				$('#div_portrait').height(this.height);
-				$('#div_portrait').width(this.width);
-			}
-			
-			
-			$('#divLargerImage_portrait').html(bigImage);
-			var $alt = $img.attr("alt");
-			$('#text_below_img_portrait').html($alt);
-			$('#div_portrait').add($('#divOverlay')).fadeIn();
-			
-			
-		});
-
-		$('#div_portrait').add($('#divOverlay')).click(function () {
-			$('#div_portrait').add($('#divOverlay')).fadeOut(function () {
-				$('#divLargerImage_portrait').empty();
-				$('#text_below_img_portrait').empty();
-			});
-		});
 	});
 	
 	</script>
@@ -119,12 +73,12 @@
 				{% for image in image_list %}
 					{% if image.img_format == "l" %}
 						<div class="col-77" >
-							<a href="#"><img class="specific_img_land" data-big-url="{{gallery_images_location}}big/{{image.img}}" src="{{gallery_images_location}}{{image.img}}" alt="{{image.txt_below_img}}" href="photo"></a>
+							<a href="#"><img class="specific_img_land thumbnail" data-big-url="{{gallery_images_location}}big/{{image.img}}" src="{{gallery_images_location}}{{image.img}}" alt="{{image.txt_below_img}}" href="photo"></a>
 						</div>
 					{% endif %}
 					{% if image.img_format == "p" %}
 						<div class="col-77" >
-							<a href="#"><img class="specific_img_portrait" data-big-url="{{gallery_images_location}}big/{{image.img}}" src="{{gallery_images_location}}{{image.img}}" alt="{{image.txt_below_img}}" href="photo"></a>
+							<a href="#"><img class="specific_img_portrait thumbnail" data-big-url="{{gallery_images_location}}big/{{image.img}}" src="{{gallery_images_location}}{{image.img}}" alt="{{image.txt_below_img}}" href="photo"></a>
 						</div>
 					{% endif %}
 				{% endfor %}
@@ -148,15 +102,9 @@
 		</div>
 	{% endif %}
 	
-	<div id="div_land">
-		<div id="divLargerImage_land"></div>
-		<div class="txt_below_img" id="text_below_img_land"></div>	
-	</div>
-	
-	
-	<div id="div_portrait">
-		<div id="divLargerImage_portrait"></div>
-		<div class="txt_below_img" id="text_below_img_portrait"></div>	
+	<div id="div_img_popup">
+		<div id="divLargerImage"></div>
+		<div class="txt_below_img" id="text_below_img"></div>	
 	</div>
 	
 	<div id="divOverlay"></div>

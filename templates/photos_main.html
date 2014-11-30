@@ -5,16 +5,17 @@
 		$('.specific_img_land').click(function () {
 		
 			var $img = $(this);
-			$('#divLargerImage_land').html($img.clone().height(600).width(800)).add($('#div_land'));
+			$('#divLargerImage_land').html($img.clone().height(600).width(800));
 			var $alt = $img.attr("alt");
-			$('#text_below_img').html($alt).add($('#div_land'));
+			$('#text_below_img_land').html($alt);
 			$('#div_land').add($('#divOverlay')).fadeIn();
 			
 		});
 
 		$('#div_land').add($('#divOverlay')).click(function () {
 			$('#div_land').add($('#divOverlay')).fadeOut(function () {
-				$('#div_land').empty();
+				$('#divLargerImage_land').empty();
+				$('#text_below_img_land').empty();
 			});
 		});
 		
@@ -25,17 +26,16 @@
 			var $img = $(this);
 			$('#divLargerImage_portrait').html($img.clone().height(800).width(600));
 			var $alt = $img.attr("alt");
-			$('#text_below_img').html($alt);
+			$('#text_below_img_portrait').html($alt);
 			$('#div_portrait').add($('#divOverlay')).fadeIn();
 		});
 
 		$('#div_portrait').add($('#divOverlay')).click(function () {
 			$('#div_portrait').add($('#divOverlay')).fadeOut(function () {
-				$('#div_portrait').empty();
+				$('#divLargerImage_portrait').empty();
+				$('#text_below_img_portrait').empty();
 			});
 		});
-		
-		
 	});
 	
 	</script>
@@ -94,14 +94,14 @@
 	{% endif %}
 	
 	<div id="div_land">
-		
+		<div id="divLargerImage_land"></div>
+		<div class="txt_below_img" id="text_below_img_land"></div>	
 	</div>
-	<div id="divLargerImage_land"></div>
-	<div id="text_below_img"></div>	
+	
 	
 	<div id="div_portrait">
 		<div id="divLargerImage_portrait"></div>
-		<div id="text_below_img"></div>	
+		<div class="txt_below_img" id="text_below_img_portrait"></div>	
 	</div>
 	
 	<div id="divOverlay"></div>

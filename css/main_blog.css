@@ -326,10 +326,10 @@ a.link_menu_dd:hover {
     z-index: 97;
 }
 
-#text_below_img {
+.txt_below_img{
 	padding-top:18px;
-	z-index: 98;
 }
+
 
 .contact_headline{
 	width: 100%;

@@ -315,6 +315,7 @@ a.link_menu_dd:hover {
 	font-size:14px;
 	background-color:white;
 	display:block;
+	white-space: pre;
 }
 
 .big_img {

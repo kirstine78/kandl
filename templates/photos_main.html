@@ -5,7 +5,33 @@
 		$('.specific_img_land').click(function () {
 		
 			var $img = $(this);
-			$('#divLargerImage_land').html($img.clone().height(600).width(800));
+			var urlBigImage = $img.data('big-url');
+			var bigImage = new Image();
+			$(bigImage).load(function(){
+
+				$('.container').append($(this));
+
+			}).attr({
+
+				src: urlBigImage,
+				class: "big_img"
+				
+
+			}).error(function(){
+			  //do something if image cannot load
+			  console.log("error not displaying big landscape img");
+			});
+			console.log("bigImage.height="+bigImage.height);
+			console.log("bigImage.height="+$(bigImage).height);
+			$('#div_land').height(bigImage.height);
+			$('#div_land').width(bigImage.width);
+			
+			bigImage.onload = function() {
+				$('#div_land').height(this.height);
+				$('#div_land').width(this.width);
+			}
+			
+			$('#divLargerImage_land').html(bigImage);
 			var $alt = $img.attr("alt");
 			$('#text_below_img_land').html($alt);
 			$('#div_land').add($('#divOverlay')).fadeIn();
@@ -24,10 +50,39 @@
 		$('.specific_img_portrait').click(function () {
 		
 			var $img = $(this);
-			$('#divLargerImage_portrait').html($img.clone().height(800).width(600));
+			var urlBigImage = $img.data('big-url');
+			var bigImage = new Image();
+			$(bigImage).load(function(){
+
+				$('.container').append($(this));
+
+			}).attr({
+
+				src: urlBigImage,
+				class: "big_img"
+				
+
+			}).error(function(){
+			  //do something if image cannot load
+			  console.log("error not displaying big portrait img");
+			});
+			console.log("bigImage.height="+bigImage.height);
+			console.log("bigImage.height="+$(bigImage).height);
+			$('#div_portrait').height(bigImage.height);
+			$('#div_portrait').width(bigImage.width);
+			
+			bigImage.onload = function() {
+				$('#div_portrait').height(this.height);
+				$('#div_portrait').width(this.width);
+			}
+			
+			
+			$('#divLargerImage_portrait').html(bigImage);
 			var $alt = $img.attr("alt");
 			$('#text_below_img_portrait').html($alt);
 			$('#div_portrait').add($('#divOverlay')).fadeIn();
+			
+			
 		});
 
 		$('#div_portrait').add($('#divOverlay')).click(function () {
@@ -64,12 +119,12 @@
 				{% for image in image_list %}
 					{% if image.img_format == "l" %}
 						<div class="col-77" >
-							<a href="#"><img class="specific_img_land" src="{{gallery_images_location}}{{image.img}}" alt="{{image.txt_below_img}}" href="photo"></a>
+							<a href="#"><img class="specific_img_land" data-big-url="{{gallery_images_location}}big/{{image.img}}" src="{{gallery_images_location}}{{image.img}}" alt="{{image.txt_below_img}}" href="photo"></a>
 						</div>
 					{% endif %}
 					{% if image.img_format == "p" %}
 						<div class="col-77" >
-							<a href="#"><img class="specific_img_portrait" src="{{gallery_images_location}}{{image.img}}" alt="{{image.txt_below_img}}" href="photo"></a>
+							<a href="#"><img class="specific_img_portrait" data-big-url="{{gallery_images_location}}big/{{image.img}}" src="{{gallery_images_location}}{{image.img}}" alt="{{image.txt_below_img}}" href="photo"></a>
 						</div>
 					{% endif %}
 				{% endfor %}

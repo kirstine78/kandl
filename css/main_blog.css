@@ -13,6 +13,11 @@
 	font-family: 'Open Sans', sans-serif;
 }
 
+@media only screen and (max-width: 500px) {
+	div {
+		background-color: blue;
+	}
+}
 
 
 
@@ -169,14 +174,17 @@ a.new_old_link:hover {
 	width:100%
 }
 
+/* 7.2 of 12.... by mistake called 75*/
 .col-75 {
 	width:60%
 }
 
+/* 2.7 of 12.... by mistake called 25*/
 .col-25 {
 	width:23.33%
 }
 
+/* 1.7 of 12.... by mistake called 77*/
 .col-77 {
 	width:14.2587%;
 }

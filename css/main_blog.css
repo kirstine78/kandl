@@ -1,6 +1,6 @@
-* {
+/* * {
 	border: 1px solid red !important;
-} 
+}  */
 
 * {
 	-webkit-box-sizing: border-box;
@@ -19,6 +19,7 @@
 	}
 }
 
+/*use class for top photo, and for landscape img's inside a blogpost*/
 .img-responsive {
 	display: block;
 	max-width: 100%;
@@ -26,6 +27,7 @@
   
 }
 
+/*use class for portrait img's inside a blogpost*/
 .img-responsive-blog-portrait {
 	display: block;
 	max-width: 75%;
@@ -118,15 +120,6 @@
 	font-size: 11px;
 }
 
-.landscape_img {
-	width:100%;  /* 660px - padding 40px = 620px*/
-	height:465px;  /* 620px width divided with 1.3333333333333 */
-}
-
-.portrait_img {
-	width:75%;  /* 495px*/
-	height:660px;   /* width 495px divided with 0.75 */
-}
 
 .txt_below_img_italic {
 	font-size:13px;

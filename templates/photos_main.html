@@ -73,7 +73,7 @@
 				{% for image in image_list %}
 					{% if image.img_format == "l" %}
 						<div class="col-77" >
-							<a href="#"><img class="specific_img_land thumbnail" data-big-url="{{gallery_images_location}}big/{{image.img}}" src="{{gallery_images_location}}{{image.img}}" alt="{{image.txt_below_img}}" href="photo"></a>
+							<a href="#"><img class="thumbnail img-responsive-land" data-big-url="{{gallery_images_location}}big/{{image.img}}" src="{{gallery_images_location}}{{image.img}}" alt="{{image.txt_below_img}}" href="photo"></a>
 						</div>
 					{% endif %}
 					{% if image.img_format == "p" %}

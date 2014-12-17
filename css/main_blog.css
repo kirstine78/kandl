@@ -1,6 +1,6 @@
-/* * {
+* {
 	border: 1px solid red !important;
-}  */
+} 
 
 * {
 	-webkit-box-sizing: border-box;
@@ -20,10 +20,28 @@
 }
 
 .img-responsive {
-  display: block;
-  max-width: 100%;
-  height: auto;
+	display: block;
+	max-width: 100%;
+	height: auto;
+  
 }
+
+
+
+.videoWrapper {
+	position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	padding-top: 25px;
+	height: 0;
+}
+.videoWrapper iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
 
 .grid {
 	margin: 0 auto;
@@ -269,6 +287,18 @@ a.link_menu_dd:hover {
 	-webkit-box-shadow:5px 5px 5px #999999;
 	-moz-box-shadow: 5px 5px 5px #999999;
 	box-shadow:5px 5px 5px #999999;
+}
+
+.img-responsive-land {
+	display: block;
+	max-width: 100%;
+	height: auto;
+	margin-left: auto;
+	margin-right: auto ;
+	/* position: relative; */
+	/* width:100%; */
+	
+	
 }
 
 .specific_img_portrait {

@@ -10,7 +10,7 @@
 						{% for year in range(2020, 2009, -1) %}
 							<LI>
 								{% if year|string in dict_bloggi %}
-									<span ><a id="color_arrow" href="#" style="text-decoration:none;">&#9658;</a></span>
+									<span><a id="color_arrow" href="#" style="text-decoration:none;">&#9658;</a></span>
 									<a class="link_menu_yy"  href="/full_year?year={{year|string}}" ><b>{{year}}</b></a>
 									
 									<UL id="month_tree" class="archive_menu">

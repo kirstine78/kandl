@@ -1,7 +1,7 @@
 /* * {
 	border: 1px solid red !important;
-}  */
-
+} 
+ */
 
 * {
 	-webkit-box-sizing: border-box;
@@ -59,6 +59,13 @@
 	width: 100%;
 	margin-bottom:0px;
 	display: flex;
+}
+
+.row_flex_block {
+	width: 100%;
+	margin-bottom:0px;
+	display: flex;
+
 }
 
 .about_headline{
@@ -209,12 +216,14 @@ a.new_old_link:hover {
 	width:14.2587%;
 }
 
+
+/*columns to be manipulated in sizes....*/
 .col-date{
-	width:25%
+	width:200px;
 }
-.col-author {
+/* .col-author {
 	width:75%
-}
+} */
 
 h3 {
 color:#848484;
@@ -406,38 +415,15 @@ a.link_headline_edit:hover {
 
 
 
-@media only screen and (max-width: 1000px) {
-	div {
-		background-color: yellow;
-	}
-	.col-date{
-		width:30%;
-	}
-	.col-author {
-		width:70%;
-	}
-}
-
-
-
-
 
 /*want blog archive to disappear from rigth column*/
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 900px) {
 	div {
-		background-color: green;
+		background-color: pink;
 		font-size: 15px;
 	}
-	
-	
-	.col-date{
-		width:30%;
-	}
-	.col-author {
-		width:70%;
-	}
-	
+
 	.blog_headline{
 		width: 100%;
 		display: flex;
@@ -464,11 +450,13 @@ a.link_headline_edit:hover {
 		white-space:pre-wrap;
 	}
 	
+	
+	
 	.about_headline{
 		width: 100%;
 		display: flex;
-		padding-left: 0px;
-		padding-right: 0px;
+		padding-left: 12px;
+		padding-right: 5px;
 		padding-bottom: 5px;
 		font-weight: bold;
 		font-size: 14px;
@@ -478,34 +466,14 @@ a.link_headline_edit:hover {
 		width: 100%;
 		display: flex;
 		padding-top: 0px;
-		padding-left: 0px;
-		padding-right: 0px;
+		padding-left: 12px;
+		padding-right: 5px;
 	}
 	
 }
 
 
-@media only screen and (max-width: 750px) {
-	div {
-		background-color: pink;
-	}
-	
-	
-	
-	.link_top_bar {
-		color:#848484;
-		text-decoration: none;
-		font-weight:bold;
-		font-size: 12px;
-	}
-	
-	.col-date{
-		width:40%;
-	}
-	.col-author {
-		width:60%;
-	}
-}
+
 
 
 @media only screen and (max-width: 500px) {
@@ -514,9 +482,27 @@ a.link_headline_edit:hover {
 		font-size: 13px;
 	}
 	
+		
+	.link_top_bar {
+		color:#848484;
+		text-decoration: none;
+		font-weight:bold;
+		font-size: 12px;
+	}
+	
+	.row_flex_block {
+		width: 100%;
+		margin-bottom:0px;
+		display: block;
+
+	}
+	
+	
 	.txt_below_img_italic {
 		font-size:11px;
 	}
+
+	
 	
 	.blog_headline{
 		width: 100%;
@@ -533,7 +519,7 @@ a.link_headline_edit:hover {
 		display: flex;
 		padding-bottom: 7px;
 		color:#848484;
-		font-size: 10px;
+		font-size: 9px;
 		white-space: pre; 
 		
 	}

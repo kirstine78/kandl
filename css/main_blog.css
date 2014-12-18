@@ -1,6 +1,6 @@
-/* * {
+* {
 	border: 1px solid red !important;
-}  */
+} 
 
 
 * {
@@ -154,6 +154,11 @@
 .div_gap_between_imgs {
 	height:9px;
 	width:100%;
+}
+
+.video_resizing {
+	height:315px;
+	width:560px;
 }
 
 .error_message_red {
@@ -325,7 +330,7 @@ a.link_menu_dd:hover {
 .photo_headline, .video_headline {
 	width: 100%;
 	padding-top: 15px;
-	padding-bottom: 5px;
+	padding-bottom: 18px;
 	font-weight: bold;
 	font-size: 24px;
 	text-align:center;
@@ -542,7 +547,7 @@ a.link_headline_edit:hover {
 		padding-top: 0px;		
 		padding-bottom: 5px;
 		font-weight: bold;
-		font-size: 14px;
+		font-size: 16px;
 	}
 	
 	.about_text {
@@ -551,6 +556,31 @@ a.link_headline_edit:hover {
 		padding-left: 12px;
 		padding-right: 0px;
 	}
+	
+	
+	
+	.photo_headline, .video_headline {
+		width: 100%;
+		padding-top: 0px;
+		padding-bottom: 5px;
+		font-weight: bold;
+		font-size: 16px;
+		text-align:center;
+	}
+}
+
+
+/*this size is only to give youtube videos inside a blog post an extra size possibility*/
+@media only screen and (max-width: 750px) {
+	div {
+		background-color: blue;
+	}
+	
+	.video_resizing {
+		height:208px;
+		width:370px;
+	}
+
 }
 
 
@@ -629,7 +659,12 @@ a.link_headline_edit:hover {
 	.txt_below_img_italic {
 		font-size:11px;
 	}
-
+	
+	.video_resizing {
+		height:208px;
+		width:270px;
+	}
+	
 	.new_old_link {
 		color:#008080;
 		font-size: 12px;
@@ -655,4 +690,39 @@ a.link_headline_edit:hover {
 		padding-right: 0px;
 	}
 	
+	
+	
+	
+	.photo_headline, .video_headline {
+		width: 100%;
+		padding-top: 12px;
+		padding-bottom: 5px;
+		font-weight: bold;
+		font-size: 14px;
+		text-align:center;
+	}
+	
+}
+
+/*this size is only to give youtube videos inside a blog post an extra size possibility*/
+@media only screen and (max-width: 380px) {
+	div {
+		background-color: yellow;
+	}
+	
+	.video_resizing {
+		height:208px;
+		width:200px;
+	}
+	
+	/*photo headline is very long*/
+	.photo_headline {
+		width: 100%;
+		padding-top: 12px;
+		padding-bottom: 5px;
+		font-weight: bold;
+		font-size: 11px;
+		text-align:center;
+	}
+
 }

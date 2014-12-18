@@ -859,19 +859,27 @@ class AddVideo(Handler):
         the_iframe_tag = self.request.get("iframe_tag").strip()  # a string
 
         if validation.is_there_a_tag(the_iframe_tag):
-            # process by creating Video item in db
-            video = Video(iframe_tag_and_content = the_iframe_tag)
-            video.put()
-            
-            #display blank page
-            # render "videos_add_video.html"!
-            self.render_AddVideo("", "")
+
+            # is tag valid
+            if validation.does_tag_have_class(the_iframe_tag):
+                # process by creating Video item in db
+                video = Video(iframe_tag_and_content = the_iframe_tag)
+                video.put()
+                
+                #display blank page
+                # render "videos_add_video.html"!
+                self.render_AddVideo("", "")
+            else:
+                # display error message
+                # don't process - instead redisplay page
+                # render "videos_add_photo.html" and display error message and redisplay what was filled in  (delete previous tag or else it screws page up).
+                self.render_AddVideo('Delete width and height and put in class="video_resizing"', "")
 
         else:
             # don't process - instead redisplay page
             
             # not all mandatory fields filled out
-            # render "photos_add_photo.html" and display error message and redisplay what was filled in (which will be empty string in this case)
+            # render "videos_add_photo.html" and display error message and redisplay what was filled in (which will be empty string in this case)
             self.render_AddVideo('Mandatory field is missing', the_iframe_tag)
 
 

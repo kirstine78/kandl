@@ -219,7 +219,7 @@ def get_previous_link(list_of_some, a_number):
 
     
 
-# for blog
+# for video
 def is_there_a_tag(some_string):
     """ Takes in a string, return True if string not empty else False """
 
@@ -230,6 +230,20 @@ def is_there_a_tag(some_string):
             return False
     return False
 
+# for video
+def does_tag_have_class(some_string):
+    """ Takes in a string, return True if string contain class="video_resizing" """
+
+    if some_string:
+        if 'class="video_resizing"' in some_string:
+            return True
+        else:
+            return False
+    return False
+
+    
+
+    
 
 # for blog used inside blog_post_entry.html. made possible with
 # jinja_env.globals.update(selected_value_dropdown=validation.selected_value_dropdown) inside main.py

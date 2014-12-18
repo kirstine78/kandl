@@ -1,6 +1,6 @@
-* {
+/* * {
 	border: 1px solid red !important;
-} 
+}  */
 
 
 * {
@@ -63,7 +63,21 @@
 	display: flex;
 }
 
-.row_flex_block {
+.row_flex_block_date_author {
+	width: 100%;
+	margin-bottom:0px;
+	display: flex;
+
+}
+
+.row_flex_block_post_archive {
+	width: 100%;
+	margin-bottom:0px;
+	display: flex;
+
+}
+
+.row_flex_block_about  {
 	width: 100%;
 	margin-bottom:0px;
 	display: flex;
@@ -241,6 +255,19 @@ a.new_old_link:hover {
 .col-top-bar-links {
 	width:16.66%
 }
+
+.col-blog-post {
+	width:72%
+}
+
+.col-blog-archive {
+	width:28%
+}
+
+.col-about-img  {
+	width:25%
+}
+
 
 
 
@@ -443,12 +470,26 @@ a.link_headline_edit:hover {
 		font-size: 15px;
 	}
 	
-	.col-newer-older-link {
-		width:50%
+	.row_flex_block_post_archive {
+		width: 100%;
+		margin-bottom:0px;
+		display: block;
 	}
 	
 	.col-top-bar-links {
 		width:15%
+	}
+	
+	.col-blog-post {
+		width:100%
+	}
+	
+	.col-newer-older-link {
+		width:50%
+	}
+
+	.col-blog-archive {
+		width:80%
 	}
 	
 	
@@ -490,28 +531,26 @@ a.link_headline_edit:hover {
 		font-weight: bold;
 		font-size: 14px;
 		text-align:center;
-	}	
+	}
 	
-	
-	
+
 	.about_headline{
 		width: 100%;
 		display: flex;
 		padding-left: 12px;
 		padding-right: 0px;
+		padding-top: 0px;		
 		padding-bottom: 5px;
 		font-weight: bold;
 		font-size: 14px;
 	}
-
+	
 	.about_text {
 		width: 100%;
 		display: flex;
-		padding-top: 0px;
 		padding-left: 12px;
 		padding-right: 0px;
 	}
-	
 }
 
 
@@ -523,19 +562,33 @@ a.link_headline_edit:hover {
 		font-size: 13px;
 	}
 	
-	.col-about-text {
-		width:100%
-	}
-	
-	.col-newer-older-link {
-		width:50%
-	}
-	
-	.row_flex_block {
+	.row_flex_block_date_author {
 		width: 100%;
 		margin-bottom:0px;
 		display: block;
 
+	}
+		
+	.row_flex_block_about  {
+		width: 100%;
+		margin-bottom:0px;
+		display: block;
+	}
+	
+	.col-newer-older-link {
+		width:50%;
+	}	
+
+	.col-blog-archive {
+		width:90%
+	}
+	
+	.col-about-img  {
+		width:50%
+	}
+	
+	.col-about-text {
+		width:100%
 	}
 	
 		
@@ -598,7 +651,6 @@ a.link_headline_edit:hover {
 	.about_text {
 		width: 100%;
 		display: flex;
-		padding-top: 0px;
 		padding-left: 0px;
 		padding-right: 0px;
 	}

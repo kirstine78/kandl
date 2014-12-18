@@ -514,7 +514,7 @@ a.link_headline_edit:hover {
 	}
 
 	.col-blog-archive {
-		width:80%
+		display: none;
 	}
 	
 	
@@ -640,9 +640,9 @@ a.link_headline_edit:hover {
 		width:50%;
 	}	
 
-	.col-blog-archive {
-		width:90%
-	}
+	/* .col-blog-archive {
+		display: block;
+	} */
 	
 	.col-about-img  {
 		width:50%

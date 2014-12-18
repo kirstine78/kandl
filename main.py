@@ -873,7 +873,7 @@ class AddVideo(Handler):
                 # display error message
                 # don't process - instead redisplay page
                 # render "videos_add_photo.html" and display error message and redisplay what was filled in  (delete previous tag or else it screws page up).
-                self.render_AddVideo('Delete width and height and put in class="video_resizing"', "")
+                self.render_AddVideo('Delete width and height and put in class="video_resize_videos"', "")
 
         else:
             # don't process - instead redisplay page

@@ -156,7 +156,7 @@
 	width:100%;
 }
 
-.video_resizing {
+.video_resize_blog_post, .video_resize_videos {
 	height:315px;
 	width:560px;
 }
@@ -473,7 +473,7 @@ a.link_headline_edit:hover {
 		background-color: green;
 	}
 	
-	.video_resizing {
+	.video_resize_blog_post {
 		height:264px;
 		width:470px;
 	}
@@ -581,25 +581,27 @@ a.link_headline_edit:hover {
 		text-align:center;
 	}
 	
-	.video_resizing {
+	.video_resize_blog_post {
 		height:315px;
 		width:560px;
 	}
 }
 
 
-/*this size is only to give youtube videos inside a blog post an extra size possibility*/
+/*this size is only to give youtube videos inside a blog post and videos in Videos an extra size possibility*/
 @media only screen and (max-width: 750px) {
 	div {
 		background-color: blue;
 	}
 	
-	.video_resizing {
+	.video_resize_blog_post, .video_resize_videos{
 		height:208px;
 		width:370px;
 	}
 
 }
+
+
 
 
 
@@ -678,7 +680,7 @@ a.link_headline_edit:hover {
 		font-size:11px;
 	}
 	
-	.video_resizing {
+	.video_resize_blog_post, .video_resize_videos {
 		height:152px;
 		width:270px;
 	}
@@ -722,13 +724,13 @@ a.link_headline_edit:hover {
 	
 }
 
-/*this size is only to give youtube videos inside a blog post an extra size possibility and photo headline becomes smaller*/
+/*this size is only to give youtube videos inside a blog post and videos in Videos an extra size possibility and photo headline becomes smaller*/
 @media only screen and (max-width: 380px) {
 	div {
 		background-color: yellow;
 	}
 	
-	.video_resizing {
+	.video_resize_blog_post, .video_resize_videos {
 		height:112px;
 		width:200px;
 	}

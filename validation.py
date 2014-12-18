@@ -232,10 +232,10 @@ def is_there_a_tag(some_string):
 
 # for video
 def does_tag_have_class(some_string):
-    """ Takes in a string, return True if string contain class="video_resizing" """
+    """ Takes in a string, return True if string contain class="video_resize_videos" """
 
     if some_string:
-        if 'class="video_resizing"' in some_string:
+        if 'class="video_resize_videos"' in some_string:
             return True
         else:
             return False

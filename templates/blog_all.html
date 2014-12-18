@@ -6,7 +6,10 @@
 		<div class="col-75">
 		{% for post in blog_posts %}
 			<div class="blog_headline">{{post.headline}}</div>
-			<div class="blog_date">{{format_the_date(post.created)}}     <i>{{post.author}}</i></div>
+			<div class="row ">
+				<div class="col-date blog_date">{{format_the_date(post.created)}}</div>
+				<div class="col-author blog_date"><i>{{post.author}}</i></div>
+			</div>
 			<div class="blog_text">{{do_substitutions(post.text)}}</div>
 							
 			<br>

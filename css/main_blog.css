@@ -2,6 +2,7 @@
 	border: 1px solid red !important;
 }  */
 
+
 * {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -56,7 +57,7 @@
 
 .row {
 	width: 100%;
-	margin-bottom:20px;
+	margin-bottom:0px;
 	display: flex;
 }
 
@@ -103,6 +104,11 @@
 	white-space: pre; 
 	
 }
+
+/* .pre-wrap {
+	display:float; 
+
+} */
 
 .blog_text {
 	width: 100%;
@@ -201,6 +207,13 @@ a.new_old_link:hover {
 /* 1.7 of 12.... by mistake called 77*/
 .col-77 {
 	width:14.2587%;
+}
+
+.col-date{
+	width:25%
+}
+.col-author {
+	width:75%
 }
 
 h3 {
@@ -391,10 +404,118 @@ a.link_headline_edit:hover {
 	color:#F88017;
 }
 
+
+
+@media only screen and (max-width: 1000px) {
+	div {
+		background-color: yellow;
+	}
+	.col-date{
+		width:30%;
+	}
+	.col-author {
+		width:70%;
+	}
+}
+
+
+
+
+
+/*want blog archive to disappear from rigth column*/
+
+@media only screen and (max-width: 800px) {
+	div {
+		background-color: green;
+		font-size: 15px;
+	}
+	
+	
+	.col-date{
+		width:30%;
+	}
+	.col-author {
+		width:70%;
+	}
+	
+	.blog_headline{
+		width: 100%;
+		display: flex;
+		padding-right: 0px;
+		padding-top: 0px;
+		padding-bottom: 5px;
+		font-weight: bold;
+		font-size: 16px;
+	}
+	
+	.blog_date {
+		/* width: 100%; */
+		display: flex;
+		padding-bottom: 7px;
+		color:#848484;
+		font-size: 12px;
+		white-space: pre; 
+		
+	}
+
+	.blog_text {
+		width: 100%;
+		padding-right: 0px;
+		white-space:pre-wrap;
+	}
+	
+	.about_headline{
+		width: 100%;
+		display: flex;
+		padding-left: 0px;
+		padding-right: 0px;
+		padding-bottom: 5px;
+		font-weight: bold;
+		font-size: 14px;
+	}
+
+	.about_text {
+		width: 100%;
+		display: flex;
+		padding-top: 0px;
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+	
+}
+
+
+@media only screen and (max-width: 750px) {
+	div {
+		background-color: pink;
+	}
+	
+	
+	
+	.link_top_bar {
+		color:#848484;
+		text-decoration: none;
+		font-weight:bold;
+		font-size: 12px;
+	}
+	
+	.col-date{
+		width:40%;
+	}
+	.col-author {
+		width:60%;
+	}
+}
+
+
 @media only screen and (max-width: 500px) {
 	div {
-		background-color: blue;
+		background-color: white;
 		font-size: 13px;
+	}
+	
+	.txt_below_img_italic {
+		font-size:11px;
 	}
 	
 	.blog_headline{

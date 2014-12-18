@@ -164,6 +164,10 @@ a.new_old_link:hover {
 	color:#F88017;
 }
 
+#align-in-center {
+   text-align: center;
+}
+
 .col-1 {
 	width: 8.33%;
 }
@@ -221,9 +225,14 @@ a.new_old_link:hover {
 .col-date{
 	width:200px;
 }
-/* .col-author {
+
+.col-about-text {
 	width:75%
-} */
+}
+
+.col-newer-older-link {
+	width:20%
+}
 
 h3 {
 color:#848484;
@@ -416,13 +425,14 @@ a.link_headline_edit:hover {
 
 
 
-/*want blog archive to disappear from rigth column*/
+/*want blog archive to disappear from rigth column and base_menu shall be a roll-down as well*/
 
 @media only screen and (max-width: 900px) {
 	div {
 		background-color: pink;
 		font-size: 15px;
 	}
+
 
 	.blog_headline{
 		width: 100%;
@@ -456,7 +466,7 @@ a.link_headline_edit:hover {
 		width: 100%;
 		display: flex;
 		padding-left: 12px;
-		padding-right: 5px;
+		padding-right: 0px;
 		padding-bottom: 5px;
 		font-weight: bold;
 		font-size: 14px;
@@ -467,11 +477,22 @@ a.link_headline_edit:hover {
 		display: flex;
 		padding-top: 0px;
 		padding-left: 12px;
-		padding-right: 5px;
+		padding-right: 0px;
+	}
+	
+	.new_old_link {
+		color:#008080;
+		font-weight: bold;
+		font-size: 14px;
+		text-align:center;
+	}
+	
+	
+	.col-newer-older-link {
+		width:50%
 	}
 	
 }
-
 
 
 
@@ -535,6 +556,7 @@ a.link_headline_edit:hover {
 		display: flex;
 		padding-left: 0px;
 		padding-right: 0px;
+		padding-top: 12px;		
 		padding-bottom: 5px;
 		font-weight: bold;
 		font-size: 14px;
@@ -546,6 +568,20 @@ a.link_headline_edit:hover {
 		padding-top: 0px;
 		padding-left: 0px;
 		padding-right: 0px;
+	}
+	
+	.col-about-text {
+		width:100%
+	}
+
+	.new_old_link {
+		color:#008080;
+		font-size: 12px;
+		font-weight: normal;
+	}
+	
+	.col-newer-older-link {
+		width:50%
 	}
 	
 }

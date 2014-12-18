@@ -6,9 +6,9 @@
 		<div class="col-75">
 		{% for post in blog_posts %}
 			<div class="blog_headline">{{post.headline}}</div>
-			<div class="row ">
+			<div class="row_flex_block">
 				<div class="col-date blog_date">{{format_the_date(post.created)}}</div>
-				<div class="col-author blog_date"><i>{{post.author}}</i></div>
+				<div class="blog_date"><i>{{post.author}}</i></div>
 			</div>
 			<div class="blog_text">{{do_substitutions(post.text)}}</div>
 							
@@ -27,8 +27,8 @@
 		<div class="row">
 			<div class="col-1"></div>
 			<div class="col-10" style="display:flex;">
-				<div class="col-2" style="padding-bottom:50px;"><a class="new_old_link" href="/?after_id={{blog_posts[0].key().id()}}">{{new_link}}</a></div>
-				<div class="col-2"><a class="new_old_link" href="/?before_id={{blog_posts[-1].key().id()}}">{{old_link}}</a></div>
+				<div class="col-newer-older-link" id="align-in-center" style="padding-bottom:50px;"><a class="new_old_link" href="/?after_id={{blog_posts[0].key().id()}}">{{new_link}}</a></div>
+				<div class="col-newer-older-link" id="align-in-center"><a class="new_old_link" href="/?before_id={{blog_posts[-1].key().id()}}">{{old_link}}</a></div>
 			</div>
 			<div class="col-1 end"></div>
 		</div>

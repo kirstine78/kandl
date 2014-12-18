@@ -465,7 +465,7 @@ a.link_headline_edit:hover {
 /*this size is only to give you-tube videos inside a blog post an extra size possibility*/
 @media only screen and (max-width: 1100px) {
 	div {
-		background-color: green;
+		background-color: #FF00FF;
 	}
 	
 	.video_resize_blog_post {
@@ -585,6 +585,16 @@ a.link_headline_edit:hover {
 	.video_resize_blog_post, .video_resize_videos{
 		height:208px;
 		width:370px;
+	}
+	
+	.contact_submission {
+		width: 100%;
+		padding-top: 15px;
+		padding-bottom: 5px;
+		color:green;
+		font-weight: bold;
+		font-size: 16px;
+		white-space: pre; 
 	}
 
 }
@@ -714,6 +724,18 @@ a.link_headline_edit:hover {
 		text-align:center;
 	}
 	
+	
+	
+	.contact_submission {
+		width: 100%;
+		padding-top: 15px;
+		padding-bottom: 5px;
+		color:green;
+		font-weight: bold;
+		font-size: 13px;
+		white-space: pre; 
+	}
+	
 }
 
 /*this size is only to give youtube videos inside a blog post and videos in Videos an extra size possibility and photo headline becomes smaller*/
@@ -735,6 +757,17 @@ a.link_headline_edit:hover {
 		font-weight: bold;
 		font-size: 11px;
 		text-align:center;
+	}	
+	
+	
+	.contact_submission {
+		width: 100%;
+		padding-top: 15px;
+		padding-bottom: 5px;
+		color:green;
+		font-weight: bold;
+		font-size: 10px;
+		white-space: pre; 
 	}
 
 }

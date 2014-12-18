@@ -1,6 +1,6 @@
-/* * {
+* {
 	border: 1px solid red !important;
-}  */
+} 
 
 
 * {
@@ -467,21 +467,21 @@ a.link_headline_edit:hover {
 
 
 
-/*this size is only to give youtube videos inside a blog post an extra size possibility*/
+/*this size is only to give you-tube videos inside a blog post an extra size possibility*/
 @media only screen and (max-width: 1100px) {
 	div {
 		background-color: green;
 	}
 	
 	.video_resizing {
-		height:225px;
-		width:400px;
+		height:264px;
+		width:470px;
 	}
 
 }
 
 
-/*want blog archive and base_menu shall be a roll-down menu's*/
+/******** Roll-down menu's for both blog archive and top bar menu ********/
 @media only screen and (max-width: 900px) {
 	div {
 		background-color: pink;
@@ -603,7 +603,7 @@ a.link_headline_edit:hover {
 
 
 
-/*Top photo shall NOT appear*/
+/******** Top photo shall NOT appear ********/
 @media only screen and (max-width: 500px) {
 	div {
 		background-color: white;
@@ -679,7 +679,7 @@ a.link_headline_edit:hover {
 	}
 	
 	.video_resizing {
-		height:208px;
+		height:152px;
 		width:270px;
 	}
 	
@@ -729,7 +729,7 @@ a.link_headline_edit:hover {
 	}
 	
 	.video_resizing {
-		height:208px;
+		height:112px;
 		width:200px;
 	}
 	

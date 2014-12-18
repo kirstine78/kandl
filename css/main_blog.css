@@ -1,7 +1,7 @@
-/* * {
+* {
 	border: 1px solid red !important;
 } 
- */
+
 
 * {
 	-webkit-box-sizing: border-box;
@@ -234,6 +234,10 @@ a.new_old_link:hover {
 	width:20%
 }
 
+.col-top-bar-links {
+	width:16.66%
+}
+
 h3 {
 color:#848484;
 }
@@ -432,7 +436,13 @@ a.link_headline_edit:hover {
 		background-color: pink;
 		font-size: 15px;
 	}
-
+	
+	.link_top_bar {
+		color:#848484;
+		text-decoration: none;
+		font-weight:bold;
+		font-size: 12px;
+	}
 
 	.blog_headline{
 		width: 100%;
@@ -490,6 +500,10 @@ a.link_headline_edit:hover {
 	
 	.col-newer-older-link {
 		width:50%
+	}
+	
+	.col-top-bar-links {
+		width:15%
 	}
 	
 }

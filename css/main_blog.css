@@ -467,8 +467,21 @@ a.link_headline_edit:hover {
 
 
 
-/*want blog archive to disappear from rigth column and base_menu shall be a roll-down as well*/
+/*this size is only to give youtube videos inside a blog post an extra size possibility*/
+@media only screen and (max-width: 1100px) {
+	div {
+		background-color: green;
+	}
+	
+	.video_resizing {
+		height:225px;
+		width:400px;
+	}
 
+}
+
+
+/*want blog archive and base_menu shall be a roll-down menu's*/
 @media only screen and (max-width: 900px) {
 	div {
 		background-color: pink;
@@ -567,6 +580,11 @@ a.link_headline_edit:hover {
 		font-size: 16px;
 		text-align:center;
 	}
+	
+	.video_resizing {
+		height:315px;
+		width:560px;
+	}
 }
 
 
@@ -585,7 +603,7 @@ a.link_headline_edit:hover {
 
 
 
-
+/*Top photo shall NOT appear*/
 @media only screen and (max-width: 500px) {
 	div {
 		background-color: white;
@@ -704,7 +722,7 @@ a.link_headline_edit:hover {
 	
 }
 
-/*this size is only to give youtube videos inside a blog post an extra size possibility*/
+/*this size is only to give youtube videos inside a blog post an extra size possibility and photo headline becomes smaller*/
 @media only screen and (max-width: 380px) {
 	div {
 		background-color: yellow;

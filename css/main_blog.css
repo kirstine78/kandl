@@ -48,6 +48,8 @@
 }
 
 
+
+
 .grid {
 	margin: 0 auto;
 	max-width: 1100px;
@@ -67,6 +69,8 @@
 	display: flex;
 
 }
+
+
 
 .about_headline{
 	width: 100%;
@@ -90,6 +94,8 @@
 	width:100%;
 	height:305px;
 } */
+
+
 
 
 .blog_headline{
@@ -127,7 +133,6 @@
 	font-size: 11px;
 }
 
-
 .txt_below_img_italic {
 	font-size:13px;
 }
@@ -136,7 +141,6 @@
 	height:9px;
 	width:100%;
 }
-
 
 .error_message_red {
 	color:red;
@@ -237,6 +241,8 @@ a.new_old_link:hover {
 .col-top-bar-links {
 	width:16.66%
 }
+
+
 
 h3 {
 color:#848484;
@@ -437,6 +443,15 @@ a.link_headline_edit:hover {
 		font-size: 15px;
 	}
 	
+	.col-newer-older-link {
+		width:50%
+	}
+	
+	.col-top-bar-links {
+		width:15%
+	}
+	
+	
 	.link_top_bar {
 		color:#848484;
 		text-decoration: none;
@@ -470,6 +485,13 @@ a.link_headline_edit:hover {
 		white-space:pre-wrap;
 	}
 	
+	.new_old_link {
+		color:#008080;
+		font-weight: bold;
+		font-size: 14px;
+		text-align:center;
+	}	
+	
 	
 	
 	.about_headline{
@@ -490,22 +512,6 @@ a.link_headline_edit:hover {
 		padding-right: 0px;
 	}
 	
-	.new_old_link {
-		color:#008080;
-		font-weight: bold;
-		font-size: 14px;
-		text-align:center;
-	}
-	
-	
-	.col-newer-older-link {
-		width:50%
-	}
-	
-	.col-top-bar-links {
-		width:15%
-	}
-	
 }
 
 
@@ -517,12 +523,12 @@ a.link_headline_edit:hover {
 		font-size: 13px;
 	}
 	
-		
-	.link_top_bar {
-		color:#848484;
-		text-decoration: none;
-		font-weight:bold;
-		font-size: 12px;
+	.col-about-text {
+		width:100%
+	}
+	
+	.col-newer-older-link {
+		width:50%
 	}
 	
 	.row_flex_block {
@@ -532,11 +538,13 @@ a.link_headline_edit:hover {
 
 	}
 	
-	
-	.txt_below_img_italic {
-		font-size:11px;
+		
+	.link_top_bar {
+		color:#848484;
+		text-decoration: none;
+		font-weight:bold;
+		font-size: 12px;
 	}
-
 	
 	
 	.blog_headline{
@@ -564,6 +572,17 @@ a.link_headline_edit:hover {
 		padding-right: 0px;
 		white-space:pre-wrap;
 	}
+		
+	.txt_below_img_italic {
+		font-size:11px;
+	}
+
+	.new_old_link {
+		color:#008080;
+		font-size: 12px;
+		font-weight: normal;
+	}
+	
 	
 	.about_headline{
 		width: 100%;
@@ -582,20 +601,6 @@ a.link_headline_edit:hover {
 		padding-top: 0px;
 		padding-left: 0px;
 		padding-right: 0px;
-	}
-	
-	.col-about-text {
-		width:100%
-	}
-
-	.new_old_link {
-		color:#008080;
-		font-size: 12px;
-		font-weight: normal;
-	}
-	
-	.col-newer-older-link {
-		width:50%
 	}
 	
 }

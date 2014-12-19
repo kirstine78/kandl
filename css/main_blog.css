@@ -32,12 +32,8 @@
   
 }
 
-/* .video-responsive-blog {
-	display: block;
-	width: 90%;
-	height: 100%;
-  
-} */
+
+/* This is for You-tube videos*/
 .video-container {
     position: relative;
     padding-bottom: 56.25%;
@@ -50,33 +46,18 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 60%;
-    height: 60%;
+    width: 100%;
+    height: 100%;
 }
 
 
 
-
-
-
-
-
-
-
-
-.videoWrapper {
-	position: relative;
-	padding-bottom: 56.25%; /* 16:9 */
-	padding-top: 25px;
-	height: 0;
+/* This for internal videos*/
+.video {
+  width: 100%    !important;
+  height: auto   !important;
 }
-.videoWrapper iframe {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-}
+
 
 
 
@@ -134,12 +115,6 @@
 }
 
 
-/* .about_img {
-	width:100%;
-	height:305px;
-} */
-
-
 
 
 .blog_headline{
@@ -183,10 +158,8 @@
 	width:100%;
 }
 
-.video_resize_blog_post, .video_resize_videos {
-	height:315px;
-	width:560px;
-}
+
+
 
 .error_message_red {
 	color:red;
@@ -200,6 +173,8 @@
 	font-weight: bold;
 	white-space:pre;
 }
+
+
 
 .link_top_bar {
 	color:#848484;
@@ -222,6 +197,8 @@ a.link_top_bar:hover {
 a.new_old_link:hover {
 	color:#F88017;
 }
+
+
 
 #align-in-center {
    text-align: center;
@@ -307,6 +284,14 @@ a.new_old_link:hover {
 
 .col-about-img  {
 	width:25%
+}
+
+.col-2-videos  {
+	width:16.66%
+}
+
+.col-8-videos {
+	width:66.66%
 }
 
 
@@ -515,18 +500,6 @@ a.link_headline_edit:hover {
 
 
 
-/*this size is only to give extra size possibility*/
-@media only screen and (max-width: 1100px) {
-	div {
-		background-color: blue;
-	}
-	
-	.video_resize_blog_post {
-		height:264px;
-		width:470px;
-	}
-
-}
 
 
 /******** Roll-down menu's for both blog archive and top bar menu ********/
@@ -644,11 +617,6 @@ a.link_headline_edit:hover {
 		font-size: 16px;
 		text-align:center;
 	}
-	
-	.video_resize_blog_post {
-		height:315px;
-		width:560px;
-	}
 }
 
 
@@ -656,11 +624,6 @@ a.link_headline_edit:hover {
 @media only screen and (max-width: 750px) {
 	div {
 		background-color: Fuchsia;
-	}
-	
-	.video_resize_blog_post, .video_resize_videos{
-		height:208px;
-		width:370px;
 	}
 	
 	.contact_submission {
@@ -754,12 +717,7 @@ a.link_headline_edit:hover {
 	.txt_below_img_italic {
 		font-size:11px;
 	}
-	
-	.video_resize_blog_post, .video_resize_videos {
-		height:152px;
-		width:270px;
-	}
-	
+		
 	.new_old_link {
 		color:#008080;
 		font-size: 12px;
@@ -834,6 +792,14 @@ a.link_headline_edit:hover {
 		white-space: pre; 
 	}
 	
+	.col-2-videos  {
+		display:none;
+	}
+
+	.col-8-videos {
+		width:100%
+	}
+	
 }
 
 /*this size is only to give extra size possibility and photo headline becomes smaller*/
@@ -851,10 +817,6 @@ a.link_headline_edit:hover {
 		color:#848484;
 	}
 	
-	.video_resize_blog_post, .video_resize_videos {
-		height:112px;
-		width:200px;
-	}
 	
 	/*photo headline is very long*/
 	.photo_headline {
@@ -879,8 +841,7 @@ a.link_headline_edit:hover {
 	.error_message_big {
 		font-size: 10px;
 		white-space:normal;
-	}
-	
+	}	
 	
 	.contact_submission {
 		width: 100%;

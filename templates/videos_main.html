@@ -14,16 +14,18 @@
 
 	<div class="row" style="padding-top: 10px;">
 		<div class="col-1"></div>
-		<div class="col-10" style="text-align: center;">
+		<div class="col-10" style="display:flex; ">
+			<div class="col-2-videos"></div>
+			<div class="col-8-videos">
+				{% for video in video_list %}
+					{{video.iframe_tag_and_content}}
+				<br>
 					
-			{% for video in video_list %}
-				{{video.iframe_tag_and_content}}
-			<br>
-			<br>
-			<br>
-			<br>
-				
-			{% endfor %}
+				{% endfor %}	
+			</div>
+			<div class="col-2-videos"></div>
+					
+			
 
 		</div>
 		<div class="col-1 end"></div>
@@ -44,3 +46,7 @@
 	{% endif %}
 	
 {% endblock %}
+
+
+
+				

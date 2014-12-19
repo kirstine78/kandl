@@ -1,6 +1,6 @@
-* {
+/* * {
 	border: 1px solid red !important;
-} 
+}  */
 
 
 * {
@@ -161,6 +161,15 @@
 
 .error_message_red {
 	color:red;
+	padding-bottom:20px;
+}
+
+.error_message_big {
+	font-size: 20px;
+	color:red;
+	padding-bottom:0px;
+	font-weight: bold;
+	white-space:pre;
 }
 
 .link_top_bar {
@@ -433,7 +442,7 @@ a.link_menu_dd:hover {
 .contact_headline{
 	width: 100%;
 	padding-top: 15px;
-	padding-bottom: 5px;
+	padding-bottom: 24px;
 	font-weight: bold;
 	font-size: 24px;
 }
@@ -578,7 +587,7 @@ a.link_headline_edit:hover {
 	.contact_headline{
 		width: 100%;
 		padding-top: 0px;
-		padding-bottom: 0px;
+		padding-bottom: 16px;
 		font-weight: bold;
 		font-size: 16px;
 	}
@@ -592,6 +601,10 @@ a.link_headline_edit:hover {
 		height:300px;
 	}
 	
+	.error_message_big {
+		font-size: 12px;
+		white-space:pre;
+	}
 	
 	
 	.photo_headline, .video_headline {
@@ -751,7 +764,7 @@ a.link_headline_edit:hover {
 	.contact_headline{
 		width: 100%;
 		padding-top: 0px;
-		padding-bottom: 0px;
+		padding-bottom: 8px;
 		font-weight: bold;
 		font-size: 14px;
 	}
@@ -767,6 +780,11 @@ a.link_headline_edit:hover {
 		font-size: 12px;
 	}
 	
+	.error_message_big {
+		font-size: 12px;
+		font-weight:bold;
+		white-space:normal;
+	}
 	
 	
 	
@@ -822,6 +840,12 @@ a.link_headline_edit:hover {
 	.contact_input_text {
 		height:300px;
 		font-size: 10px;
+	}
+	
+	.error_message_big {
+		font-size: 10px;
+		font-weight:bold;
+		white-space:normal;
 	}
 	
 	

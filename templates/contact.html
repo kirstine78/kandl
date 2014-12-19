@@ -10,43 +10,32 @@
 				<form method="post">
 				
 					{% if length(submission_content) > 0 %}
-							<p style="color:red; font-weight: bold; white-space:pre;">{{submission_content}}</p>
+							<div class="error_message_big">{{submission_content}}</div>
 					{% endif %}
 					
 					{% if length(submission_content) < 1 %}
-						<br>
 					{% endif %}
 					
 					
 					<label>
 						<div>*Your name</div><input class="contact_input_name" type="text" name="user_name" value="{{user_name_content}}" maxlength="80" onkeypress="return event.keyCode!=13">
 						
-						<span class="error_message_red">{{user_name_error}}</span>
+						<div class="error_message_red">{{user_name_error}}</div>
 					</label>
-					<br>
-					<br>
 					
 					<label>
 						<div>*Your e-mail</div><input class="contact_input_email" type="text" name="user_email" value="{{user_email_content}}" onkeypress="return event.keyCode!=13">
 						
-						<span class="error_message_red">{{user_email_error}}</span>
+						<div class="error_message_red">{{user_email_error}}</div>
 					</label>
-					<br>
-					<br>
 					
 					<label>
 						<div>*Message</div><textarea class="contact_input_text" name="user_message">{{user_message_content}}</textarea>
-						<span class="error_message_red">{{user_message_error}}</span>
+						<div class="error_message_red">{{user_message_error}}</div>
 					</label>
-					<br>
-					<br>
 					
 					<input type="submit" value="Send" style="width:75px; height:40px; font-weight:bold;">
 				</form>
-				<br>
-				<br>
-				<br>
-				<br>
 				
 			</div>
 			<div class="col-1 end"></div>

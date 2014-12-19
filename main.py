@@ -1008,7 +1008,7 @@ class ContactUs(Handler):
             
 ##            logging.debug("Email NOT send")
             
-            self.render_contact_us("Sorry, we couldn't send your message  -  check the fields below", 
+            self.render_contact_us("Sorry, something went wrong  -  check the fields below", 
                                    username_input, name_error,
                                    user_email_input, email_error,
                                    user_message_input, message_error)

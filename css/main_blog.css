@@ -167,7 +167,7 @@
 .error_message_big {
 	font-size: 20px;
 	color:red;
-	padding-bottom:0px;
+	padding-bottom:20px;
 	font-weight: bold;
 	white-space:pre;
 }
@@ -602,7 +602,7 @@ a.link_headline_edit:hover {
 	}
 	
 	.error_message_big {
-		font-size: 12px;
+		font-size: 15px;
 		white-space:pre;
 	}
 	
@@ -776,13 +776,12 @@ a.link_headline_edit:hover {
 
 	.contact_input_text {
 		width:100%;
-		height:300px;
+		height:250px;
 		font-size: 12px;
 	}
 	
 	.error_message_big {
 		font-size: 12px;
-		font-weight:bold;
 		white-space:normal;
 	}
 	
@@ -838,13 +837,12 @@ a.link_headline_edit:hover {
 	}
 
 	.contact_input_text {
-		height:300px;
+		height:250px;
 		font-size: 10px;
 	}
 	
 	.error_message_big {
 		font-size: 10px;
-		font-weight:bold;
 		white-space:normal;
 	}
 	

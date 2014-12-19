@@ -547,7 +547,7 @@ a.link_headline_edit:hover {
 		display: flex;
 		padding-bottom: 7px;
 		color:#848484;
-		font-size: 12px;
+		font-size: 11px;
 		white-space: pre; 
 		
 	}
@@ -666,10 +666,6 @@ a.link_headline_edit:hover {
 		display: block;
 	}
 	
-	.col-newer-older-link {
-		width:50%;
-	}	
-	
 	.col-about-img  {
 		width:50%
 	}
@@ -680,6 +676,14 @@ a.link_headline_edit:hover {
 	
 	.col-10-top-photo {
 		display: none;
+	}
+	
+	.col-2-videos  {
+		display:none;
+	}
+
+	.col-8-videos {
+		width:100%
 	}
 	
 		
@@ -790,14 +794,6 @@ a.link_headline_edit:hover {
 		font-weight: bold;
 		font-size: 13px;
 		white-space: pre; 
-	}
-	
-	.col-2-videos  {
-		display:none;
-	}
-
-	.col-8-videos {
-		width:100%
 	}
 	
 }

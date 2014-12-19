@@ -861,7 +861,7 @@ class AddVideo(Handler):
         if validation.is_there_a_tag(the_iframe_tag):
 
             # is tag valid
-            if validation.does_tag_have_class(the_iframe_tag):
+            if validation.are_xxxxx_replaced(the_iframe_tag):
                 # process by creating Video item in db
                 video = Video(iframe_tag_and_content = the_iframe_tag)
                 video.put()
@@ -873,7 +873,7 @@ class AddVideo(Handler):
                 # display error message
                 # don't process - instead redisplay page
                 # render "videos_add_photo.html" and display error message and redisplay what was filled in  (delete previous tag or else it screws page up).
-                self.render_AddVideo('Delete width and height and put in class="video_resize_videos"', "")
+                self.render_AddVideo('Replace xxxxx with iframe tag', "")
 
         else:
             # don't process - instead redisplay page

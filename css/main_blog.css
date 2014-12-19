@@ -137,6 +137,8 @@
 	width: 100%;
 	padding-right: 38px;
 	white-space:pre-wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .helper_tags {

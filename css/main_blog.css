@@ -438,6 +438,14 @@ a.link_menu_dd:hover {
 	font-size: 24px;
 }
 
+.contact_input_name {
+	width:600px;
+}
+
+.contact_input_email {
+	width:600px;
+}
+
 .contact_submission {
 	width: 100%;
 	padding-top: 15px;
@@ -467,7 +475,7 @@ a.link_headline_edit:hover {
 /*this size is only to give you-tube videos inside a blog post an extra size possibility*/
 @media only screen and (max-width: 1100px) {
 	div {
-		background-color: #FF00FF;
+		background-color: blue;
 	}
 	
 	.video_resize_blog_post {
@@ -562,6 +570,20 @@ a.link_headline_edit:hover {
 	
 	
 	
+	.contact_headline{
+		width: 100%;
+		padding-top: 0px;
+		padding-bottom: 0px;
+		font-weight: bold;
+		font-size: 16px;
+	}
+	
+	.contact_input_name, .contact_input_email {
+		width:550px;
+	}
+	
+	
+	
 	.photo_headline, .video_headline {
 		width: 100%;
 		padding-top: 0px;
@@ -581,12 +603,16 @@ a.link_headline_edit:hover {
 /*this size is only to give youtube videos inside a blog post and videos in Videos an extra size possibility*/
 @media only screen and (max-width: 750px) {
 	div {
-		background-color: blue;
+		background-color: Fuchsia;
 	}
 	
 	.video_resize_blog_post, .video_resize_videos{
 		height:208px;
 		width:370px;
+	}
+	
+	.contact_input_name, .contact_input_email {
+		width:360px;
 	}
 	
 	.contact_submission {
@@ -716,6 +742,21 @@ a.link_headline_edit:hover {
 	
 	
 	
+	.contact_headline{
+		width: 100%;
+		padding-top: 0px;
+		padding-bottom: 0px;
+		font-weight: bold;
+		font-size: 14px;
+	}
+	
+	.contact_input_name, .contact_input_email {
+		width:270px;
+		font-size: 12px;
+	}
+	
+	
+	
 	
 	.photo_headline, .video_headline {
 		width: 100%;
@@ -759,7 +800,13 @@ a.link_headline_edit:hover {
 		font-weight: bold;
 		font-size: 11px;
 		text-align:center;
-	}	
+	}
+	
+	
+	.contact_input_name, .contact_input_email {
+		width:200px;
+		font-size:10px;
+	}
 	
 	
 	.contact_submission {

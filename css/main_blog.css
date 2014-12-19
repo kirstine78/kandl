@@ -714,9 +714,6 @@ a.link_headline_edit:hover {
 		display: flex;
 		padding-bottom: 7px;
 		color:#848484;
-		font-size: 9px;
-		white-space: pre; 
-		
 	}
 
 	.blog_text {
@@ -814,6 +811,15 @@ a.link_headline_edit:hover {
 @media only screen and (max-width: 380px) {
 	div {
 		background-color: yellow;
+	}
+	
+	
+	.blog_date {
+		width: 100%;
+		display: flex;
+		padding-bottom: 7px;
+		font-size:10px;
+		color:#848484;
 	}
 	
 	.video_resize_blog_post, .video_resize_videos {

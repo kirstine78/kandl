@@ -446,6 +446,11 @@ a.link_menu_dd:hover {
 	width:600px;
 }
 
+.contact_input_text {
+	width:700px;
+	height:300px;
+}
+
 .contact_submission {
 	width: 100%;
 	padding-top: 15px;
@@ -472,10 +477,15 @@ a.link_headline_edit:hover {
 
 
 
-/*this size is only to give you-tube videos inside a blog post an extra size possibility*/
+/*this size is only to give extra size possibility*/
 @media only screen and (max-width: 1100px) {
 	div {
 		background-color: blue;
+	}
+
+	.contact_input_text {
+		width:650px;
+		height:300px;
 	}
 	
 	.video_resize_blog_post {
@@ -581,6 +591,11 @@ a.link_headline_edit:hover {
 	.contact_input_name, .contact_input_email {
 		width:550px;
 	}
+
+	.contact_input_text {
+		width:580px;
+		height:300px;
+	}
 	
 	
 	
@@ -600,7 +615,7 @@ a.link_headline_edit:hover {
 }
 
 
-/*this size is only to give youtube videos inside a blog post and videos in Videos an extra size possibility*/
+/*this size is only to give extra size possibility*/
 @media only screen and (max-width: 750px) {
 	div {
 		background-color: Fuchsia;
@@ -613,6 +628,11 @@ a.link_headline_edit:hover {
 	
 	.contact_input_name, .contact_input_email {
 		width:360px;
+	}
+
+	.contact_input_text {
+		width:360px;
+		height:300px;
 	}
 	
 	.contact_submission {
@@ -754,6 +774,12 @@ a.link_headline_edit:hover {
 		width:270px;
 		font-size: 12px;
 	}
+
+	.contact_input_text {
+		width:270px;
+		height:300px;
+		font-size: 12px;
+	}
 	
 	
 	
@@ -781,7 +807,7 @@ a.link_headline_edit:hover {
 	
 }
 
-/*this size is only to give youtube videos inside a blog post and videos in Videos an extra size possibility and photo headline becomes smaller*/
+/*this size is only to give extra size possibility and photo headline becomes smaller*/
 @media only screen and (max-width: 380px) {
 	div {
 		background-color: yellow;
@@ -806,6 +832,12 @@ a.link_headline_edit:hover {
 	.contact_input_name, .contact_input_email {
 		width:200px;
 		font-size:10px;
+	}
+
+	.contact_input_text {
+		width:200px;
+		height:300px;
+		font-size: 10px;
 	}
 	
 	

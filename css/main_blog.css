@@ -573,11 +573,10 @@ a.link_headline_edit:hover {
 	}
 	
 	.new_old_link {
-		color:#008080;
-		font-weight: bold;
 		font-size: 14px;
 		text-align:center;
 	}
+	
 	
 
 	.row_flex_block_about  {
@@ -734,11 +733,10 @@ a.link_headline_edit:hover {
 	}
 		
 	.new_old_link {
-		color:#008080;
 		font-size: 12px;
 		font-weight: normal;
 	}
-	
+		
 	
 	.about_headline{
 		width: 100%;

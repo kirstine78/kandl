@@ -1,6 +1,6 @@
-/* * {
+* {
 	border: 1px solid red !important;
-}  */
+} 
 
 
 * {
@@ -258,6 +258,14 @@ a.new_old_link:hover {
 
 
 /*columns to be manipulated in sizes....*/
+.col-1-sides {
+	width: 8.33%;
+}
+
+.col-10-middle {
+	width:83.33%
+}
+
 .col-date{
 	width:200px;
 }
@@ -665,6 +673,13 @@ a.link_headline_edit:hover {
 		margin-bottom:0px;
 		display: block;
 	}
+	.col-1-sides {
+		display: none;
+	}
+	
+	.col-10-middle {
+		width:100%
+	}
 	
 	.col-about-img  {
 		width:50%
@@ -845,7 +860,7 @@ a.link_headline_edit:hover {
 		padding-bottom: 5px;
 		color:green;
 		font-weight: bold;
-		font-size: 10px;
+		font-size: 11px;
 		white-space: pre; 
 	}
 

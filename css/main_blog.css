@@ -590,9 +590,6 @@ a.link_headline_edit:hover {
 	}
 	
 	.about_text {
-		width: 100%;
-		display: flex;
-		padding-left: 20px;
 		padding-right: 0px;
 	}
 	
@@ -731,10 +728,7 @@ a.link_headline_edit:hover {
 	}
 
 	.about_text {
-		width: 100%;
-		display: flex;
 		padding-left: 0px;
-		padding-right: 0px;
 	}
 	
 	

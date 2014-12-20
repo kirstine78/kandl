@@ -14,8 +14,25 @@
 	<script type="text/javascript">
 	$(document).ready(function() {
 		$("ul > li > ul").hide();
+		
+		
+		var ww = document.body.clientWidth;
+		if (ww < 901) {
+			$(".toggleMenu").css("display", "inline-block");
+			$(".menu").hide();
+		} else {
+			$(".toggleMenu").css("display", "none");
+		}
+	
 	});
 	
+	$(function(){
+		$(".toggleMenu").click(function(e) {
+			e.preventDefault();
+			$(".menu").toggle();
+		});
+	});
+
 	$(function(){
 		$('#year_tree').find('SPAN').click(function(e){
 			var i=$(this);
@@ -64,6 +81,7 @@
 		<div class="row">
 			<div class="col-1-sides"></div>
 			<div class="col-10-middle top_bar_padding_top">
+				<a class="toggleMenu link_top_bar" href="#">Menu</a>
 				<ul class="menu">
 					<li><a class="link_top_bar" href="/">Blog</a></li>
 					<li><a class="link_top_bar" href="/photos">Photos</a></li>

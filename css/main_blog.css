@@ -639,15 +639,14 @@ a.link_headline_edit:hover {
 	}
 	
 	.contact_submission {
-		width: 100%;
-		padding-top: 15px;
-		padding-bottom: 5px;
-		color:green;
-		font-weight: bold;
+		/* width: 100%; */
+		/* padding-top: 15px; */
+		/* padding-bottom: 5px; */
+		/* color:green; */
+		/* font-weight: bold; */
 		font-size: 16px;
-		white-space: pre; 
+		/* white-space: pre;  */
 	}
-
 }
 
 
@@ -785,13 +784,13 @@ a.link_headline_edit:hover {
 	
 	
 	.contact_submission {
-		width: 100%;
+		/* width: 100%;
 		padding-top: 15px;
 		padding-bottom: 5px;
 		color:green;
-		font-weight: bold;
+		font-weight: bold; */
 		font-size: 13px;
-		white-space: pre; 
+		/* white-space: pre;  */
 	}
 	
 }
@@ -830,13 +829,13 @@ a.link_headline_edit:hover {
 	}	
 	
 	.contact_submission {
-		width: 100%;
+		/* width: 100%;
 		padding-top: 15px;
 		padding-bottom: 5px;
 		color:green;
-		font-weight: bold;
+		font-weight: bold; */
 		font-size: 11px;
-		white-space: pre; 
+		/* white-space: pre;  */
 	}
 
 }

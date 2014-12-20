@@ -640,7 +640,6 @@ a.link_headline_edit:hover {
 	
 	
 	.photo_headline, .video_headline {
-		/* width: 100%; */
 		padding-top: 0px;
 		padding-bottom: 0px;
 		font-size: 16px;
@@ -710,9 +709,9 @@ a.link_headline_edit:hover {
 		width:100%
 	}
 	
-	.col-10-top-photo {
+/* 	.col-10-top-photo {
 		display: none;
-	}
+	} */
 	
 	.col-2-videos  {
 		display:none;

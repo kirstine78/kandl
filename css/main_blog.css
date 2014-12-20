@@ -584,13 +584,8 @@ a.link_headline_edit:hover {
 	}
 	
 	.about_headline{
-		width: 100%;
-		display: flex;
-		padding-left: 20px;
 		padding-right: 0px;
-		padding-top: 0px;		
-		padding-bottom: 5px;
-		font-weight: bold;
+		padding-top: 0px;
 		font-size: 16px;
 	}
 	
@@ -730,13 +725,8 @@ a.link_headline_edit:hover {
 		
 	
 	.about_headline{
-		width: 100%;
-		display: flex;
 		padding-left: 0px;
-		padding-right: 0px;
-		padding-top: 12px;		
-		padding-bottom: 5px;
-		font-weight: bold;
+		padding-top: 12px;
 		font-size: 14px;
 	}
 

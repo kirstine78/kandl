@@ -785,7 +785,6 @@ a.link_headline_edit:hover {
 	
 	
 	.photo_headline, .video_headline {
-		/* width: 100%; */
 		font-size: 14px;
 	}
 	
@@ -816,12 +815,8 @@ a.link_headline_edit:hover {
 	
 	/*photo headline is very long*/
 	.photo_headline {
-		/* width: 100%; */
-		/* padding-top: 12px; */
-		/* padding-bottom: 5px; */
 		font-weight: bold;
 		font-size: 11px;
-		/* text-align:center; */
 	}
 	
 	

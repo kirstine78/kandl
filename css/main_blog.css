@@ -96,6 +96,33 @@
 }
 
 
+/* .menu ul  {margin: 0; padding: 0;}
+.menu li  {margin: 0; padding: 0;}
+.menu a  {margin: 0; padding: 0;} */
+
+.menu  {
+    list-style: none;
+    padding-left:0;
+
+}
+
+.menu > li{
+  display: inline;
+  padding-right:80px;
+}
+
+
+/* .nav > li {
+    float: left;
+    border-top: 1px solid #104336;
+    z-index: 200;
+    position: absolute;
+}
+.nav > li > a {
+    display: block;
+} */
+
+
 
 .about_headline{
 	width: 100%;
@@ -175,6 +202,11 @@
 }
 
 
+.top_bar_padding_top {
+	display:flex;
+	padding-top:20px;
+	padding-bottom:20px;
+}
 
 .link_top_bar {
 	color:#848484;
@@ -276,10 +308,6 @@ a.new_old_link:hover {
 
 .col-newer-older-link {
 	width:20%
-}
-
-.col-top-bar-links {
-	width:16.66%
 }
 
 .col-blog-post {
@@ -513,12 +541,8 @@ a.link_headline_edit:hover {
 /******** Roll-down menu's for both blog archive and top bar menu ********/
 @media only screen and (max-width: 900px) {
 	div {
-		/* background-color: pink; */
+		background-color: pink;
 		font-size: 15px;
-	}
-	
-	.col-top-bar-links {
-		width:15%
 	}
 	
 	.col-blog-post {
@@ -532,7 +556,13 @@ a.link_headline_edit:hover {
 	.col-newer-older-link {
 		width:50%
 	}
-	
+
+
+	.top_bar_padding_top {
+		display:flex;
+		padding-top:5px;
+		padding-bottom:5px;
+	}	
 	
 	.link_top_bar {
 		color:#848484;
@@ -653,7 +683,7 @@ a.link_headline_edit:hover {
 /******** Top photo shall NOT appear ********/
 @media only screen and (max-width: 500px) {
 	div {
-		/* background-color: white; */
+		background-color: white;
 		font-size: 13px;
 	}
 	
@@ -673,6 +703,7 @@ a.link_headline_edit:hover {
 		margin-bottom:0px;
 		display: block;
 	}
+	
 	.col-1-sides {
 		display: none;
 	}
@@ -700,7 +731,13 @@ a.link_headline_edit:hover {
 	.col-8-videos {
 		width:100%
 	}
-	
+
+
+	.top_bar_padding_top {
+		display:flex;
+		padding-top:0px;
+		padding-bottom:0px;
+	}	
 		
 	.link_top_bar {
 		color:#848484;
@@ -816,7 +853,7 @@ a.link_headline_edit:hover {
 /*this size is only to give extra size possibility and photo headline becomes smaller*/
 @media only screen and (max-width: 380px) {
 	div {
-		/* background-color: yellow; */
+		background-color: yellow;
 	}
 	
 	

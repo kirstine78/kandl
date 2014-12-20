@@ -4,35 +4,19 @@
 	<meta charset="utf-8">
 	<title>K and L</title>
 	<link rel="stylesheet" href="../css/main_blog.css">
+	<link rel="stylesheet" href="../css/slimmenu.css" type="text/css">
 	<link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css">
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	
 	
-	
-	
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script src="../js/jquery.slimmenu.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
-		$("ul > li > ul").hide();
-		
-		
-		var ww = document.body.clientWidth;
-		if (ww < 901) {
-			$(".toggleMenu").css("display", "inline-block");
-			$(".menu").hide();
-		} else {
-			$(".toggleMenu").css("display", "none");
-		}
-	
+		$(".archive_menu > li > ul").hide();
 	});
 	
-	$(function(){
-		$(".toggleMenu").click(function(e) {
-			e.preventDefault();
-			$(".menu").toggle();
-		});
-	});
-
+	
 	$(function(){
 		$('#year_tree').find('SPAN').click(function(e){
 			var i=$(this);
@@ -48,7 +32,6 @@
 		});
 	});
 
-	
 	</script>
 	
 	<script>
@@ -81,8 +64,7 @@
 		<div class="row">
 			<div class="col-1-sides"></div>
 			<div class="col-10-middle top_bar_padding_top">
-				<a class="toggleMenu link_top_bar" href="#">Menu</a>
-				<ul class="menu">
+				<ul class="slimmenu" id="navigation">
 					<li><a class="link_top_bar" href="/">Blog</a></li>
 					<li><a class="link_top_bar" href="/photos">Photos</a></li>
 					<li><a class="link_top_bar" href="/videos">Videos</a></li>
@@ -96,7 +78,17 @@
 		
 		
 		{% block body %}{% endblock %}
-	</div>	
-	
+	</div>
+	<script>
+		$('#navigation').slimmenu(
+	{
+		resizeWidth: '900',
+		collapserTitle: 'Main Menu',
+		animSpeed: 'medium',
+		easingEffect: null,
+		indentChildren: false,
+		childrenIndenter: '&nbsp;'
+	});
+	</script>
 </body>
 </html>

@@ -96,52 +96,6 @@
 }
 
 
-/* .menu ul  {margin: 0; padding: 0;}
-.menu li  {margin: 0; padding: 0;}
-.menu a  {margin: 0; padding: 0;} */
-
-.menu  {
-    list-style: none;
-    padding-left:0;
-
-}
-
-.menu > li{
-  display: inline;
-  padding-right:80px;
-}
-
-.toggleMenu {
-    display:  none;
-    background: #666;
-    padding: 10px 15px;
-    color: #fff;
-}
-
-@media only screen and (max-width: 900px) {
-    .menu > li {
-		display: block;
-        float: none;
-    }
-	
-	.toggleMenu {
-		display:  block;
-		background: #848484;
-		padding: 8px 15px;
-		color: #fff;
-	}
-}
-
-
-/* .nav > li {
-    float: left;
-    border-top: 1px solid #104336;
-    z-index: 200;
-    position: absolute;
-}
-.nav > li > a {
-    display: block;
-} */
 
 
 

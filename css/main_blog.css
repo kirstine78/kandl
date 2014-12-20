@@ -204,8 +204,8 @@
 
 .top_bar_padding_top {
 	display:flex;
-	padding-top:20px;
-	padding-bottom:20px;
+	padding-top:9px;
+	padding-bottom:5px;
 }
 
 .link_top_bar {

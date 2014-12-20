@@ -1,7 +1,7 @@
 /* * {
 	border: 1px solid red !important;
-}  */
-
+} 
+ */
 
 * {
 	-webkit-box-sizing: border-box;
@@ -32,6 +32,10 @@
   
 }
 
+#top_photo {
+	padding-right: 4px;
+
+}
 
 /* This is for You-tube videos*/
 .video-container {
@@ -179,7 +183,7 @@
 
 .top_bar_padding_top {
 	display:flex;
-	padding-top:9px;
+	padding-top:13px;
 	padding-bottom:5px;
 }
 
@@ -532,6 +536,11 @@ a.link_headline_edit:hover {
 		width:50%
 	}
 
+	#top_photo {
+		padding-right: 0px;
+
+	}
+
 	.link_top_bar {
 		color:white; /*#848484;*/
 		text-decoration: none;
@@ -540,8 +549,8 @@ a.link_headline_edit:hover {
 
 
 	.top_bar_padding_top {
-		display:flex;
-		padding-top:12px;
+		display:block;
+		padding-top:13px;
 		padding-bottom:12px;
 	}
 
@@ -708,7 +717,7 @@ a.link_headline_edit:hover {
 
 
 	.top_bar_padding_top {
-		display:flex;
+		display:block;
 		padding-top:0px;
 		padding-bottom:0px;
 	}	

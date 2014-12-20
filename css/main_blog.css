@@ -554,7 +554,6 @@ a.link_headline_edit:hover {
 
 	.top_bar_padding_top {
 		display:block;
-		padding-top:13px;
 		padding-bottom:12px;
 	}
 
@@ -565,18 +564,13 @@ a.link_headline_edit:hover {
 	}
 	
 	.blog_date {
-		/* display: flex; */
-		/* padding-bottom: 7px; */
-		/* color:#848484; */
-		font-size: 11px;
-		/* white-space: pre;  */
-		
+		font-size: 11px;		
 	}
 
 	.blog_text {
-		width: 100%;
+		/* width: 100%; */
 		padding-right: 0px;
-		white-space:pre-wrap;
+		/* white-space:pre-wrap; */
 	}
 	
 	.new_old_link {
@@ -722,11 +716,10 @@ a.link_headline_edit:hover {
 
 
 	.top_bar_padding_top {
-		display:block;
 		padding-top:0px;
 		padding-bottom:0px;
 	}	
-		
+			
 	.link_top_bar {
 		color: white; /*#848484;*/
 		text-decoration: none;
@@ -738,12 +731,6 @@ a.link_headline_edit:hover {
 	.blog_headline{
 		padding-bottom: 5px;
 		font-size: 14px;
-	}
-
-	.blog_text {
-		width: 100%;
-		padding-right: 0px;
-		white-space:pre-wrap;
 	}
 		
 	.txt_below_img_italic {

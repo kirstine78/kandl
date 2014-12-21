@@ -75,15 +75,58 @@
 			<div class="col-1-sides end"></div>
 		</div>
 		
-		
+		<div class="row small_blog_archive">
+			<div class="col-1-sides"></div>
+			<div class="col-10-middle top_bar_padding_top">
+					<UL id="small_year_tree" class="slimmenu">
+					
+						{% for year in range(2020, 2009, -1) %}
+							<LI>
+								{% if year|string in dict_bloggi %}
+									<a class="link_top_bar"  href="/full_year?year={{year|string}}" ><b>{{year}}</b></a>
+									
+									<UL>
+										{% for month in range(12, 0, -1) %}
+											{% if month|string in dict_bloggi[year|string] %}
+												
+												<LI>
+													<a class="link_top_bar" href="/full_month?year_and_month={{year|string + month|string}}">{{numeric_to_alphabetic_month(month)}}</a> <!-- using from python file: jinja_env.globals.update(numeric_to_alphabetic_month=validation.numeric_to_alpabetic) -->
+													
+														{% for i in dict_bloggi[year|string][month|string] %}
+															<UL>
+																<LI><a class="link_top_bar" href="/single_blog_post?single_post_id={{i.key().id()}}">{{i.headline}}</a></LI>
+															</UL>
+														{% endfor %}
+												</LI>
+											{% endif %}
+										{% endfor %}
+									</UL>
+									
+								{% endif %}
+							</LI>
+						{% endfor %}
+						
+					</UL>
+			</div>
+			<div class="col-1-sides end"></div>
+		</div>		
 		
 		{% block body %}{% endblock %}
 	</div>
 	<script>
-		$('#navigation').slimmenu(
+	$('#navigation').slimmenu(
 	{
 		resizeWidth: '883',
 		collapserTitle: 'Menu',
+		animSpeed: 'medium',
+		easingEffect: null,
+		indentChildren: false,
+		childrenIndenter: '&nbsp;'
+	});
+	$('#small_year_tree').slimmenu(
+	{
+		resizeWidth: '883',
+		collapserTitle: 'Archive',
 		animSpeed: 'medium',
 		easingEffect: null,
 		indentChildren: false,

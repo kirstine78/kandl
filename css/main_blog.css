@@ -1,7 +1,7 @@
 /* * {
 	border: 1px solid red !important;
-}  */
-
+} 
+ */
 
 * {
 	-webkit-box-sizing: border-box;
@@ -36,6 +36,10 @@
 #top_photo {
 	padding-right: 4px;
 
+}
+
+.row.small_blog_archive {
+	display: none;
 }
 
 /* This is for You-tube videos*/
@@ -547,6 +551,10 @@ a.link_headline_edit:hover {
 	
 	.col-newer-older-link {
 		width:50%
+	}
+
+	.row.small_blog_archive {
+		display: flex;
 	}
 
 	#top_photo {

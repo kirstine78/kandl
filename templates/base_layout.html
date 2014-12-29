@@ -61,10 +61,10 @@
 		
 		
 
-		<div class="row">
+		<div class="row" id="menu_row_big">
 			<div class="col-1-sides"></div>
 			<div class="col-10-middle top_bar_padding_top">
-				<ul class="slimmenu" id="navigation">
+				<ul class="slimmenu">
 					<li><a class="link_top_bar" href="/">Blog</a></li>
 					<li><a class="link_top_bar" href="/photos">Photos</a></li>
 					<li><a class="link_top_bar" href="/videos">Videos</a></li>
@@ -75,10 +75,12 @@
 			<div class="col-1-sides end"></div>
 		</div>
 		
-		<div class="row small_blog_archive">
+		<div class="row" id="menu_row_small">
 			<div class="col-1-sides"></div>
 			<div class="col-10-middle top_bar_padding_top">
-					<UL id="small_year_tree" class="slimmenu">
+				<ul class="slimmenu" id="navigation">
+					<li><a class="link_top_bar" href="/">Blog</a>
+						<UL>
 					
 						{% for year in range(2020, 2009, -1) %}
 							<LI>
@@ -106,27 +108,25 @@
 							</LI>
 						{% endfor %}
 						
-					</UL>
+						</UL>
+					
+					</li>
+					<li><a class="link_top_bar" href="/photos">Photos</a></li>
+					<li><a class="link_top_bar" href="/videos">Videos</a></li>
+					<li><a class="link_top_bar" href="/about">About</a></li>
+					<li><a class="link_top_bar" href="/contact">Contact</a></li>
+				</ul>
 			</div>
 			<div class="col-1-sides end"></div>
-		</div>		
+		</div>	
 		
 		{% block body %}{% endblock %}
 	</div>
 	<script>
 	$('#navigation').slimmenu(
 	{
-		resizeWidth: '883',
+		resizeWidth: '900',
 		collapserTitle: 'Menu',
-		animSpeed: 'medium',
-		easingEffect: null,
-		indentChildren: false,
-		childrenIndenter: '&nbsp;'
-	});
-	$('#small_year_tree').slimmenu(
-	{
-		resizeWidth: '883',
-		collapserTitle: 'Archive',
 		animSpeed: 'medium',
 		easingEffect: null,
 		indentChildren: false,

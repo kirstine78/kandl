@@ -1,7 +1,7 @@
 /* * {
 	border: 1px solid red !important;
-} 
- */
+}  */
+
 
 * {
 	-webkit-box-sizing: border-box;
@@ -103,7 +103,14 @@
 	display: flex;
 }
 
+#menu_row_big {
+	display:flex;
 
+}
+
+#menu_row_small {
+	display:none;
+}
 
 
 
@@ -540,6 +547,13 @@ a.link_headline_edit:hover {
 		padding-top:8px;
 	}
 	
+	#menu_row_big {
+		display:none;
+	}
+
+	#menu_row_small {
+		display:flex;
+	}
 	
 	.col-blog-post {
 		width:100%

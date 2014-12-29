@@ -404,7 +404,7 @@ a.link_menu_dd:hover {
 .inner_container {
 	display: inline-block;
 	margin: 0 auto;
-	width:50%;
+	left:50%;
 }
 
 .specific_img_land {

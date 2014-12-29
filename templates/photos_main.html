@@ -66,24 +66,26 @@
 	<div class="row" style="padding-top: 10px;">
 		<div class="col-1-sides"></div>
 		<div class="col-10-middle" >
-			
-			
+		
 			{% for image_list in photo_list_of_lists %}
-			<div class="row" style=" white-space: wrap;">	
 				{% for image in image_list %}
 					{% if image.img_format == "l" %}
-						<div class="col-77" >
-							<a href="#"><img class="thumbnail img-responsive-land" data-big-url="{{gallery_images_location}}big/{{image.img}}" src="{{gallery_images_location}}{{image.img}}" alt="{{image.txt_below_img}}" href="photo"></a>
+						<div class="gallery_container">
+							<div class="inner_container">
+								<a href="#"><img class="specific_img_land thumbnail" data-big-url="{{gallery_images_location}}big/{{image.img}}" src="{{gallery_images_location}}{{image.img}}" alt="{{image.txt_below_img}}" href="photo"></a>
+							</div>
 						</div>
 					{% endif %}
 					{% if image.img_format == "p" %}
-						<div class="col-77" >
-							<a href="#"><img class="specific_img_portrait thumbnail" data-big-url="{{gallery_images_location}}big/{{image.img}}" src="{{gallery_images_location}}{{image.img}}" alt="{{image.txt_below_img}}" href="photo"></a>
+						<div class="gallery_container">
+							<div class="inner_container">
+								<a href="#"><img class="specific_img_portrait thumbnail" data-big-url="{{gallery_images_location}}big/{{image.img}}" src="{{gallery_images_location}}{{image.img}}" alt="{{image.txt_below_img}}" href="photo"></a>
+							</div>
 						</div>
 					{% endif %}
 				{% endfor %}
-			</div>
-			{% endfor %}
+				{% endfor %}
+			
 		</div>
 		<div class="col-1-sides end"></div>
 	</div>

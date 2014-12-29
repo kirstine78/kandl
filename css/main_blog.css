@@ -394,31 +394,26 @@ a.link_menu_dd:hover {
 
 
 .gallery_container {
-	display:inline;
+	display:inline-block;
 	width:110px;
-	height:83px;
-	position:relative;
+	height:110px;
+	/* position:relative; */
 	text-align:center;
-}
-
-.inner_container {
-	display: inline-block;
-	margin: 0 auto;
-	left:50%;
+	margin: 5px;
 }
 
 .specific_img_land {
     /* display: inline; */
-/*     margin-left: auto;
-    margin-right: auto ; */
-	/* position: relative; */
+   /*  margin-left: auto;
+    margin-right: auto ;
+	position: relative; */
     /* margin: 0px; */
     /* border: 1px solid #ffffff; */
 /* 	max-width:90%;
 	max-height:90%; */
-	
-	/* width:110px;
-	height:83px;   */ 
+	/* margin: 0 auto; */
+	width:110px;
+	height:83px;   
 	/* 110px width divided with 1.3333333333333 */	
 }
 
@@ -441,8 +436,12 @@ a.link_menu_dd:hover {
     /* margin: 0px; */
 	/* max-width:90%;
 	max-height:90%; */
-	/* width:83px;
-	height:110px;   */
+	/* margin: 0 auto; */
+   /*  margin-left: auto;
+    margin-right: auto ;
+	position: relative; */
+	width:83px;
+	height:110px;  
 	/* width 83px divided with 0.75 */	
 }
 

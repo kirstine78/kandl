@@ -520,9 +520,9 @@ class AllBlogPosts(Handler):
                 return
                 
             
-        # elif there is a_last_post_id, then 'older posts' has been clicked
+        # elif there is a_last_post_id, then 'older' has been clicked
         elif a_last_post_id:
-##            logging.debug("Goes into else if: 'older posts' has been clicked")
+##            logging.debug("Goes into else if: 'older' has been clicked")
             
             # find the post with a_last_post_id
             last_post = BlogPost.get_by_id(int(a_last_post_id))  # get the blogpost with the specific id (a_last_post_id)
@@ -544,7 +544,7 @@ class AllBlogPosts(Handler):
             # newer_link shall never appear no matter what
             newer_link = ""
             
-            # decide if older_link shall be "Older posts >" or ""
+            # decide if older_link shall be "Older >" or ""
             older_link = validation.get_older_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
 
             # get list of only POSTS_PER_PAGE or less
@@ -609,7 +609,7 @@ class FullYearBlogPosts (Handler):
                 # newer_link shall never appear no matter what
                 newer_link = ""
                 
-                # decide if older_link shall be "Older posts >" or ""
+                # decide if older_link shall be "Older >" or ""
                 all_blog_posts_plus_one = dataFunctions.find_blog_posts_between(POSTS_PER_PAGE + 1, end_of_previous_year, start_of_next_year)
 ##                logging.debug("in year: length of all_blog_posts_plus_one = " + str(len(all_blog_posts_plus_one)))
                 older_link = validation.get_older_link(all_blog_posts_plus_one, POSTS_PER_PAGE)
@@ -768,8 +768,7 @@ class AllPhotos(Handler):
             self.render_front("Click photo to enlarge - click again to close", all_photos, make_dict_blog())
             
 
-    def post(self):
-        self.render_front()
+
 
 
 
@@ -990,9 +989,6 @@ class AllVideos(Handler):
         
         self.render_front(headline, all_videos, newer_link, older_link, make_dict_blog())
 
-
-    def post(self):
-        self.render_front()
 
 
   

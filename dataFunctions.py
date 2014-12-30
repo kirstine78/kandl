@@ -163,13 +163,13 @@ def get_blog_posts_and_links_if_prevlink_clicked(an_id, a_post, are_there_betwee
         newer_link = validation.get_newer_link(all_blog_posts_plus_one, max_posts_per_page)
 
         # older_link shall appear no matter what
-        older_link = "Older posts &#9658;"
+        older_link = "Older &#9658;"
 
     else:   # find_newer_link False
         # newer_link shall appear no matter what 
         newer_link = "&#9668; Newer posts"
 
-        # decide if older_link shall be "Older posts >" or ""  
+        # decide if older_link shall be "Older >" or ""  
         older_link = validation.get_older_link(all_blog_posts_plus_one, max_posts_per_page)
 
     return all_blog_posts, newer_link, older_link
@@ -209,13 +209,13 @@ def get_blog_posts_and_links_if_nextlink_clicked(an_id, a_post, are_there_betwee
         newer_link = validation.get_newer_link(all_blog_posts_plus_one, max_posts_per_page)
 
         # older_link shall appear no matter what
-        older_link = "Older posts &#9658;"
+        older_link = "Older &#9658;"
 
     else:   # find_newer_link False
         # newer_link shall appear no matter what 
         newer_link = "&#9668; Newer posts"
 
-        # decide if older_link shall be "Older posts >" or ""  
+        # decide if older_link shall be "Older >" or ""  
         older_link = validation.get_older_link(all_blog_posts_plus_one, max_posts_per_page)
 
     return all_blog_posts, newer_link, older_link

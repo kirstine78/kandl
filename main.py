@@ -1009,16 +1009,18 @@ class ContactUs(Handler):
     def render_contact_us(self, submission_cont,
                           name, name_error,
                           email, email_error,
-                          message, message_error):
+                          message, message_error,
+                          dict_for_blog_archive):
         
         self.render("contact.html", submission_content=submission_cont,
                     user_name_content=name , user_name_error=name_error,
                     user_email_content=email, user_email_error=email_error,
-                    user_message_content=message, user_message_error=message_error)
+                    user_message_content=message, user_message_error=message_error,
+                    dict_bloggi=dict_for_blog_archive)
 
         
     def get(self):
-        self.render_contact_us("", "", "", "", "", "", "")
+        self.render_contact_us("", "", "", "", "", "", "", make_dict_blog())
 
 
     def post(self):
@@ -1048,7 +1050,8 @@ class ContactUs(Handler):
             self.render_contact_us("Sorry, something went wrong  -  check the fields below", 
                                    username_input, name_error,
                                    user_email_input, email_error,
-                                   user_message_input, message_error)
+                                   user_message_input, message_error,
+                                   make_dict_blog())
         
 
         

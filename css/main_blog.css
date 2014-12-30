@@ -596,7 +596,6 @@ a.link_headline_edit:hover {
 	}
 	
 	.new_old_link {
-		font-size: 14px;
 		text-align:center;
 	}
 	
@@ -727,11 +726,6 @@ a.link_headline_edit:hover {
 		
 	.txt_below_img_italic {
 		font-size:11px;
-	}
-		
-	.new_old_link {
-		font-size: 12px;
-		font-weight: normal;
 	}
 		
 		

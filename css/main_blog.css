@@ -306,6 +306,10 @@ a.new_old_link:hover {
 	width:16.66%
 }
 
+.col-4-videos  {
+	width:33.33%;
+}
+
 .col-8-videos {
 	width:66.66%
 }
@@ -701,6 +705,10 @@ a.link_headline_edit:hover {
 
 	.col-8-videos {
 		width:100%
+	}
+	
+	.col-4-videos  {
+		width:50%;
 	}
 	
 	.col-4-previous-next-link {

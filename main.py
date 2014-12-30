@@ -1057,14 +1057,14 @@ class ContactUs(Handler):
         
 # '/contact_success', ContactUsSuccess
 class ContactUsSuccess(Handler):
-    def render_success(self, submission_cont):
+    def render_success(self, submission_cont, dict_for_blog_archive):
         
-        self.render("contact_success.html", submission_content=submission_cont)
+        self.render("contact_success.html", submission_content=submission_cont, dict_bloggi=dict_for_blog_archive)
 
         
     def get(self):
         
-        self.render_success("Thank you  -  your message has been sent")
+        self.render_success("Thank you  -  your message has been sent", make_dict_blog())
 
 
     

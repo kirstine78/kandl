@@ -85,22 +85,13 @@
 }
 
 .row-top-photo {
-	width: 100%;
-	margin-bottom:0px;
-	display: flex;
 }
 
 .row_flex_block_date_author {
-	width: 100%;
-	margin-bottom:0px;
-	display: flex;
 }
 
 .row_flex_block_about  {
-	width: 100%;
 	padding-top:24px;
-	margin-bottom:0px;
-	display: flex;
 }
 
 #menu_row_big {
@@ -687,14 +678,12 @@ a.link_headline_edit:hover {
 	}
 	
 	.row_flex_block_date_author {
-		width: 100%;
-		margin-bottom:0px;
+		/* width: 100%;
+		margin-bottom:0px; */
 		display: block;
 	}
 		
 	.row_flex_block_about  {
-		width: 100%;
-		margin-bottom:0px;
 		display: block;
 	}
 	

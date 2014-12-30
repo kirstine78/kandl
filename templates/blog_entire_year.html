@@ -9,7 +9,7 @@
 				<div class="col-blog-post">
 				{% for post in list_all_year_posts %}
 					<div class="blog_headline">{{post.headline}}</div>
-					<div class="row_flex_block_date_author">
+					<div class="row row_flex_block_date_author">
 						<div class="col-date blog_date">{{format_the_date(post.created)}}</div>
 						<div class="blog_date"><i>{{post.author}}</i></div>
 					</div>

@@ -999,7 +999,8 @@ class AllVideos(Handler):
 # '/about', AboutUs
 class AboutUs(Handler):
     def get(self):
-        self.render("about.html")
+        dict_for_blog_archive = make_dict_blog()
+        self.render("about.html", dict_bloggi=dict_for_blog_archive)
 
         
         

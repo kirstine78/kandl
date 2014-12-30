@@ -921,9 +921,10 @@ class AddVideo(Handler):
             
 # '/videos'   
 class AllVideos(Handler):
-    def render_front(self, a_headline, an_all_videos, a_previous_link, a_next_link):
+    def render_front(self, a_headline, an_all_videos, a_previous_link, a_next_link, dict_for_blog_archive):
         # passing contents into the html file
-        self.render("videos_main.html", headline_videos=a_headline, video_list=an_all_videos, new_link = a_previous_link, old_link = a_next_link)
+        self.render("videos_main.html", headline_videos=a_headline, video_list=an_all_videos,
+                    new_link = a_previous_link, old_link = a_next_link, dict_bloggi=dict_for_blog_archive)
         
 
     def get(self):
@@ -987,7 +988,7 @@ class AllVideos(Handler):
             if len(all_videos) < 1:
                 headline="Sorry - no videos"
         
-        self.render_front(headline, all_videos, newer_link, older_link)
+        self.render_front(headline, all_videos, newer_link, older_link, make_dict_blog())
 
 
     def post(self):

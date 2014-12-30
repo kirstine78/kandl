@@ -23,12 +23,51 @@
 			});
 			console.log("bigImage.height="+bigImage.height);
 			console.log("bigImage.height="+$(bigImage).height);
+			
+			console.log("screen.height="+screen.height);
+			console.log("screen.width="+screen.width);
+			
+			
+			
 			$('#div_img_popup').height(bigImage.height);
 			$('#div_img_popup').width(bigImage.width);
 			
 			bigImage.onload = function() {
-				$('#div_img_popup').height(this.height);
+				//console.log("before this.height="+this.height);
+				//console.log("before this.width="+this.width);
+				
+				var is_landscape = this.width > this.height;
+				
+				if (screen.width < this.width && is_landscape) {
+					//console.log("Goes into WIDTH if statement");
+					
+					var reduction_factor = 10;
+					
+					if (screen.width < 501) {
+						reduction_factor = 1;
+					}
+					
+					this.width = screen.width - (screen.width * reduction_factor / 100);
+				}
+				
+				if (screen.height < this.height && !is_landscape) {
+					//console.log("Goes into HEIGHT if statement");
+					
+					var reduction_factor = 18;
+					
+					if (screen.height < 501) {
+						reduction_factor = 5;
+					}
+					
+					this.height = screen.height - (screen.height * reduction_factor / 100);
+				}
+				
 				$('#div_img_popup').width(this.width);
+				$('#div_img_popup').height(this.height);
+				
+				//console.log("after this.height="+this.height);
+				//console.log("after this.width="+this.width);
+				
 			}
 			
 			$('#divLargerImage').html(bigImage);

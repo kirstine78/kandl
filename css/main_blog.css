@@ -535,7 +535,7 @@ a.link_headline_edit:hover {
 
 
 
-/******** Roll-down menu's for both blog archive and top bar menu ********/
+/******** Blog archive on right side disappears into and top bar menu ********/
 @media only screen and (max-width: 900px) {
 	div {
 		/* background-color: pink; */

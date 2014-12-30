@@ -741,9 +741,9 @@ class AddPhoto(Handler):
 
 # '/photos'   
 class AllPhotos(Handler):
-    def render_front(self, a_headline, a_list):  # 'youngest' created date shown first by default
+    def render_front(self, a_headline, a_list, dict_for_blog_archive):  # 'youngest' created date shown first by default
         # passing contents into the html file
-        self.render("photos_main.html", headline_photos=a_headline, image_list=a_list)
+        self.render("photos_main.html", headline_photos=a_headline, image_list=a_list, dict_bloggi=dict_for_blog_archive)
         
 
     def get(self):
@@ -760,12 +760,12 @@ class AllPhotos(Handler):
         if len(all_photos) < 1:
             # no images so pass in an empty list
             photo_list = []
-            self.render_front("Sorry - Photo gallery is empty", photo_list)
+            self.render_front("Sorry - Photo gallery is empty", photo_list, make_dict_blog())
         else:
             # call function that organizes the rows and returns a list of lists
             #photo_all_rows_list = dataFunctions.get_rows_of_photos_list_of_list(all_photos, MAX_IMG_ON_ROW_DECIMAL, MAX_IMG_ON_ROW_INT)
                         
-            self.render_front("Click photo to enlarge - click again to close", all_photos)
+            self.render_front("Click photo to enlarge - click again to close", all_photos, make_dict_blog())
             
 
     def post(self):

@@ -741,87 +741,122 @@ class AddPhoto(Handler):
 
 # '/photos'   
 class AllPhotos(Handler):
-    def render_front(self, a_headline, a_list, a_newer_link, an_older_link):  # 'youngest' created date shown first by default
+    def render_front(self, a_headline, a_list):  # 'youngest' created date shown first by default
         # passing contents into the html file
-        self.render("photos_main.html", headline_photos=a_headline, photo_list_of_lists=a_list,
-                    new_link=a_newer_link, old_link=an_older_link)
+        self.render("photos_main.html", headline_photos=a_headline, image_list=a_list)
         
 
     def get(self):
+        ##### Decision: show all photos on one page. cause centering looks stupid when user resize the page.#####
 
-        ROWS_PER_PAGE = 5  # constant to decide the max rows to show per page
+        # get list of all photos
+        all_photos = dataFunctions.find_all_photos()
         
-        MAX_IMG_ON_ROW_INT = 7
-
-        MAX_IMG_ON_ROW_DECIMAL = 7.0
-
-        # maybe a link has been clicked!!!
-        a_first_photo_id = self.request.get("after_id")  # if previous link is clicked, there is a_first_photo_id
-        a_last_photo_id = self.request.get("before_id")  # if next link is clicked, there is a_last_photo_id
-
-        # if there is a_first_photo_id, then 'previous' has been clicked
-        if a_first_photo_id:
-##            logging.debug("Goes into if: 'previous' has been clicked")
-
-            # find out the photo with a_first_photo_id (the first photo of the 3 (ROWS_PER_PAGE) shown on specific page)
-            first_photo = Photo.get_by_id(int(a_first_photo_id))  # get the blogpost with the specific id (a_first_photo_id)
-
-            # check if first_photo exists
-            if first_photo:
-                # call helperfunction that returns list of photos, string for link1 and string for link2
-                all_photos, newer_link, older_link = dataFunctions.get_posts_and_links_if_prevlink_clicked(first_photo, True, True, ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT)
-
-            else:   # user has typed some random shit in
-                self.redirect('/photos')
-                return
-
-        # elif there is a_last_photo_id, then 'next' has been clicked
-        elif a_last_photo_id:
-##            logging.debug("Goes into else if: 'next' has been clicked")
-            
-            # find out the photo with a_last_photo_id
-            last_photo = Photo.get_by_id(int(a_last_photo_id))  # get the photo with the specific id (a_last_photo_id)
-
-            # check if last_photo exists
-            if last_photo:
-
-                # call helperfunction that returns list of photos, string for link1 and string for link2
-                all_photos, newer_link, older_link = dataFunctions.get_posts_and_links_if_nextlink_clicked(last_photo, True, False, ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT)
-                
-            else:   # user has typed some random shit in
-                self.redirect('/photos')
-                return
-
-        # else, no id, then just render the very first photos
-        else:
-##            logging.debug("Goes into else: just display very first photos")
-            all_photos_plus_one = dataFunctions.find_limited_photos(ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT + 1)
-
-            # newer_link shall never appear no matter what
-            newer_link = ""
-            
-            # decide if older_link shall be "Next >" or ""
-            older_link = validation.get_next_link(all_photos_plus_one, ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT)
-
-            # get list of only ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT or less
-            all_photos = dataFunctions.find_limited_photos(ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT)    
+        logging.debug("length of all_photos = " + str(len(all_photos)))
 
 ##        logging.debug("length of all_photos = " + str(len(all_photos)))
 
         # check if there are any img's to show in gallery
         if len(all_photos) < 1:
             # no images so pass in an empty list
-            photo_all_rows_list = []
-            self.render_front("Sorry - Photo gallery is empty", photo_all_rows_list, newer_link, older_link)
+            photo_list = []
+            self.render_front("Sorry - Photo gallery is empty", photo_list)
         else:
             # call function that organizes the rows and returns a list of lists
-            photo_all_rows_list = dataFunctions.get_rows_of_photos_list_of_list(all_photos, MAX_IMG_ON_ROW_DECIMAL, MAX_IMG_ON_ROW_INT)
+            #photo_all_rows_list = dataFunctions.get_rows_of_photos_list_of_list(all_photos, MAX_IMG_ON_ROW_DECIMAL, MAX_IMG_ON_ROW_INT)
                         
-            self.render_front("Click photo to enlarge - click again to close", photo_all_rows_list, newer_link, older_link)
+            self.render_front("Click photo to enlarge - click again to close", all_photos)
             
 
     def post(self):
         self.render_front()
+
+
+
+
+        
+
+##        ROWS_PER_PAGE = 5  # constant to decide the max rows to show per page
+##        
+##        MAX_IMG_ON_ROW_INT = 7
+##
+##        MAX_IMG_ON_ROW_DECIMAL = 7.0
+
+##        MAX_IMG_PER_PAGE = 21
+
+        
+
+##        # maybe a link has been clicked!!!
+##        a_first_photo_id = self.request.get("after_id")  # if previous link is clicked, there is a_first_photo_id
+##        a_last_photo_id = self.request.get("before_id")  # if next link is clicked, there is a_last_photo_id
+##
+##        # if there is a_first_photo_id, then 'previous' has been clicked
+##        if a_first_photo_id:
+####            logging.debug("Goes into if: 'previous' has been clicked")
+##
+##            # find out the photo with a_first_photo_id (the first photo of the 3 (ROWS_PER_PAGE) shown on specific page)
+##            first_photo = Photo.get_by_id(int(a_first_photo_id))  # get the blogpost with the specific id (a_first_photo_id)
+##
+##            # check if first_photo exists
+##            if first_photo:
+##                # call helperfunction that returns list of photos, string for link1 and string for link2
+##                all_photos, newer_link, older_link = dataFunctions.get_posts_and_links_if_prevlink_clicked(first_photo, True, True, MAX_IMG_PER_PAGE)
+##
+##            else:   # user has typed some random shit in
+##                self.redirect('/photos')
+##                return
+##
+##        # elif there is a_last_photo_id, then 'next' has been clicked
+##        elif a_last_photo_id:
+####            logging.debug("Goes into else if: 'next' has been clicked")
+##            
+##            # find out the photo with a_last_photo_id
+##            last_photo = Photo.get_by_id(int(a_last_photo_id))  # get the photo with the specific id (a_last_photo_id)
+##
+##            # check if last_photo exists
+##            if last_photo:
+##
+##                # call helperfunction that returns list of photos, string for link1 and string for link2
+##                all_photos, newer_link, older_link = dataFunctions.get_posts_and_links_if_nextlink_clicked(last_photo, True, False, MAX_IMG_PER_PAGE)
+##                
+##            else:   # user has typed some random shit in
+##                self.redirect('/photos')
+##                return
+##
+##        # else, no id, then just render the very first photos
+##        else:
+####            logging.debug("Goes into else: just display very first photos")
+##            all_photos_plus_one = dataFunctions.find_limited_photos(MAX_IMG_PER_PAGE + 1)
+##            
+##            logging.debug("length of all_photos_plus_one = " + str(len(all_photos_plus_one)))
+##
+##            # newer_link shall never appear no matter what
+##            newer_link = ""
+##            
+##            # decide if older_link shall be "Next >" or ""
+##            older_link = validation.get_next_link(all_photos_plus_one, MAX_IMG_PER_PAGE)
+##
+##            # get list of only ROWS_PER_PAGE * MAX_IMG_ON_ROW_INT or less
+##            all_photos = dataFunctions.find_limited_photos(MAX_IMG_PER_PAGE)
+##            
+##            logging.debug("length of all_photos = " + str(len(all_photos)))
+##
+####        logging.debug("length of all_photos = " + str(len(all_photos)))
+##
+##        # check if there are any img's to show in gallery
+##        if len(all_photos) < 1:
+##            # no images so pass in an empty list
+##            photo_all_rows_list = []
+##            self.render_front("Sorry - Photo gallery is empty", photo_all_rows_list, newer_link, older_link)
+##        else:
+##            # call function that organizes the rows and returns a list of lists
+##            #photo_all_rows_list = dataFunctions.get_rows_of_photos_list_of_list(all_photos, MAX_IMG_ON_ROW_DECIMAL, MAX_IMG_ON_ROW_INT)
+##                        
+##            self.render_front("Click photo to enlarge - click again to close", all_photos, newer_link, older_link)
+
+
+
+
 
 
 

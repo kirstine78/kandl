@@ -192,6 +192,7 @@ def get_newer_link(list_of_some_posts, a_number):
     """ Takes in a list_of_some_posts. Based on length of list return a certain string"""
 
     if len(list_of_some_posts) > a_number:
+        
         return "&#9668; Newer posts"
     else:
         return ""
@@ -202,6 +203,9 @@ def get_next_link(list_of_some, a_number):
     """ Takes in a list_of_some. Based on length of list return a certain string"""
 
     if len(list_of_some) > a_number:
+        
+        logging.debug("validation.py length of list_of_some = " + str(len(list_of_some)))
+        logging.debug("validation.py a_number = " + str(a_number))
         return "Next &#9658;"
     else:
         return ""

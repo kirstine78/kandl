@@ -181,7 +181,7 @@ def get_older_link(list_of_some_posts, a_number):
     """ Takes in a list_of_some_posts. Based on length of list return a certain string"""
 
     if len(list_of_some_posts) > a_number:
-        return "Older posts &#9658;"
+        return "Older &#9658;"
     else:
         return ""
         
@@ -193,7 +193,7 @@ def get_newer_link(list_of_some_posts, a_number):
 
     if len(list_of_some_posts) > a_number:
         
-        return "&#9668; Newer posts"
+        return "&#9668; Newer"
     else:
         return ""
 

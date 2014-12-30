@@ -749,7 +749,7 @@ class AllPhotos(Handler):
     def get(self):
         ##### Decision: show all photos on one page. cause centering looks stupid when user resize the page.#####
 
-        # get list of all photos
+        # get list of all photos; we don't have specific rows with specific amount of img's in it anymore
         all_photos = dataFunctions.find_all_photos()
         
         logging.debug("length of all_photos = " + str(len(all_photos)))

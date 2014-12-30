@@ -2,46 +2,42 @@
 {% block body %}
 
 	<div class="row" style="padding-top: 10px;">
-		<div class="col-1-sides"></div>
-		<div class="col-10-middle" >
+		<div class="col-1 col-1-sides"></div>
+		<div class="col-10 col-10-middle" >
 		
 			<div class="video_headline">{{headline_videos}}</div>
 			
 		</div>
-		<div class="col-1-sides end"></div>
+		<div class="col-1 col-1-sides end"></div>
 	</div>
 		
 
 	<div class="row" style="padding-top: 10px;">
-		<div class="col-1-sides"></div>
-		<div class="col-10-middle" style="display:flex; ">
-			<div class="col-2-videos"></div>
-			<div class="col-8-videos">
+		<div class="col-1 col-1-sides"></div>
+		<div class="col-10 col-10-middle" style="display:flex; ">
+			<div class="col-2 col-2-videos"></div>
+			<div class="col-8 col-8-videos">
 				{% for video in video_list %}
 					{{video.iframe_tag_and_content}}
 				<br>
-					
 				{% endfor %}	
 			</div>
-			<div class="col-2-videos"></div>
-					
-			
-
+			<div class="col-2 col-2-videos"></div>
 		</div>
-		<div class="col-1-sides end"></div>
+		<div class="col-1 col-1-sides end"></div>
 	</div>
 	
 	
 	{% if length(video_list) > 0 %}
 		<div class="row">
-			<div class="col-1-sides"></div>
-			<div class="col-10-middle" style="display:flex; ">
+			<div class="col-1 col-1-sides"></div>
+			<div class="col-10 col-10-middle" style="display:flex; ">
 				<div class="col-2"></div>
 				<div class="col-4-previous-next-link" style="padding-bottom:50px; text-align: center;"><a class="new_old_link" href="/videos?after_id={{video_list[0].key().id()}}">{{new_link}}</a></div>
 				<div class="col-4-previous-next-link" style="text-align: center;"><a class="new_old_link" href="/videos?before_id={{video_list[-1].key().id()}}">{{old_link}}</a></div>
 				<div class="col-2"></div>
 			</div>
-			<div class="col-1-sides end"></div>
+			<div class="col-1 col-1-sides end"></div>
 		</div>
 	{% endif %}
 	

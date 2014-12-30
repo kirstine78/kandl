@@ -2,8 +2,8 @@
 {% block body %}
 
 	<div class="row" style="padding-top: 10px;">
-		<div class="col-1-sides"></div>
-		<div class="col-10-middle">
+		<div class="col-1 col-1-sides"></div>
+		<div class="col-10 col-10-middle">
 			<div class="row">
 			
 				<div class="col-blog-post">
@@ -23,18 +23,18 @@
 				{% include "archive_menu.html" %}
 			</div>
 		</div>
-		<div class="col-1-sides end"></div>
+		<div class="col-1 col-1-sides end"></div>
 		
 	</div>
 	
 	{% if length(blog_posts) > 0 %}
 		<div class="row">
-			<div class="col-1-sides"></div>
-			<div class="col-10-middle" style="display:flex;">
+			<div class="col-1 col-1-sides"></div>
+			<div class="col-10 col-10-middle" style="display:flex;">
 				<div class="col-newer-older-link" id="align-in-center" style="padding-bottom:50px;"><a class="new_old_link" href="/?after_id={{blog_posts[0].key().id()}}">{{new_link}}</a></div>
 				<div class="col-newer-older-link" id="align-in-center"><a class="new_old_link" href="/?before_id={{blog_posts[-1].key().id()}}">{{old_link}}</a></div>
 			</div>
-			<div class="col-1-sides end"></div>
+			<div class="col-1 col-1-sides end"></div>
 		</div>
 	{% endif %}
 

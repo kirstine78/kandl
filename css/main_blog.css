@@ -1,6 +1,6 @@
-* {
+/* * {
 	border: 1px solid red !important;
-} 
+}  */
 
 
 * {
@@ -653,7 +653,9 @@ a.link_headline_edit:hover {
 	}
 
 	#menu_row_small {
-		display:block;
+		display:flex;
+		display:-webkit-flex;
+		display:-webkit-box;
 	}
 	
 	.col-blog-post {

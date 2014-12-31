@@ -206,7 +206,7 @@ def get_next_link(list_of_some, a_number):
         
         logging.debug("validation.py length of list_of_some = " + str(len(list_of_some)))
         logging.debug("validation.py a_number = " + str(a_number))
-        return "Next &#9658;"
+        return "&#9658;"
     else:
         return ""
         
@@ -217,7 +217,7 @@ def get_previous_link(list_of_some, a_number):
     """ Takes in a list_of_some. Based on length of list return a certain string"""
 
     if len(list_of_some) > a_number:
-        return "&#9668; Previous"
+        return "&#9668;"
     else:
         return ""
 

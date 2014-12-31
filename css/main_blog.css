@@ -217,6 +217,68 @@ a.new_old_link:hover {
 	color:#F88017;
 }
 
+/* this makes new_old_link look like a button */
+.button_design {
+	border-top: 1px solid #737373;
+	background: #7d7c7d;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ebebeb), to(#7d7c7d));
+	background: -webkit-linear-gradient(top, #ebebeb, #7d7c7d);
+	background: -moz-linear-gradient(top, #ebebeb, #7d7c7d);
+	background: -ms-linear-gradient(top, #ebebeb, #7d7c7d);
+	background: -o-linear-gradient(top, #ebebeb, #7d7c7d);
+	padding: 20px 17px;
+	-webkit-border-radius: 11px;
+	-moz-border-radius: 11px;
+	border-radius: 11px;
+	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+	-moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+	box-shadow: rgba(0,0,0,1) 0 1px 0;
+	color: #ffffff;
+	font-size: 15px;
+	text-decoration: none;
+	vertical-align: middle;
+}
+.button_design:hover {
+	border-top-color: #BDBDBD;
+	background: #BDBDBD;
+	color: #ffffff;
+}
+.button_design:active {
+	border-top-color: #b3b7ba;
+	background: #b3b7ba;
+}
+
+
+.button_design_Contact {
+	border-top: 1px solid #737373;
+	background: #7d7c7d;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ebebeb), to(#7d7c7d));
+	background: -webkit-linear-gradient(top, #ebebeb, #7d7c7d);
+	background: -moz-linear-gradient(top, #ebebeb, #7d7c7d);
+	background: -ms-linear-gradient(top, #ebebeb, #7d7c7d);
+	background: -o-linear-gradient(top, #ebebeb, #7d7c7d);
+	padding: 20px 29px;
+	-webkit-border-radius: 11px;
+	-moz-border-radius: 11px;
+	border-radius: 11px;
+	-webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+	-moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+	box-shadow: rgba(0,0,0,1) 0 1px 0;
+	color: #ffffff;
+	font-size: 20px;
+	font-weight:bold;
+	text-decoration: none;
+	vertical-align: middle;
+}
+.button_design_Contact:hover {
+	border-top-color: #BDBDBD;
+	background: #BDBDBD;
+	color: #ffffff;
+}
+.button_design_Contact:active {
+	border-top-color: #b3b7ba;
+	background: #b3b7ba;
+}
 
 
 

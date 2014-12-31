@@ -16,21 +16,30 @@
 
 
 
-/*use class for top photo, and for landscape img's inside a blogpost*/
-.img-responsive {
+/*use class for top photo, and for landscape img's inside a blogpost: it is responsive*/
+.landscape_img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+
+/*use class for portrait img's inside a blogpost*/
+.portrait_img {
+	display: block;
+	max-width: 75%;
+	height: auto;
+  
+}
+
+/*use class for portrait img's inside About*/
+.portrait_img_About {
 	display: block;
 	max-width: 100%;
 	height: auto;
   
 }
 
-/*use class for portrait img's inside a blogpost*/
-.img-responsive-blog-portrait {
-	display: block;
-	max-width: 75%;
-	height: auto;
-  
-}
 
 /* padding necessary in biggest screen size to make top photo align with greyness of link in top bar*/
 #top_photo {

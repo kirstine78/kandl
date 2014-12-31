@@ -33,8 +33,23 @@
 			<div class="col-1 col-1-sides"></div>
 			<div class="col-10 col-10-middle" style="display:flex; ">
 				<div class="col-2 col-2-videos"></div>
-				<div class="col-4-previous-next-link col-4-videos" style="padding-bottom:50px; text-align: center;"><a class="new_old_link" href="/videos?after_id={{video_list[0].key().id()}}">{{new_link}}</a></div>
-				<div class="col-4-previous-next-link col-4-videos" style="text-align: center;"><a class="new_old_link" href="/videos?before_id={{video_list[-1].key().id()}}">{{old_link}}</a></div>
+				{% if length(new_link) > 0 %}
+					<div class="col-4-previous-next-link col-4-videos" style="padding-bottom:50px; text-align: center;"><a class="new_old_link" href="/videos?after_id={{video_list[0].key().id()}}"><button class="button_design" type="button">{{new_link}}</button></a></div>
+				{% endif %}
+				
+				{% if length(new_link) < 1 %}
+					<div class="col-4-previous-next-link col-4-videos" style="padding-bottom:50px; text-align: center;"><a class="new_old_link" href="/videos?after_id={{video_list[0].key().id()}}"></a></div>
+				{% endif %}
+				
+				{% if length(old_link) > 0 %}
+					<div class="col-4-previous-next-link col-4-videos" style="text-align: center;"><a class="new_old_link" href="/videos?before_id={{video_list[-1].key().id()}}"><button class="button_design" type="button">{{old_link}}</button></a></div>
+				{% endif %}
+				
+				{% if length(old_link) < 1 %}
+					<div class="col-4-previous-next-link col-4-videos" style="text-align: center;"><a class="new_old_link" href="/videos?before_id={{video_list[-1].key().id()}}"></a></div>
+				{% endif %}
+				
+				
 				<div class="col-2 col-2-videos"></div>
 			</div>
 			<div class="col-1 col-1-sides end"></div>

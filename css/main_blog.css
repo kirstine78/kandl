@@ -1,6 +1,6 @@
-/* * {
+* {
 	border: 1px solid red !important;
-}  */
+} 
 
 
 * {
@@ -388,10 +388,6 @@ a.new_old_link:hover {
 	width:75%
 }
 
-.col-newer-older-link {
-	width:20%
-}
-
 .col-blog-post {
 	width:72%
 }
@@ -666,10 +662,6 @@ a.link_headline_edit:hover {
 
 	.col-blog-archive {
 		display: none;
-	}
-	
-	.col-newer-older-link {
-		width:50%
 	}
 
 	#top_photo {

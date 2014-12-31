@@ -66,7 +66,7 @@ ul.slimmenu {
     width: 100%;
 }
 
-/*first submenu, the years and the little square in front of months*/
+/*first submenu, 'Blog' and the little square in front of 'Years'*/
 ul.slimmenu li {
     position: relative;
     display: inline-block;
@@ -86,7 +86,7 @@ ul.slimmenu li a {
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
     font-weight: bold;
-    text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+    /* text-shadow: 0 1px 0 rgba(255,255,255,0.2); */
     transition: background-color 0.5s ease-out;
     -o-transition: background-color 0.5s ease-out;
     -moz-transition: background-color 0.5s ease-out;
@@ -126,12 +126,19 @@ ul.slimmenu li ul {
     list-style-type: none;
 }
 
-/*color for months and the square in front of specific post*/
+/*second submenu, 'Years' and the little square in front of months BEIGE*/
 /* ul.slimmenu li ul li { background-color: #BBB } */
-ul.slimmenu li ul  li{ background-color: #F0F0E0; }
+/* ul.slimmenu li ul  li{ background-color: #F0F0E0; } */
+ul.slimmenu li ul  li{ background-color:#F0F0E0; }
 
-/*color for specific post*/
-ul.slimmenu li ul li ul li{ background-color: #F0E0B0; }
+
+
+/*third submenu, 'Months' and the square in front of specific post BISQUE*/
+/* ul.slimmenu li ul li ul li{ background-color: #F0E0B0; } */
+ul.slimmenu li ul li ul li{ background-color: #FFE0C0; }
+
+/* 'specific post' SANDYBROWN*/
+ul.slimmenu li ul li ul li ul li{ background-color: #F0A060; }
 
 ul.slimmenu li > ul {
     display: none;

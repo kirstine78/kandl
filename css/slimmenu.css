@@ -71,9 +71,6 @@ ul.slimmenu li {
     position: relative;
     display: inline-block;
     background-color: white;
-	
-    /* background-color: pink; */
-    /* background-color: #BCC6CC; */
 }
 ul.slimmenu > li { margin-right: -5px;  width:20%; }
 ul.slimmenu > li:first-child { border-left: 0 }
@@ -127,15 +124,12 @@ ul.slimmenu li ul {
 }
 
 /*second submenu, 'Years' and the little square in front of months BEIGE*/
-/* ul.slimmenu li ul li { background-color: #BBB } */
-/* ul.slimmenu li ul  li{ background-color: #F0F0E0; } */
 ul.slimmenu li ul  li{ background-color:#F0F0E0; }
 
 
-
 /*third submenu, 'Months' and the square in front of specific post BISQUE*/
-/* ul.slimmenu li ul li ul li{ background-color: #F0E0B0; } */
 ul.slimmenu li ul li ul li{ background-color: #FFE0C0; }
+
 
 /* 'specific post' SANDYBROWN*/
 ul.slimmenu li ul li ul li ul li{ background-color: #F0A060; }

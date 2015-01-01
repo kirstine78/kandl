@@ -33,22 +33,23 @@
 			<div class="col-10 col-10-middle">
 				<div class="row">
 					<div class="col-blog-post" style="display:flex;">					
-					
-						{% if length(new_link) > 0 %}
-							<div class="col-6" id="align-in-center" style="padding-bottom:50px;"><a class="new_old_link" href="/full_year?after_id={{list_all_year_posts[0].key().id()}}&year={{year}}"><button class="button_design_newer_older" type="button">{{new_link}}</button></a></div>
-						{% endif %}
-						
-						{% if length(new_link) < 1 %}
-							<div class="col-6" id="align-in-center" style="padding-bottom:50px;"><a class="new_old_link" href="/full_year?after_id={{list_all_year_posts[0].key().id()}}&year={{year}}"></a></div>
-						{% endif %}
-						
-						{% if length(old_link) > 0 %}
-							<div class="col-6" id="align-in-center"><a class="new_old_link" href="/full_year?before_id={{list_all_year_posts[-1].key().id()}}&year={{year}}"><button class="button_design_newer_older" type="button">{{old_link}}</button></a></div>
-						{% endif %}
-						
-						{% if length(old_link) < 1 %}
-							<div class="col-6" id="align-in-center"><a class="new_old_link" href="/full_year?before_id={{list_all_year_posts[-1].key().id()}}&year={{year}}"></a></div>
-						{% endif %}
+						<div class="row">
+							{% if length(new_link) > 0 %}
+								<div class="col-6" id="align-in-center" style="padding-bottom:50px;"><a class="new_old_link" href="/full_year?after_id={{list_all_year_posts[0].key().id()}}&year={{year}}"><button class="button_design_newer_older" type="button">{{new_link}}</button></a></div>
+							{% endif %}
+							
+							{% if length(new_link) < 1 %}
+								<div class="col-6" id="align-in-center" style="padding-bottom:50px;"><a class="new_old_link" href="/full_year?after_id={{list_all_year_posts[0].key().id()}}&year={{year}}"></a></div>
+							{% endif %}
+							
+							{% if length(old_link) > 0 %}
+								<div class="col-6" id="align-in-center"><a class="new_old_link" href="/full_year?before_id={{list_all_year_posts[-1].key().id()}}&year={{year}}"><button class="button_design_newer_older" type="button">{{old_link}}</button></a></div>
+							{% endif %}
+							
+							{% if length(old_link) < 1 %}
+								<div class="col-6" id="align-in-center"><a class="new_old_link" href="/full_year?before_id={{list_all_year_posts[-1].key().id()}}&year={{year}}"></a></div>
+							{% endif %}
+						</div>
 					</div>
 					<div class="col-blog-archive"></div>
 				</div>

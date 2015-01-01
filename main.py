@@ -930,7 +930,7 @@ class AllVideos(Handler):
         
         headline="Videos"
 
-        VIDEOS_PER_PAGE = 10
+        VIDEOS_PER_PAGE = 1
 
         # maybe a link has been clicked!!!
         a_first_video_id = self.request.get("after_id")  # if Previous link is clicked, there is a_first_video_id

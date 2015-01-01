@@ -497,7 +497,7 @@ class AllBlogPosts(Handler):
         
         
     def get(self):
-        POSTS_PER_PAGE = 6
+        POSTS_PER_PAGE = 1
 
         # maybe a link has been clicked!!!
         a_first_post_id = self.request.get("after_id")  # if newer posts link is clicked, there is a_first_post_id
@@ -573,7 +573,7 @@ class FullYearBlogPosts (Handler):
             end_of_previous_year = datetime(year_integer - 1, 12, 31)
             start_of_next_year = datetime(year_integer + 1, 01, 01)
 
-            POSTS_PER_PAGE = 6
+            POSTS_PER_PAGE = 1
 
             # maybe a link has been clicked!!!
             a_first_post_id = self.request.get("after_id")  # if newer posts link is clicked, there is a_first_post_id

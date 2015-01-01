@@ -19,7 +19,7 @@
 /*use class for top photo, and for landscape img's inside a blogpost: it is responsive*/
 .landscape_img {
 	display: block;
-	max-width: 100%;
+	width: 100%;
 	height: auto;
 }
 
@@ -27,7 +27,7 @@
 /*use class for portrait img's inside a blogpost*/
 .portrait_img {
 	display: block;
-	max-width: 75%;
+	width: 75%;
 	height: auto;
   
 }
@@ -35,7 +35,7 @@
 /*use class for portrait img's inside About*/
 .portrait_img_About {
 	display: block;
-	max-width: 100%;
+	width: 100%;
 	height: auto;
   
 }
@@ -86,6 +86,8 @@
 .row {
 	width: 100%;
 	margin-bottom:0px;
+	display:-webkit-box;
+	display:-webkit-flex;
 	display: flex;
 }
 
@@ -97,6 +99,9 @@
 
 .row_flex_block_about  {
 	padding-top:24px;
+	display:-webkit-box;
+	display:-webkit-flex;
+	display: flex;
 }
 
 #menu_row_big {
@@ -653,9 +658,9 @@ a.link_headline_edit:hover {
 	}
 
 	#menu_row_small {
-		display:flex;
-		display:-webkit-flex;
 		display:-webkit-box;
+		display:-webkit-flex;
+		display:flex;
 	}
 	
 	.col-blog-post {

@@ -163,11 +163,11 @@ def get_blog_posts_and_links_if_prevlink_clicked(an_id, a_post, are_there_betwee
         newer_link = validation.get_newer_link(all_blog_posts_plus_one, max_posts_per_page)
 
         # older_link shall appear no matter what
-        older_link = "Older &#9658;"
+        older_link = "Older &raquo;"
 
     else:   # find_newer_link False
         # newer_link shall appear no matter what 
-        newer_link = "&#9668; Newer"
+        newer_link = "&laquo; Newer"
 
         # decide if older_link shall be "Older >" or ""  
         older_link = validation.get_older_link(all_blog_posts_plus_one, max_posts_per_page)
@@ -209,11 +209,11 @@ def get_blog_posts_and_links_if_nextlink_clicked(an_id, a_post, are_there_betwee
         newer_link = validation.get_newer_link(all_blog_posts_plus_one, max_posts_per_page)
 
         # older_link shall appear no matter what
-        older_link = "Older &#9658;"
+        older_link = "Older &raquo;"
 
     else:   # find_newer_link False
         # newer_link shall appear no matter what 
-        newer_link = "&#9668; Newer"
+        newer_link = "&laquo; Newer"
 
         # decide if older_link shall be "Older >" or ""  
         older_link = validation.get_older_link(all_blog_posts_plus_one, max_posts_per_page)
@@ -260,11 +260,11 @@ def get_posts_and_links_if_prevlink_clicked(a_post, is_it_photos, find_previous_
         newer_link = validation.get_previous_link(all_posts_plus_one, max_per_page)
 
         # older_link shall appear no matter what
-        older_link = "&#9658;"
+        older_link = "&raquo;"
 
     else:   # find_previous_link False
         # newer_link shall appear no matter what 
-        newer_link = "&#9668;"
+        newer_link = "&laquo;"
 
         # decide if older_link shall be "Next >" or ""  
         older_link = validation.get_next_link(all_posts_plus_one, max_per_page)
@@ -306,11 +306,11 @@ def get_posts_and_links_if_nextlink_clicked(a_post, is_it_photos, find_newer_lin
         newer_link = validation.get_previous_link(all_posts_plus_one, max_per_page)
 
         # older_link shall appear no matter what
-        older_link = "&#9658;"
+        older_link = "&raquo;"
 
     else:   # find_newer_link False
         # newer_link shall appear no matter what 
-        newer_link = "&#9668;"
+        newer_link = "&laquo;"
 
         # decide if older_link shall be "Next >" or ""  
         older_link = validation.get_next_link(all_posts_plus_one, max_per_page)

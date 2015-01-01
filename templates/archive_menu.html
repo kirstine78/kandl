@@ -1,44 +1,39 @@
-
-	
-			
-			<div class="col-blog-archive end" style="font-size: 14px;" >
-				<div style="padding-top: 10px;"><h3>Blog archive</h3></div>
-				<div>
-					
-					<UL id="year_tree" class="archive_menu" style="padding-left:0px;">
-					
-						{% for year in range(2020, 2009, -1) %}
-							<LI>
-								{% if year|string in dict_bloggi %}
-									<span><a id="color_arrow" href="#" style="text-decoration:none;">&#9658;</a></span>
-									<a class="link_menu_yy"  href="/full_year?year={{year|string}}" ><b>{{year}}</b></a>
-									
-									<UL id="month_tree" class="archive_menu">
-										{% for month in range(12, 0, -1) %}
-											{% if month|string in dict_bloggi[year|string] %}
-												
-												<LI id="margin_decrease">
-													<span><a id="color_arrow" href="#" style="text-decoration:none; ">&#9658;</a></span>
-													<a class="link_menu_mm" href="/full_month?year_and_month={{year|string + month|string}}">{{numeric_to_alphabetic_month(month)}}</a> <!-- using from python file: jinja_env.globals.update(numeric_to_alphabetic_month=validation.numeric_to_alpabetic) -->
-													
-														{% for i in dict_bloggi[year|string][month|string] %}
-															<UL id="post_tree" class="archive_menu">
-																<LI id="margin_decrease" style="padding-bottom:8px; font-size:13px;"><span>&#8226;</span><a class="link_menu_dd" href="/single_blog_post?single_post_id={{i.key().id()}}">{{i.headline}}</a></LI>
-															</UL>
-														{% endfor %}
-												</LI>
-											{% endif %}
-										{% endfor %}
-									</UL>
-									
-								{% endif %}
-							</LI>
-						{% endfor %}
+<div class="col-blog-archive end">
+	<div>
+		
+		<UL id="year_tree" class="slimmenu">
+		
+			{% for year in range(2020, 2009, -1) %}
+				<LI>
+					{% if year|string in dict_bloggi %}
+						<a class="link_top_bar" href="/full_year?year={{year|string}}" ><b>{{year}}</b></a>
 						
-					</UL>
-					
-				</div>
-			</div>
+						<UL>
+							{% for month in range(12, 0, -1) %}
+								{% if month|string in dict_bloggi[year|string] %}
+									
+									<LI>
+										<a class="link_top_bar" href="/full_month?year_and_month={{year|string + month|string}}">{{numeric_to_alphabetic_month(month)}}</a> <!-- using from python file: jinja_env.globals.update(numeric_to_alphabetic_month=validation.numeric_to_alpabetic) -->
+										
+											{% for i in dict_bloggi[year|string][month|string] %}
+												<UL>
+													<LI><a class="link_top_bar" href="/single_blog_post?single_post_id={{i.key().id()}}">{{i.headline}}</a></LI>
+												</UL>
+											{% endfor %}
+									</LI>
+								{% endif %}
+							{% endfor %}
+						</UL>
+						
+					{% endif %}
+				</LI>
+			{% endfor %}
+			
+		</UL>
+		
+	</div>
+</div>
+
 			
 			
 			

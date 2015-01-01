@@ -12,28 +12,6 @@
 	
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 	<script src="../js/jquery.slimmenu.js"></script>
-	<script type="text/javascript">
-	$(document).ready(function() {
-		$(".archive_menu > li > ul").hide();
-	});
-	
-	
-	$(function(){
-		$('#year_tree').find('SPAN').click(function(e){
-			var i=$(this);
-			$(this).siblings("ul").each(
-				function(){
-					$(this).toggle();
-					if($(this).is(":hidden"))i.html("&#9658;");
-					else i.html("&#9660;");
-					$(i).hover(function(){
-						$(this).css("cursor","pointer");
-						})
-				})
-		});
-	});
-
-	</script>
 	
 	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -134,5 +112,6 @@
 		childrenIndenter: '&nbsp;'
 	});
 	</script>
+		{% block bodyend %}{% endblock %}
 </body>
 </html>

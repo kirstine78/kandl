@@ -24,8 +24,8 @@
 			//console.log("bigImage.height="+bigImage.height);
 			//console.log("bigImage.height="+$(bigImage).height);
 			
-			//console.log("screen.height="+screen.height);
-			//console.log("screen.width="+screen.width);
+			//console.log("$(window).height()="+$(window).height());
+			//console.log("$(window).width()="+$(window).width());
 			
 			
 			
@@ -38,28 +38,28 @@
 				
 				var is_landscape = this.width > this.height;
 				
-				if (screen.width < this.width && is_landscape) {
+				if ($(window).width() < this.width && is_landscape) {
 					//console.log("Goes into WIDTH if statement");
 					
 					var reduction_factor = 18;
 					
-					if (screen.width < 501) {
+					if ($(window).width() < 501) {
 						reduction_factor = 1;
 					}
 					
-					this.width = screen.width - (screen.width * reduction_factor / 100);
+					this.width = $(window).width() - ($(window).width() * reduction_factor / 100);
 				}
 				
-				if (screen.height < this.height && !is_landscape) {
+				if ($(window).height() < this.height && !is_landscape) {
 					//console.log("Goes into HEIGHT if statement");
 					
 					var reduction_factor = 18;
 					
-					if (screen.height < 501) {
-						reduction_factor = 5;
+					if ($(window).height() < 501) {
+						reduction_factor = 15;
 					}
 					
-					this.height = screen.height - (screen.height * reduction_factor / 100);
+					this.height = $(window).height() - ($(window).height() * reduction_factor / 100);
 				}
 				
 				$('#div_img_popup').width(this.width);

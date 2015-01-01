@@ -14,15 +14,17 @@
 
 	<div class="row" style="padding-top: 10px;">
 		<div class="col-1 col-1-sides"></div>
-		<div class="col-10 col-10-middle" style="display:flex; ">
-			<div class="col-2 col-2-videos"></div>
-			<div class="col-8 col-8-videos">
-				{% for video in video_list %}
-					{{video.iframe_tag_and_content}}
-				<br>
-				{% endfor %}	
+		<div class="col-10 col-10-middle">
+			<div class="row">
+				<div class="col-2 col-2-videos"></div>
+				<div class="col-8 col-8-videos">
+					{% for video in video_list %}
+						{{video.iframe_tag_and_content}}
+					<br>
+					{% endfor %}	
+				</div>
+				<div class="col-2 col-2-videos"></div>
 			</div>
-			<div class="col-2 col-2-videos"></div>
 		</div>
 		<div class="col-1 col-1-sides end"></div>
 	</div>

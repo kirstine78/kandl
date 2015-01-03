@@ -48,11 +48,11 @@
 					{% endif %}
 					
 					{% if length(old_link) > 0 %}
-						<div class="col-4-previous-next-link col-4-videos" style="text-align: center;"><a class="new_old_link" href="/videos?before_id={{video_list[-1].key().id()}}"><button class="button_design_just_arrows" type="button">{{old_link}}</button></a></div>
+						<div class="col-4-previous-next-link col-4-videos" style="padding-bottom:50px; text-align: center;"><a class="new_old_link" href="/videos?before_id={{video_list[-1].key().id()}}"><button class="button_design_just_arrows" type="button">{{old_link}}</button></a></div>
 					{% endif %}
 					
 					{% if length(old_link) < 1 %}
-						<div class="col-4-previous-next-link col-4-videos" style="text-align: center;"><a class="new_old_link" href="/videos?before_id={{video_list[-1].key().id()}}"></a></div>
+						<div class="col-4-previous-next-link col-4-videos" style="padding-bottom:50px; text-align: center;"><a class="new_old_link" href="/videos?before_id={{video_list[-1].key().id()}}"></a></div>
 					{% endif %}
 					<div class="col-2 col-2-videos"></div>
 				</div>

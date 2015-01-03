@@ -43,11 +43,11 @@
 							{% endif %}
 							
 							{% if length(old_link) > 0 %}
-								<div class="col-6" id="align-in-center"><a class="new_old_link" href="/?before_id={{blog_posts[-1].key().id()}}"><button class="button_design_newer_older" type="button">{{old_link}}</button></a></div>
+								<div class="col-6" id="align-in-center" style="padding-bottom:50px;"><a class="new_old_link" href="/?before_id={{blog_posts[-1].key().id()}}"><button class="button_design_newer_older" type="button">{{old_link}}</button></a></div>
 							{% endif %}
 							
 							{% if length(old_link) < 1 %}
-								<div class="col-6" id="align-in-center"><a class="new_old_link" href="/?before_id={{blog_posts[-1].key().id()}}"></a></div>
+								<div class="col-6" id="align-in-center" style="padding-bottom:50px;"><a class="new_old_link" href="/?before_id={{blog_posts[-1].key().id()}}"></a></div>
 							{% endif %}
 						</div>
 					</div>

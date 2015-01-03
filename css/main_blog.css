@@ -298,6 +298,7 @@ a.new_old_link:hover {
 	background: -ms-linear-gradient(top, #ebebeb, #7d7c7d);
 	background: -o-linear-gradient(top, #ebebeb, #7d7c7d);
 	padding: 19px 29px;
+	margin-bottom: 50px;
 	-webkit-border-radius: 11px;
 	-moz-border-radius: 11px;
 	border-radius: 11px;

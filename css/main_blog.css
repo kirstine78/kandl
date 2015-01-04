@@ -1,7 +1,7 @@
-/* * {
+* {
 	border: 1px solid red !important;
 } 
- */
+
 
 * {
 	-webkit-box-sizing: border-box;
@@ -424,7 +424,6 @@ a.new_old_link:hover {
 
 .col-4-previous-next-link {
 	width:33.33%;
-	padding-top:15px;
 }
 
 

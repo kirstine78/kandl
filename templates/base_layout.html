@@ -23,6 +23,13 @@
 		ga('send', 'pageview');
 	</script>
 	
+	<script>
+		$(document).ready(function() {
+			// Workaround for Safari and Chrome CSS alignment bug (2014).
+			$(".blog_text").hide().fadeIn('fast');
+		});
+	</script>
+
 	{% block head %}{% endblock %}
 	
 	
